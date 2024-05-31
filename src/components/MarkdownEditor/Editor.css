@@ -1,0 +1,11 @@
+.cm-editor {
+  border: none;
+  outline: none;
+}
+.cm-editor.cm-focused {
+  border: none;
+  outline: none;
+}
+.cm-editor .cm-scroller {
+  @apply font-sans;
+}

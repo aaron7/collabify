@@ -1,0 +1,11 @@
+.md-codeblock {
+  @apply bg-slate-100 font-mono;
+}
+
+.md-codeblock-start {
+  @apply rounded-t-lg;
+}
+
+.md-codeblock-end {
+  @apply rounded-b-lg;
+}

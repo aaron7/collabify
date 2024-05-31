@@ -1,0 +1,4 @@
+/* Hide processing instructions when line is not active */
+:not(.cm-activeLine) > .md-header-processing-instruction {
+  display: none;
+}
