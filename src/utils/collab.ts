@@ -41,9 +41,10 @@ export const createWebrtcProvider = (session: Session, isHost: boolean) => {
   const roomId = `${ROOM_ID_PREFIX}${session.roomId}`;
 
   const ydoc = new Doc();
+  const signalingServerUrl = import.meta.env.VITE_SIGNALING_SERVER_URL;
   const webrtcProvider = new WebrtcProvider(roomId, ydoc, {
     password: session.secret,
-    signaling: ['ws://localhost:4444'],
+    signaling: [signalingServerUrl || 'ws://localhost:4444'],
   });
 
   const userColor = usercolors[uint32() % usercolors.length];
