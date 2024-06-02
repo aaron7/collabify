@@ -23,7 +23,7 @@ const Loading = ({
   title,
 }: LoadingProps) => {
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center">
+    <div className="flex h-screen w-full flex-col items-center justify-center max-sm:px-4">
       <h2 className="text-3xl">{title}</h2>
       {showLoader && (
         <LoaderCircle
