@@ -5,6 +5,7 @@ import { type WebrtcProvider } from 'y-webrtc';
 import Editor from '@/components/MarkdownEditor/Editor';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
+import routes from '@/routes';
 import {
   createWebrtcProvider,
   findHostId,
@@ -58,7 +59,7 @@ const Session = () => {
     }
     setDocMapAndWaitForSync(webrtcProvider.doc, 'status', 'ended', true)
       .then(() => {
-        navigate('/');
+        navigate(routes.landing.path);
       })
       .catch((error) => {
         // TODO: Handle error

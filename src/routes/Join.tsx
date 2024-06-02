@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import routes from '@/routes';
 import {
   decodeJoinUrlFragment,
   encodeSessionWithoutSecret,
@@ -15,7 +16,7 @@ const Join = () => {
       const session = decodeJoinUrlFragment(location.hash);
       const urlFragmentWithoutSecret = encodeSessionWithoutSecret(session);
 
-      navigate(`/session#${urlFragmentWithoutSecret}`, {
+      navigate(`${routes.session.path}#${urlFragmentWithoutSecret}`, {
         replace: true,
         state: { joining: true, session },
       });

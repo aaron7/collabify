@@ -1,3 +1,5 @@
+import routes from '@/routes';
+
 import { generateSecureAlphanumericString } from './random';
 
 export type Session = {
@@ -37,5 +39,5 @@ export function decodeJoinUrlFragment(urlFragment: string): Session {
 }
 
 export function buildJoinUrl(session: Session): string {
-  return `${window.location.origin}/join#${encodeJoinUrlFragment(session)}`;
+  return `${window.location.origin}${routes.join.path}#${encodeJoinUrlFragment(session)}`;
 }

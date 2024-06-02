@@ -9,6 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
+import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
 import { buildJoinUrl, type Session } from '@/utils/session';
 
@@ -39,7 +40,7 @@ const StatusBar = ({ isHost, onEndSession, session }: StatusBarProps) => {
   return (
     <div className="background-prim flex justify-between p-1">
       <div className="flex items-center">
-        <Link to="/">
+        <Link to={routes.landing.path}>
           <h2 className="text-lg font-semibold">Collabify.it</h2>
         </Link>
       </div>
