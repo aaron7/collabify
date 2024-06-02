@@ -16,24 +16,40 @@ import { buildJoinUrl, type Session } from '@/utils/session';
 const COPIED_TO_CLIPBOARD_TIMEOUT = 3000;
 
 type StatusBarProps = {
+  copyMarkdownToClipboard: () => void;
   isHost: boolean;
   onEndSession: () => void;
   session: Session;
 };
 
-const StatusBar = ({ isHost, onEndSession, session }: StatusBarProps) => {
-  const [copiedToClipboard, setCopiedToClipboard] = useState(false);
+const StatusBar = ({
+  copyMarkdownToClipboard,
+  isHost,
+  onEndSession,
+  session,
+}: StatusBarProps) => {
+  const [copiedJoinUrlToClipboard, setCopiedJoinUrlToClipboard] =
+    useState(false);
+  const [copiedMarkdownToClipboard, setCopiedMarkdownToClipboard] =
+    useState(false);
 
   const joinUrl = useMemo(() => buildJoinUrl(session), [session]);
 
   const onCopyInviteUrlClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-
     copyToClipboard(joinUrl);
 
-    setCopiedToClipboard(true);
+    setCopiedJoinUrlToClipboard(true);
     setTimeout(() => {
-      setCopiedToClipboard(false);
+      setCopiedJoinUrlToClipboard(false);
+    }, COPIED_TO_CLIPBOARD_TIMEOUT);
+  };
+
+  const onDownloadMarkdown = () => {
+    copyMarkdownToClipboard();
+
+    setCopiedMarkdownToClipboard(true);
+    setTimeout(() => {
+      setCopiedMarkdownToClipboard(false);
     }, COPIED_TO_CLIPBOARD_TIMEOUT);
   };
 
@@ -53,7 +69,7 @@ const StatusBar = ({ isHost, onEndSession, session }: StatusBarProps) => {
         )}
 
         <Button onClick={onCopyInviteUrlClick} variant="outline">
-          {copiedToClipboard ? (
+          {copiedJoinUrlToClipboard ? (
             <Check className="mr-2 h-4 w-4 text-success" />
           ) : (
             <ClipboardCopy className="mr-2 h-4 w-4" />
@@ -61,8 +77,12 @@ const StatusBar = ({ isHost, onEndSession, session }: StatusBarProps) => {
           Copy invite URL
         </Button>
 
-        <Button size="icon" variant="ghost">
-          <Download className="h-4 w-4" />
+        <Button onClick={onDownloadMarkdown} size="icon" variant="ghost">
+          {copiedMarkdownToClipboard ? (
+            <Check className="h-4 w-4 text-success" />
+          ) : (
+            <Download className="h-4 w-4" />
+          )}
         </Button>
 
         <Button size="icon" variant="ghost">

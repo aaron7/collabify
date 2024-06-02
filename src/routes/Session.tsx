@@ -7,6 +7,7 @@ import Editor from '@/components/MarkdownEditor/Editor';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
 import routes from '@/routes';
+import { copyToClipboard } from '@/utils/clipboard';
 import {
   createWebrtcProvider,
   findHostId,
@@ -52,6 +53,10 @@ const Session = () => {
   const onEditorChange = React.useCallback((val: string) => {
     setValue(val);
   }, []);
+
+  const copyMarkdownToClipboard = () => {
+    copyToClipboard(value);
+  };
 
   // When the session ends, set status to 'ended' and navigate back to the home page
   const onEndSession = () => {
@@ -136,6 +141,7 @@ const Session = () => {
   return (
     <div>
       <StatusBar
+        copyMarkdownToClipboard={copyMarkdownToClipboard}
         isHost={isHost}
         onEndSession={onEndSession}
         session={session}
