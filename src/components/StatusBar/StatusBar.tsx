@@ -1,17 +1,13 @@
 import { useMemo, useState } from 'react';
-import {
-  Check,
-  ClipboardCopy,
-  Download,
-  RefreshCwOff,
-  Settings,
-} from 'lucide-react';
+import { Check, ClipboardCopy, Download, Settings } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
 import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
 import { buildJoinUrl, type Session } from '@/utils/session';
+
+import { EndSessionButton } from './EndSessionButton';
 
 const COPIED_TO_CLIPBOARD_TIMEOUT = 3000;
 
@@ -61,12 +57,7 @@ const StatusBar = ({
         </Link>
       </div>
       <div className="flex space-x-2">
-        {isHost && (
-          <Button onClick={onEndSession} variant="outline">
-            <RefreshCwOff className="mr-2 h-4 w-4 text-destructive" />
-            End session
-          </Button>
-        )}
+        {isHost && <EndSessionButton onEndSession={onEndSession} />}
 
         <Button onClick={onCopyInviteUrlClick} variant="outline">
           {copiedJoinUrlToClipboard ? (
