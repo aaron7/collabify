@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { type WebrtcProvider } from 'y-webrtc';
 
+import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
@@ -95,13 +96,12 @@ const Session = () => {
   // Initial loading state
   if (!webrtcProvider || !isConnected || (!isHost && !peers.length)) {
     return (
-      <div>
-        <span>Waiting to connect to the host or existing peers...</span>
-        <span>
-          If you cannot connect, either the host has gone offline or the secret
-          is incorrect.
-        </span>
-      </div>
+      <Loading
+        copy="If you cannot connect, either the host is offline or the secret URL is incorrect."
+        ctaCopy="Stop connecting"
+        onCtaClick={() => navigate(routes.landing.path)}
+        title="Connecting to your host"
+      />
     );
   }
 
@@ -112,9 +112,12 @@ const Session = () => {
     webrtcProvider?.doc.getMap('status').get('ended')
   ) {
     return (
-      <div>
-        <span>The session has ended</span>
-      </div>
+      <Loading
+        ctaCopy="Exit session"
+        onCtaClick={() => navigate(routes.landing.path)}
+        showLoader={false}
+        title="The session has ended"
+      />
     );
   }
 
@@ -122,9 +125,11 @@ const Session = () => {
   const hostId = findHostId(awarenessStates);
   if (hostId && !isHost && !awarenessStates.get(hostId)) {
     return (
-      <div>
-        <span>The host has gone offline.</span>
-      </div>
+      <Loading
+        ctaCopy="Exit session"
+        onCtaClick={() => navigate(routes.landing.path)}
+        title="Your host has gone offline"
+      />
     );
   }
 
