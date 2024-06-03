@@ -10,6 +10,8 @@ import {
 
 import './headings.css';
 
+const emptyHeadingRegex = new RegExp('^# *$', 'i');
+
 function headings(view: EditorView) {
   const headings: Range<Decoration>[] = [];
 
@@ -24,8 +26,11 @@ function headings(view: EditorView) {
           node.type.is('ATXHeading5') ||
           node.type.is('ATXHeading6')
         ) {
+          const line = view.state.doc.lineAt(node.from);
           const deco = Decoration.mark({
-            class: 'md-header-processing-instruction',
+            class: emptyHeadingRegex.test(line.text)
+              ? 'md-empty-header-processing-instruction'
+              : 'md-header-processing-instruction',
           });
           const num = Number.parseInt(node.type.name.slice(-1));
           headings.push(deco.range(node.from, node.from + num + 1));
