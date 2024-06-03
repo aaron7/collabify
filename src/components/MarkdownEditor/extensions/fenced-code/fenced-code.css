@@ -1,5 +1,5 @@
 .md-codeblock {
-  @apply bg-slate-100 font-mono;
+  @apply bg-secondary font-mono;
 }
 
 .md-codeblock-start {
