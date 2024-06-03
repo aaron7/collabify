@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Check, ClipboardCopy, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+import ThemeButton from '@/components/ThemeButton/ThemeButton';
 import { Button } from '@/components/ui/button';
 import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
@@ -9,7 +10,6 @@ import { buildJoinUrl, type Session } from '@/utils/session';
 
 import { EndSessionButton } from './EndSessionButton';
 import { SettingsButton } from './SettingsButton';
-import ThemeButton from './ThemeButton';
 
 const COPIED_TO_CLIPBOARD_TIMEOUT = 3000;
 
