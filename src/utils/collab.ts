@@ -47,7 +47,7 @@ export const createWebrtcProvider = (session: Session, isHost: boolean) => {
     password: session.secret,
     peerOpts: {
       config: {
-        ...(iceServersJson ? JSON.parse(iceServersJson) : {}),
+        ...(iceServersJson ? { iceServers: JSON.parse(iceServersJson) } : {}),
       },
     },
     signaling: [signalingServerUrl || 'ws://localhost:4444'],
