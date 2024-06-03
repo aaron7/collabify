@@ -18,11 +18,19 @@ import markdownSyntaxHighlighting from './extensions/markdown/syntax-highlightin
 
 import './Editor.css';
 
+import { EditorView } from '@codemirror/view';
+
 type EditorProps = {
   onChange: (value: string, viewUpdate: ViewUpdate) => void;
   value: string;
   webrtcProvider: WebrtcProvider;
 };
+
+const baseTheme = EditorView.baseTheme({
+  '&.cm-editor': {
+    backgroundColor: 'hsl(var(--background))',
+  },
+});
 
 const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
   const collabPlugin = createCollabPlugin({ webrtcProvider });
@@ -42,6 +50,7 @@ const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
             lineNumbers: false,
           }}
           extensions={[
+            baseTheme,
             markdown({ base: markdownLanguage, codeLanguages: languages }),
             syntaxHighlighting(defaultHighlightStyle),
             markdownSyntaxHighlighting,
