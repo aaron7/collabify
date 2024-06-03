@@ -9,6 +9,7 @@ import { buildJoinUrl, type Session } from '@/utils/session';
 
 import { EndSessionButton } from './EndSessionButton';
 import { SettingsButton } from './SettingsButton';
+import ThemeButton from './ThemeButton';
 
 const COPIED_TO_CLIPBOARD_TIMEOUT = 3000;
 
@@ -76,6 +77,8 @@ const StatusBar = ({
             <Download className="h-4 w-4" />
           )}
         </Button>
+
+        <ThemeButton />
 
         <SettingsButton />
       </div>

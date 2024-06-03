@@ -9,6 +9,8 @@ import { ViewUpdate } from '@codemirror/view';
 import CodeMirror, { EditorView as RCEditorView } from '@uiw/react-codemirror';
 import { WebrtcProvider } from 'y-webrtc';
 
+import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
+
 import createCollabPlugin from './extensions/collab/collab';
 import fenchedCodePlugin from './extensions/fenced-code/decoration';
 import markdownHeadingsPlugin from './extensions/markdown/headings';
@@ -24,6 +26,10 @@ type EditorProps = {
 
 const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
   const collabPlugin = createCollabPlugin({ webrtcProvider });
+  const { theme } = useTheme();
+  const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
+    ? 'dark'
+    : 'light';
 
   return (
     <>
@@ -46,6 +52,7 @@ const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
           ]}
           height="100%"
           onChange={onChange}
+          theme={theme === 'system' ? systemTheme : theme}
           value={value}
         />
       </div>
