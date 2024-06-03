@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Check, ClipboardCopy, Download, Settings } from 'lucide-react';
+import { Check, ClipboardCopy, Download } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import { Button } from '@/components/ui/button';
@@ -8,6 +8,7 @@ import { copyToClipboard } from '@/utils/clipboard';
 import { buildJoinUrl, type Session } from '@/utils/session';
 
 import { EndSessionButton } from './EndSessionButton';
+import { SettingsButton } from './SettingsButton';
 
 const COPIED_TO_CLIPBOARD_TIMEOUT = 3000;
 
@@ -76,9 +77,7 @@ const StatusBar = ({
           )}
         </Button>
 
-        <Button size="icon" variant="ghost">
-          <Settings className="h-4 w-4" />
-        </Button>
+        <SettingsButton />
       </div>
     </div>
   );

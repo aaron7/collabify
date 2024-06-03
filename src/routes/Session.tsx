@@ -4,6 +4,7 @@ import { type WebrtcProvider } from 'y-webrtc';
 
 import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
+import { useSettings } from '@/components/SettingsProvider/SettingsProvider';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
 import routes from '@/routes';
@@ -24,6 +25,8 @@ const Session = () => {
   const session = location.state?.session;
   const isHost = location.state?.isHost;
 
+  const { settings } = useSettings();
+
   const [webrtcProvider, setWebrtcProvider] = useState<WebrtcProvider | null>(
     null,
   );
@@ -37,7 +40,10 @@ const Session = () => {
 
   // Always setup a new webrtcProvider when the session changes
   useEffect(() => {
-    const newWebrtcProvider = createWebrtcProvider(session, isHost);
+    const newWebrtcProvider = createWebrtcProvider({
+      isHost,
+      session,
+    });
     setWebrtcProvider(newWebrtcProvider);
     setAwarenessStates(new Map(newWebrtcProvider.awareness.getStates()));
     setValue(newWebrtcProvider.doc.getText('content').toString());
@@ -49,6 +55,12 @@ const Session = () => {
       }
     };
   }, [session, isHost]);
+
+  useEffect(() => {
+    webrtcProvider?.awareness.setLocalStateField('user', {
+      name: settings.name,
+    });
+  }, [settings.name, webrtcProvider?.awareness]);
 
   const onEditorChange = React.useCallback((val: string) => {
     setValue(val);

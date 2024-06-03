@@ -37,7 +37,15 @@ export const usercolors = [
   { color: '#1be7ff', light: '#1be7ff33' },
 ];
 
-export const createWebrtcProvider = (session: Session, isHost: boolean) => {
+type CreateWebrtcProviderProps = {
+  isHost: boolean;
+  session: Session;
+};
+
+export const createWebrtcProvider = ({
+  isHost,
+  session,
+}: CreateWebrtcProviderProps) => {
   const roomId = `${ROOM_ID_PREFIX}${session.roomId}`;
 
   const ydoc = new Doc();
@@ -58,7 +66,6 @@ export const createWebrtcProvider = (session: Session, isHost: boolean) => {
     color: userColor.color,
     colorLight: userColor.light,
     isHost,
-    name: 'Anonymous ' + Math.floor(Math.random() * 100),
   });
 
   return webrtcProvider;
