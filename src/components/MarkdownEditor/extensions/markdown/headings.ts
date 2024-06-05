@@ -15,7 +15,7 @@ import { tags } from '@lezer/highlight';
 
 import './headings.css';
 
-const emptyHeadingRegex = new RegExp('^# *$', 'i');
+const emptyHeadingRegex = new RegExp('^#+ *$', 'i');
 
 function headings(view: EditorView) {
   const headings: Range<Decoration>[] = [];
