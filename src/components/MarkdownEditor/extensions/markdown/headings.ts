@@ -1,4 +1,8 @@
-import { syntaxTree } from '@codemirror/language';
+import {
+  HighlightStyle,
+  syntaxHighlighting,
+  syntaxTree,
+} from '@codemirror/language';
 import { Range } from '@codemirror/state';
 import {
   Decoration,
@@ -7,6 +11,7 @@ import {
   ViewPlugin,
   ViewUpdate,
 } from '@codemirror/view';
+import { tags } from '@lezer/highlight';
 
 import './headings.css';
 
@@ -68,4 +73,15 @@ const headingsPlugin = ViewPlugin.fromClass(
   },
 );
 
-export default headingsPlugin;
+const headingsHighlightStyle = HighlightStyle.define([
+  { class: 'my-4 text-4xl font-semibold no-underline', tag: tags.heading1 },
+  { class: 'my-3 text-3xl font-semibold no-underline', tag: tags.heading2 },
+  { class: 'my-2 text-2xl font-semibold no-underline', tag: tags.heading3 },
+  { class: 'my-2 text-xl font-semibold no-underline', tag: tags.heading4 },
+  { class: 'my-1 text-lg font-semibold no-underline', tag: tags.heading5 },
+  { class: 'text-base font-semibold no-underline', tag: tags.heading6 },
+]);
+
+const headingsSyntaxHighlighting = syntaxHighlighting(headingsHighlightStyle);
+
+export default [headingsPlugin, headingsSyntaxHighlighting];
