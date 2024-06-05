@@ -1,10 +1,10 @@
 {
-  "name": "@nkzw/vite-ts-react-tailwind",
+  "name": "collabify",
   "version": "0.0.1",
-  "author": "Christoph Nakazawa <christoph.pojer@gmail.com>",
+  "author": "Aaron Kirkbride <hi@aaronkirkbride.com>",
   "repository": {
     "type": "git",
-    "url": "git://github.com/cpojer/vite-ts-react-tailwind.git"
+    "url": "git://github.com/aaron7/collabify.git"
   },
   "type": "module",
   "engines": {
