@@ -1,6 +1,7 @@
 import React from 'react';
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
+import { Prec } from '@codemirror/state';
 import { EditorView, ViewUpdate } from '@codemirror/view';
 import CodeMirror, { EditorView as RCEditorView } from '@uiw/react-codemirror';
 import { WebrtcProvider } from 'y-webrtc';
@@ -9,6 +10,7 @@ import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 
 import createCollabPlugin from './extensions/collab/collab';
 import fenchedCodePlugin from './extensions/fenced-code/decoration';
+import markdownCommands from './extensions/markdown/commands';
 import markdownHeadings from './extensions/markdown/headings';
 import { getTheme } from './extensions/theme/theme';
 
@@ -48,6 +50,7 @@ const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
             getTheme(theme === 'system' ? systemTheme : theme),
             markdown({ base: markdownLanguage, codeLanguages: languages }),
             markdownHeadings,
+            Prec.high(markdownCommands),
             RCEditorView.lineWrapping,
             ...(collabPlugin ? [collabPlugin] : []),
             fenchedCodePlugin,
