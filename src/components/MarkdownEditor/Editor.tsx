@@ -25,6 +25,7 @@ type EditorProps = {
 const baseTheme = EditorView.baseTheme({
   '&.cm-editor': {
     backgroundColor: 'hsl(var(--background))',
+    color: 'hsl(var(--text))',
   },
 });
 
