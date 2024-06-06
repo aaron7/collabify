@@ -37,32 +37,28 @@ const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
     : 'light';
 
   return (
-    <>
-      <div className="mx-auto text-base lg:w-2/3">
-        <CodeMirror
-          basicSetup={{
-            foldGutter: false,
-            highlightActiveLine: true,
-            highlightSelectionMatches: false,
-            lineNumbers: false,
-          }}
-          extensions={[
-            baseTheme,
-            getTheme(theme === 'system' ? systemTheme : theme),
-            markdown({ base: markdownLanguage, codeLanguages: languages }),
-            markdownHeadings,
-            Prec.high(markdownCommands),
-            RCEditorView.lineWrapping,
-            ...(collabPlugin ? [collabPlugin] : []),
-            fenchedCodePlugin,
-          ]}
-          height="100%"
-          onChange={onChange}
-          theme="none"
-          value={value}
-        />
-      </div>
-    </>
+    <CodeMirror
+      basicSetup={{
+        foldGutter: false,
+        highlightActiveLine: true,
+        highlightSelectionMatches: false,
+        lineNumbers: false,
+      }}
+      extensions={[
+        baseTheme,
+        getTheme(theme === 'system' ? systemTheme : theme),
+        markdown({ base: markdownLanguage, codeLanguages: languages }),
+        markdownHeadings,
+        Prec.high(markdownCommands),
+        RCEditorView.lineWrapping,
+        ...(collabPlugin ? [collabPlugin] : []),
+        fenchedCodePlugin,
+      ]}
+      height="100%"
+      onChange={onChange}
+      theme="none"
+      value={value}
+    />
   );
 };
 

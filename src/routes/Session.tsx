@@ -151,7 +151,7 @@ const Session = () => {
   }
 
   return (
-    <div>
+    <div className="flex h-full flex-col">
       <StatusBar
         copyMarkdownToClipboard={copyMarkdownToClipboard}
         isHost={isHost}
@@ -159,11 +159,15 @@ const Session = () => {
         session={session}
       />
       <Separator />
-      <Editor
-        onChange={onEditorChange}
-        value={value}
-        webrtcProvider={webrtcProvider}
-      />
+      <div className="flex-grow overflow-y-auto">
+        <div className="mx-auto h-full cursor-text lg:w-2/3">
+          <Editor
+            onChange={onEditorChange}
+            value={value}
+            webrtcProvider={webrtcProvider}
+          />
+        </div>
+      </div>
     </div>
   );
 };
