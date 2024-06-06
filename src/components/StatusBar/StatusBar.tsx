@@ -63,11 +63,11 @@ const StatusBar = ({
 
         <Button onClick={onCopyInviteUrlClick} variant="outline">
           {copiedJoinUrlToClipboard ? (
-            <Check className="mr-2 h-4 w-4 text-success" />
+            <Check className="h-4 w-4 text-success" />
           ) : (
-            <ClipboardCopy className="mr-2 h-4 w-4" />
+            <ClipboardCopy className="h-4 w-4" />
           )}
-          Copy invite URL
+          <span className="ml-2 hidden sm:block">Copy invite URL</span>
         </Button>
 
         <Button onClick={onDownloadMarkdown} size="icon" variant="ghost">
