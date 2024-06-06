@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Check, ClipboardCopy, Download } from 'lucide-react';
+import { Check, ClipboardCopy, Download, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import ThemeButton from '@/components/ThemeButton/ThemeButton';
@@ -65,7 +65,10 @@ const StatusBar = ({
           {copiedJoinUrlToClipboard ? (
             <Check className="h-4 w-4 text-success" />
           ) : (
-            <ClipboardCopy className="h-4 w-4" />
+            <>
+              <ClipboardCopy className="hidden h-4 w-4 sm:block" />
+              <LinkIcon className="h-4 w-4 sm:hidden" />
+            </>
           )}
           <span className="ml-2 hidden sm:block">Copy invite URL</span>
         </Button>
