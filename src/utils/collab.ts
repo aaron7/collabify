@@ -1,4 +1,5 @@
 import { uint32 } from 'lib0/random';
+import { IndexeddbPersistence } from 'y-indexeddb';
 import { WebrtcProvider } from 'y-webrtc';
 import { Doc } from 'yjs';
 
@@ -40,15 +41,16 @@ export const usercolors = [
 type CreateWebrtcProviderProps = {
   isHost: boolean;
   session: Session;
+  ydoc: Doc;
 };
 
 export const createWebrtcProvider = ({
   isHost,
   session,
+  ydoc,
 }: CreateWebrtcProviderProps) => {
   const roomId = `${ROOM_ID_PREFIX}${session.roomId}`;
 
-  const ydoc = new Doc();
   const signalingServerUrl = import.meta.env.VITE_WEBRTC_SIGNALING_SERVER_URL;
   const iceServersJson = import.meta.env.VITE_WEBRTC_ICE_SERVERS_JSON;
   const webrtcProvider = new WebrtcProvider(roomId, ydoc, {
@@ -69,6 +71,19 @@ export const createWebrtcProvider = ({
   });
 
   return webrtcProvider;
+};
+
+type CreateIndexedDbPersistenceProps = {
+  session: Session;
+  ydoc: Doc;
+};
+
+export const createIndexedDbPersistence = ({
+  session,
+  ydoc,
+}: CreateIndexedDbPersistenceProps) => {
+  const indexedDbKey = `${ROOM_ID_PREFIX}${session.roomId}`;
+  return new IndexeddbPersistence(indexedDbKey, ydoc);
 };
 
 export function setDocMapAndWaitForSync<T>(

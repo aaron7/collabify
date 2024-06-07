@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { IndexeddbPersistence } from 'y-indexeddb';
 import { type WebrtcProvider } from 'y-webrtc';
+import { Doc } from 'yjs';
 
 import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
@@ -10,6 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
 import {
+  createIndexedDbPersistence,
   createWebrtcProvider,
   findHostId,
   setDocMapAndWaitForSync,
@@ -40,9 +43,15 @@ const Session = () => {
 
   // Always setup a new webrtcProvider when the session changes
   useEffect(() => {
+    const ydoc = new Doc();
     const newWebrtcProvider = createWebrtcProvider({
       isHost,
       session,
+      ydoc,
+    });
+    const indexedDbProvider = createIndexedDbPersistence({ session, ydoc });
+    indexedDbProvider.on('synced', (event: IndexeddbPersistence) => {
+      setValue(event.doc.getText('content').toString());
     });
     setWebrtcProvider(newWebrtcProvider);
     setAwarenessStates(new Map(newWebrtcProvider.awareness.getStates()));
