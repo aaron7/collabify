@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
 import { Prec } from '@codemirror/state';
@@ -30,7 +30,10 @@ const baseTheme = EditorView.baseTheme({
 });
 
 const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
-  const collabPlugin = createCollabPlugin({ webrtcProvider });
+  const collabPlugin = useMemo(
+    () => createCollabPlugin({ webrtcProvider }),
+    [webrtcProvider],
+  );
   const { theme } = useTheme();
   const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
