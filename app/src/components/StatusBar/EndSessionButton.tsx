@@ -22,7 +22,7 @@ export function EndSessionButton({ onEndSession }: EndSessionButtonProps) {
     <AlertDialog>
       <AlertDialogTrigger asChild>
         <Button variant="outline">
-          <RefreshCwOff className="h-4 w-4 text-destructive" />
+          <RefreshCwOff className="text-destructive h-4 w-4" />
           <span className="ml-2 hidden sm:block">End session</span>
         </Button>
       </AlertDialogTrigger>

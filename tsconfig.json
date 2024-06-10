@@ -20,7 +20,7 @@
     "types": ["vite/client"],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./app/src/*"]
     }
   },
   "exclude": ["node_modules"],
