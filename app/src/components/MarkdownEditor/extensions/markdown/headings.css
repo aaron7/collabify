@@ -1,4 +1,10 @@
-/* Hide processing instructions when line is not active */
+/*
+Hide processing instructions when line is not active. Use width and height = 0 because
+`display: none` removes the characters from the editor which can affect selection.
+*/
 :not(.cm-activeLine) > .md-header-processing-instruction {
-  display: none;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
 }
