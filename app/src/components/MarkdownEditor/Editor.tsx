@@ -21,7 +21,7 @@ import './Editor.css';
 
 type EditorProps = {
   onChange: (value: string, viewUpdate: ViewUpdate) => void;
-  ref: React.RefObject<ReactCodeMirrorRef>;
+  refs: React.RefObject<ReactCodeMirrorRef>;
   value: string;
   webrtcProvider: WebrtcProvider;
 };
@@ -33,7 +33,7 @@ const baseTheme = EditorView.baseTheme({
   },
 });
 
-const Editor = ({ onChange, ref, value, webrtcProvider }: EditorProps) => {
+const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
   const collabPlugin = useMemo(
     () => createCollabPlugin({ webrtcProvider }),
     [webrtcProvider],
@@ -63,7 +63,7 @@ const Editor = ({ onChange, ref, value, webrtcProvider }: EditorProps) => {
       ]}
       height="100%"
       onChange={onChange}
-      ref={ref}
+      ref={refs}
       theme="none"
       value={value}
     />

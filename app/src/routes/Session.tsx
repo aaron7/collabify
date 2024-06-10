@@ -42,7 +42,7 @@ const Session = () => {
   const [peers, setPeers] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
 
-  const editorRef = React.useRef<ReactCodeMirrorRef>({});
+  const editorRefs = React.useRef<ReactCodeMirrorRef>({});
 
   // Always setup a new webrtcProvider when the session changes
   useEffect(() => {
@@ -168,7 +168,7 @@ const Session = () => {
     e: React.MouseEvent<HTMLDivElement>,
   ) => {
     if (e.target === e.currentTarget) {
-      editorRef?.current?.view?.focus();
+      editorRefs?.current?.view?.focus();
     }
   };
 
@@ -188,7 +188,7 @@ const Session = () => {
         >
           <Editor
             onChange={onEditorChange}
-            ref={editorRef}
+            refs={editorRefs}
             value={value}
             webrtcProvider={webrtcProvider}
           />
