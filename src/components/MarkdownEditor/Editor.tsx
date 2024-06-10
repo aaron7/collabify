@@ -3,7 +3,10 @@ import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
 import { Prec } from '@codemirror/state';
 import { EditorView, ViewUpdate } from '@codemirror/view';
-import CodeMirror, { EditorView as RCEditorView } from '@uiw/react-codemirror';
+import CodeMirror, {
+  EditorView as RCEditorView,
+  ReactCodeMirrorRef,
+} from '@uiw/react-codemirror';
 import { WebrtcProvider } from 'y-webrtc';
 
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
@@ -18,6 +21,7 @@ import './Editor.css';
 
 type EditorProps = {
   onChange: (value: string, viewUpdate: ViewUpdate) => void;
+  ref: React.RefObject<ReactCodeMirrorRef>;
   value: string;
   webrtcProvider: WebrtcProvider;
 };
@@ -29,7 +33,7 @@ const baseTheme = EditorView.baseTheme({
   },
 });
 
-const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
+const Editor = ({ onChange, ref, value, webrtcProvider }: EditorProps) => {
   const collabPlugin = useMemo(
     () => createCollabPlugin({ webrtcProvider }),
     [webrtcProvider],
@@ -59,6 +63,7 @@ const Editor = ({ onChange, value, webrtcProvider }: EditorProps) => {
       ]}
       height="100%"
       onChange={onChange}
+      ref={ref}
       theme="none"
       value={value}
     />

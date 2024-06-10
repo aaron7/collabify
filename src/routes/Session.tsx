@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IndexeddbPersistence } from 'y-indexeddb';
 import { type WebrtcProvider } from 'y-webrtc';
@@ -40,6 +41,8 @@ const Session = () => {
   const [isConnected, setIsConnected] = useState(false);
   const [peers, setPeers] = useState<string[]>([]);
   const [value, setValue] = useState<string>('');
+
+  const editorRef = React.useRef<ReactCodeMirrorRef>({});
 
   // Always setup a new webrtcProvider when the session changes
   useEffect(() => {
@@ -159,6 +162,16 @@ const Session = () => {
     );
   }
 
+  // Focus the editor when the user clicks the empty space when the editor
+  // doesn't have enough lines to fill the screen.
+  const onEmptySpaceBehindEditorClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+  ) => {
+    if (e.target === e.currentTarget) {
+      editorRef?.current?.view?.focus();
+    }
+  };
+
   return (
     <div className="flex h-full flex-col">
       <StatusBar
@@ -169,9 +182,13 @@ const Session = () => {
       />
       <Separator />
       <div className="flex-grow overflow-y-auto">
-        <div className="mx-auto h-full cursor-text lg:w-2/3">
+        <div
+          className="mx-auto h-full cursor-text lg:w-2/3"
+          onClick={onEmptySpaceBehindEditorClick}
+        >
           <Editor
             onChange={onEditorChange}
+            ref={editorRef}
             value={value}
             webrtcProvider={webrtcProvider}
           />
