@@ -7,19 +7,15 @@ type LoadingProps = {
   copy?: string;
   ctaCopy: string;
   onCtaClick: () => void;
-  showLoader: boolean;
+  showLoader?: boolean;
   title: string;
-};
-
-const defaultProps = {
-  showLoader: true,
 };
 
 const Loading = ({
   copy,
   ctaCopy,
   onCtaClick,
-  showLoader,
+  showLoader = true,
   title,
 }: LoadingProps) => {
   return (
@@ -38,7 +34,5 @@ const Loading = ({
     </div>
   );
 };
-
-Loading.defaultProps = defaultProps;
 
 export default Loading;
