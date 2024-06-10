@@ -58,6 +58,7 @@ const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
         markdownHeadings,
         Prec.high(markdownCommands),
         RCEditorView.lineWrapping,
+        RCEditorView.contentAttributes.of({ autocapitalize: 'on' }),
         ...(collabPlugin ? [collabPlugin] : []),
         fenchedCodePlugin,
       ]}
