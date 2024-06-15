@@ -1,82 +1,25 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { IndexeddbPersistence } from 'y-indexeddb';
-import { type WebrtcProvider } from 'y-webrtc';
-import { Doc } from 'yjs';
+import { useNavigate } from 'react-router-dom';
 
 import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
-import { useSettings } from '@/providers/SettingsProvider';
+import { useSession } from '@/hooks/session';
+import { useCollabProvider } from '@/hooks/webrtc';
 import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
-import {
-  createIndexedDbPersistence,
-  createWebrtcProvider,
-  findHostId,
-  setDocMapAndWaitForSync,
-  type AwarenessState,
-  type PeersEvent,
-  type StatusEvent,
-} from '@/utils/collab';
-import { getSessionFromUrlFragment } from '@/utils/session';
 
 const Session = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-
-  const session = useMemo(
-    () => getSessionFromUrlFragment(location.hash.slice(1)),
-    [location.hash],
-  );
-  const isHost = session.isHost;
-
-  const { settings } = useSettings();
-
-  const [webrtcProvider, setWebrtcProvider] = useState<WebrtcProvider | null>(
-    null,
-  );
-  const [awarenessStates, setAwarenessStates] = useState<AwarenessState>(
-    new Map(),
-  );
-
-  const [isConnected, setIsConnected] = useState(false);
-  const [peers, setPeers] = useState<string[]>([]);
-  const [value, setValue] = useState<string>('');
+  const session = useSession();
 
   const editorRefs = React.useRef<ReactCodeMirrorRef>({});
+  const [value, setValue] = useState<string>('');
 
-  // Always setup a new webrtcProvider when the session changes
-  useEffect(() => {
-    const ydoc = new Doc();
-    const newWebrtcProvider = createWebrtcProvider({
-      isHost,
-      session,
-      ydoc,
-    });
-    const indexedDbProvider = createIndexedDbPersistence({ session, ydoc });
-    indexedDbProvider.on('synced', (event: IndexeddbPersistence) => {
-      setValue(event.doc.getText('content').toString());
-    });
-    setWebrtcProvider(newWebrtcProvider);
-    setAwarenessStates(new Map(newWebrtcProvider.awareness.getStates()));
-    setValue(newWebrtcProvider.doc.getText('content').toString());
-
-    return () => {
-      if (newWebrtcProvider) {
-        newWebrtcProvider.disconnect();
-        newWebrtcProvider.destroy();
-      }
-    };
-  }, [session, isHost]);
-
-  useEffect(() => {
-    webrtcProvider?.awareness.setLocalStateField('user', {
-      name: settings.name,
-    });
-  }, [settings.name, webrtcProvider?.awareness]);
+  const { isActive, isConnected, isHostOnline, onEndSession, webrtcProvider } =
+    useCollabProvider({ session, setValue });
 
   const onEditorChange = React.useCallback((val: string) => {
     setValue(val);
@@ -85,86 +28,6 @@ const Session = () => {
   const copyMarkdownToClipboard = () => {
     copyToClipboard(value);
   };
-
-  // When the session ends, set status to 'ended' and navigate back to the home page
-  const onEndSession = () => {
-    if (!webrtcProvider) {
-      return;
-    }
-    setDocMapAndWaitForSync(webrtcProvider.doc, 'status', 'ended', true)
-      .then(() => {
-        navigate(routes.landing.path);
-      })
-      .catch((error) => {
-        // TODO: Handle error
-      });
-  };
-
-  // Handle webrtcProvider events
-  useEffect(() => {
-    const onStatus = (event: StatusEvent) => {
-      setIsConnected(event.connected);
-    };
-
-    const onPeers = (event: PeersEvent) => {
-      setPeers(event.webrtcPeers);
-    };
-
-    const onAwarenessUpdate = () => {
-      const awarenessStates = webrtcProvider?.awareness.getStates();
-      setAwarenessStates(new Map(awarenessStates));
-    };
-
-    webrtcProvider?.on('status', onStatus);
-    webrtcProvider?.on('peers', onPeers);
-    webrtcProvider?.awareness.on('update', onAwarenessUpdate);
-
-    return () => {
-      webrtcProvider?.off('status', onStatus);
-      webrtcProvider?.off('peers', onPeers);
-      webrtcProvider?.awareness.off('update', onAwarenessUpdate);
-    };
-  }, [setAwarenessStates, webrtcProvider, webrtcProvider?.awareness]);
-
-  // Initial loading state
-  if (!webrtcProvider || !isConnected || (!isHost && !peers.length)) {
-    return (
-      <Loading
-        copy="If you cannot connect, either the host is offline or the secret URL is incorrect."
-        ctaCopy="Stop connecting"
-        onCtaClick={() => navigate(routes.landing.path)}
-        title="Connecting to your host"
-      />
-    );
-  }
-
-  // Session has been explicitly ended by the host
-  if (
-    isConnected &&
-    webrtcProvider &&
-    webrtcProvider?.doc.getMap('status').get('ended')
-  ) {
-    return (
-      <Loading
-        ctaCopy="Exit session"
-        onCtaClick={() => navigate(routes.landing.path)}
-        showLoader={false}
-        title="The session has ended"
-      />
-    );
-  }
-
-  // The host has gone offline
-  const hostId = findHostId(awarenessStates);
-  if (hostId && !isHost && !awarenessStates.get(hostId)) {
-    return (
-      <Loading
-        ctaCopy="Exit session"
-        onCtaClick={() => navigate(routes.landing.path)}
-        title="Your host has gone offline"
-      />
-    );
-  }
 
   // Focus the editor when the user clicks the empty space when the editor
   // doesn't have enough lines to fill the screen.
@@ -176,11 +39,42 @@ const Session = () => {
     }
   };
 
+  if (!webrtcProvider || !isConnected) {
+    return (
+      <Loading
+        copy="If you cannot connect, either the host is offline or the secret URL is incorrect."
+        ctaCopy="Stop connecting"
+        onCtaClick={() => navigate(routes.landing.path)}
+        title="Connecting to your host"
+      />
+    );
+  }
+
+  if (!isActive) {
+    return (
+      <Loading
+        ctaCopy="Exit session"
+        onCtaClick={() => navigate(routes.landing.path)}
+        showLoader={false}
+        title="The session has ended"
+      />
+    );
+  }
+
+  if (!isHostOnline) {
+    return (
+      <Loading
+        ctaCopy="Exit session"
+        onCtaClick={() => navigate(routes.landing.path)}
+        title="Your host has gone offline"
+      />
+    );
+  }
+
   return (
     <div className="flex h-full flex-col">
       <StatusBar
         copyMarkdownToClipboard={copyMarkdownToClipboard}
-        isHost={isHost}
         onEndSession={onEndSession}
         session={session}
       />

@@ -15,14 +15,12 @@ const COPIED_TO_CLIPBOARD_TIMEOUT = 3000;
 
 type StatusBarProps = {
   copyMarkdownToClipboard: () => void;
-  isHost: boolean;
   onEndSession: () => void;
   session: Session;
 };
 
 const StatusBar = ({
   copyMarkdownToClipboard,
-  isHost,
   onEndSession,
   session,
 }: StatusBarProps) => {
@@ -59,7 +57,7 @@ const StatusBar = ({
         </Link>
       </div>
       <div className="flex space-x-2">
-        {isHost && <EndSessionButton onEndSession={onEndSession} />}
+        {session.isHost && <EndSessionButton onEndSession={onEndSession} />}
 
         <Button onClick={onCopyInviteUrlClick} variant="outline">
           {copiedJoinUrlToClipboard ? (
