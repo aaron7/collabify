@@ -86,30 +86,6 @@ export const createIndexedDbPersistence = ({
   return new IndexeddbPersistence(indexedDbKey, ydoc);
 };
 
-export function setDocMapAndWaitForSync<T>(
-  doc: Doc,
-  mapName: string,
-  key: string,
-  value: T,
-): Promise<void> {
-  return new Promise((resolve, reject) => {
-    const updateHandler = () => {
-      doc.off('update', updateHandler);
-      resolve();
-    };
-
-    doc.on('update', updateHandler);
-    doc.getMap(mapName).set(key, value);
-
-    setTimeout(() => {
-      doc.off('update', updateHandler);
-      reject(new Error('Sync timeout'));
-    }, 5000);
-
-    updateHandler();
-  });
-}
-
 export function findHostId(awarenessState: AwarenessState) {
   for (const [key, value] of awarenessState.entries()) {
     if (value.user.isHost) {

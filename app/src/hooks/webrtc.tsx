@@ -1,16 +1,13 @@
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { IndexeddbPersistence } from 'y-indexeddb';
 import { type WebrtcProvider } from 'y-webrtc';
 import { Doc } from 'yjs';
 
 import { useSettings } from '@/providers/SettingsProvider';
-import routes from '@/routes';
 import {
   createIndexedDbPersistence,
   createWebrtcProvider,
   findHostId,
-  setDocMapAndWaitForSync,
   type AwarenessState,
   type StatusEvent,
 } from '@/utils/collab';
@@ -94,14 +91,13 @@ export const useCollabProvider = ({
 }: UseCollabProviderProps) => {
   const isHost = session.isHost;
 
-  const navigate = useNavigate();
-
   const { settings } = useSettings();
 
   const { awarenessStates, isConnected, webrtcProvider } = useWebrtcProvider({
     session,
     setValue,
   });
+  const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
     webrtcProvider?.awareness.setLocalStateField('user', {
@@ -115,18 +111,24 @@ export const useCollabProvider = ({
     if (!webrtcProvider) {
       return;
     }
-    setDocMapAndWaitForSync(webrtcProvider.doc, 'status', 'ended', true)
-      .then(() => {
-        navigate(routes.landing.path);
-      })
-      .catch((error) => {
-        // TODO: Handle error
-      });
+    webrtcProvider.doc.getMap('status').set('ended', true);
   };
+
+  useEffect(() => {
+    if (!webrtcProvider) {
+      return;
+    }
+
+    const statusMap = webrtcProvider.doc.getMap('status');
+    statusMap.observe(() => {
+      if (statusMap.get('ended')) {
+        setIsActive(false);
+      }
+    });
+  }, [webrtcProvider, setIsActive]);
 
   const hostId = findHostId(awarenessStates);
   const isHostOnline = isHost || (hostId && awarenessStates.get(hostId));
-  const isActive = webrtcProvider?.doc.getMap('status').get('ended') || true;
 
   return {
     awarenessStates,
