@@ -7,9 +7,9 @@ import { Doc } from 'yjs';
 
 import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
-import { useSettings } from '@/components/SettingsProvider/SettingsProvider';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
+import { useSettings } from '@/providers/SettingsProvider';
 import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
 import {

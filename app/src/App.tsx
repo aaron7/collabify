@@ -1,8 +1,8 @@
 import React from 'react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
-import { SettingsProvider } from '@/components/SettingsProvider/SettingsProvider';
 import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
+import { SettingsProvider } from '@/providers/SettingsProvider';
 import routes from '@/routes';
 
 import './App.css';

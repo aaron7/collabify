@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { Settings as SettingsIcon } from 'lucide-react';
 
-import { useSettings } from '@/components/SettingsProvider/SettingsProvider';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -15,6 +14,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { useSettings } from '@/providers/SettingsProvider';
 
 export function SettingsButton() {
   const { setSettings, settings } = useSettings();
