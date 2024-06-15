@@ -26,6 +26,7 @@ const useWebrtcProvider = ({ session, setValue }: UseWebrtcProviderProps) => {
     new Map(),
   );
   const [isConnected, setIsConnected] = useState(false);
+  const [hasSynced, setHasSynced] = useState(false);
 
   // Create a new webrtcProvider when the session changes
   useEffect(() => {
@@ -59,22 +60,37 @@ const useWebrtcProvider = ({ session, setValue }: UseWebrtcProviderProps) => {
       setIsConnected(event.connected);
     };
 
+    const onSynced = () => {
+      if (!hasSynced) {
+        setHasSynced(true);
+      }
+    };
+
     const onAwarenessUpdate = () => {
       const awarenessStates = webrtcProvider?.awareness.getStates();
       setAwarenessStates(new Map(awarenessStates));
     };
 
     webrtcProvider?.on('status', onStatus);
+    webrtcProvider?.on('synced', onSynced);
     webrtcProvider?.awareness.on('update', onAwarenessUpdate);
 
     return () => {
       webrtcProvider?.off('status', onStatus);
+      webrtcProvider?.off('synced', onSynced);
       webrtcProvider?.awareness.off('update', onAwarenessUpdate);
     };
-  }, [setAwarenessStates, webrtcProvider, webrtcProvider?.awareness]);
+  }, [
+    hasSynced,
+    setHasSynced,
+    setAwarenessStates,
+    webrtcProvider,
+    webrtcProvider?.awareness,
+  ]);
 
   return {
     awarenessStates,
+    hasSynced,
     isConnected,
     webrtcProvider,
   };
@@ -93,10 +109,11 @@ export const useCollabProvider = ({
 
   const { settings } = useSettings();
 
-  const { awarenessStates, isConnected, webrtcProvider } = useWebrtcProvider({
-    session,
-    setValue,
-  });
+  const { awarenessStates, hasSynced, isConnected, webrtcProvider } =
+    useWebrtcProvider({
+      session,
+      setValue,
+    });
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
@@ -132,6 +149,7 @@ export const useCollabProvider = ({
 
   return {
     awarenessStates,
+    hasSynced,
     isActive,
     isConnected,
     isHostOnline,

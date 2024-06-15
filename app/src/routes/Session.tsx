@@ -17,9 +17,16 @@ const Session = () => {
 
   const editorRefs = React.useRef<ReactCodeMirrorRef>({});
   const [value, setValue] = useState<string>('');
+  const [hasSeenEditor, setHasSeenEditor] = useState(false);
 
-  const { isActive, isConnected, isHostOnline, onEndSession, webrtcProvider } =
-    useCollabProvider({ session, setValue });
+  const {
+    hasSynced,
+    isActive,
+    isConnected,
+    isHostOnline,
+    onEndSession,
+    webrtcProvider,
+  } = useCollabProvider({ session, setValue });
 
   const onEditorChange = React.useCallback((val: string) => {
     setValue(val);
@@ -39,13 +46,18 @@ const Session = () => {
     }
   };
 
-  if (!webrtcProvider || !isConnected) {
+  if (
+    !webrtcProvider ||
+    !isConnected ||
+    (!session.isHost && !hasSynced) ||
+    (!hasSeenEditor && !isHostOnline)
+  ) {
     return (
       <Loading
         copy="If you cannot connect, either the host is offline or the secret URL is incorrect."
         ctaCopy="Stop connecting"
         onCtaClick={() => navigate(routes.landing.path)}
-        title="Connecting to your host"
+        title="Connecting"
       />
     );
   }
@@ -69,6 +81,10 @@ const Session = () => {
         title="Your host has gone offline"
       />
     );
+  }
+
+  if (!hasSeenEditor) {
+    setHasSeenEditor(true);
   }
 
   return (
