@@ -45,7 +45,9 @@
     "yjs": "^13.6.15"
   },
   "devDependencies": {
+    "@playwright/test": "^1.44.1",
     "@types/jsdom": "^21.1.7",
+    "@types/node": "^20.11.24",
     "@types/react": "^18.2.61",
     "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
@@ -58,7 +60,8 @@
   "scripts": {
     "build": "vite build",
     "dev": "vite dev",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test-e2e": "playwright test"
   },
   "browserslist": [
     ">0.2%",
