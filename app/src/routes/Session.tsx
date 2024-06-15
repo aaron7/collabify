@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IndexeddbPersistence } from 'y-indexeddb';
@@ -21,13 +21,17 @@ import {
   type PeersEvent,
   type StatusEvent,
 } from '@/utils/collab';
+import { getSessionFromUrlFragment } from '@/utils/session';
 
 const Session = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const session = location.state?.session;
-  const isHost = location.state?.isHost;
+  const session = useMemo(
+    () => getSessionFromUrlFragment(location.hash.slice(1)),
+    [location.hash],
+  );
+  const isHost = session.isHost;
 
   const { settings } = useSettings();
 

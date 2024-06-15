@@ -3,8 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import routes from '@/routes';
 import {
-  decodeJoinUrlFragment,
-  encodeSessionWithoutSecret,
+  buildSessionUrlFragment,
+  getSessionFromJoinUrlFragment,
 } from '@/utils/session';
 
 const Join = () => {
@@ -13,12 +13,11 @@ const Join = () => {
 
   useEffect(() => {
     if (location.hash) {
-      const session = decodeJoinUrlFragment(location.hash);
-      const urlFragmentWithoutSecret = encodeSessionWithoutSecret(session);
+      const session = getSessionFromJoinUrlFragment(location.hash.slice(1));
+      const sessionUrlFragment = buildSessionUrlFragment(session);
 
-      navigate(`${routes.session.path}#${urlFragmentWithoutSecret}`, {
+      navigate(`${routes.session.path}#${sessionUrlFragment}`, {
         replace: true,
-        state: { joining: true, session },
       });
     } else {
       navigate('/error', { replace: true }); // TODO: handle errors

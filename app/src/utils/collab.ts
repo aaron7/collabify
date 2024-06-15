@@ -49,7 +49,7 @@ export const createWebrtcProvider = ({
   session,
   ydoc,
 }: CreateWebrtcProviderProps) => {
-  const roomId = `${ROOM_ID_PREFIX}${session.roomId}`;
+  const roomId = `${ROOM_ID_PREFIX}${session.id}`;
 
   const signalingServerUrl = import.meta.env.VITE_WEBRTC_SIGNALING_SERVER_URL;
   const iceServersJson = import.meta.env.VITE_WEBRTC_ICE_SERVERS_JSON;
@@ -82,7 +82,7 @@ export const createIndexedDbPersistence = ({
   session,
   ydoc,
 }: CreateIndexedDbPersistenceProps) => {
-  const indexedDbKey = `${ROOM_ID_PREFIX}${session.roomId}`;
+  const indexedDbKey = `${ROOM_ID_PREFIX}${session.id}`;
   return new IndexeddbPersistence(indexedDbKey, ydoc);
 };
 
