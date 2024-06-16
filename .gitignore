@@ -6,3 +6,4 @@ dist/
 tsconfig.tsbuildinfo
 .DS_Store
 .env
+generated/

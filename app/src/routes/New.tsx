@@ -1,25 +1,48 @@
 import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+import Loading from '@/components/Loading/Loading';
 import routes from '@/routes';
+import {
+  getApiSettingsFromUrlFragment,
+  loadInitialMarkdown,
+  startSessionCallback,
+} from '@/utils/api';
 import { buildSessionUrlFragment, createNewSession } from '@/utils/session';
 
 const New = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
-    const session = createNewSession({});
+    const apiSettings = getApiSettingsFromUrlFragment(location.hash.slice(1));
+    const session = createNewSession({
+      apiSettings: apiSettings || undefined,
+    });
     const sessionUrlFragment = buildSessionUrlFragment(session);
 
-    // Store the session in the location state for now. We'll want to store
-    // isHost in local storage eventually, so hosts joining via an invite link can be
-    // recognized.
-    navigate(`${routes.session.path}#${sessionUrlFragment}`, {
-      replace: true,
-    });
-  }, [navigate]);
+    if (apiSettings) {
+      loadInitialMarkdown(session).then((data) => {
+        startSessionCallback(session);
+        navigate(`${routes.session.path}#${sessionUrlFragment}`, {
+          replace: true,
+          state: { initialMarkdown: data },
+        });
+      });
+    } else {
+      navigate(`${routes.session.path}#${sessionUrlFragment}`, {
+        replace: true,
+      });
+    }
+  }, [navigate, location.hash]);
 
-  return null;
+  return (
+    <Loading
+      ctaCopy="Stop loading"
+      onCtaClick={() => navigate(routes.landing.path)}
+      title="Loading your markdown"
+    />
+  );
 };
 
 export default New;

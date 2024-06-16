@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
@@ -9,24 +9,24 @@ import { Separator } from '@/components/ui/separator';
 import { useSession } from '@/hooks/session';
 import { useCollabProvider } from '@/hooks/webrtc';
 import routes from '@/routes';
+import { saveMarkdown, stopSessionCallback } from '@/utils/api';
 import { copyToClipboard } from '@/utils/clipboard';
 
 const Session = () => {
   const navigate = useNavigate();
   const session = useSession();
+  const location = useLocation();
 
   const editorRefs = React.useRef<ReactCodeMirrorRef>({});
   const [value, setValue] = useState<string>('');
   const [hasSeenEditor, setHasSeenEditor] = useState(false);
 
-  const {
-    hasSynced,
-    isActive,
-    isConnected,
-    isHostOnline,
-    onEndSession,
-    webrtcProvider,
-  } = useCollabProvider({ session, setValue });
+  const { isActive, isConnected, isHostOnline, onEndSession, webrtcProvider } =
+    useCollabProvider({
+      initialMarkdown: location.state?.initialMarkdown || '',
+      session,
+      setValue,
+    });
 
   const onEditorChange = React.useCallback((val: string) => {
     setValue(val);
@@ -34,6 +34,7 @@ const Session = () => {
 
   const copyMarkdownToClipboard = () => {
     copyToClipboard(value);
+    saveMarkdown(session, value);
   };
 
   // Focus the editor when the user clicks the empty space when the editor
@@ -46,12 +47,14 @@ const Session = () => {
     }
   };
 
-  if (
-    !webrtcProvider ||
-    !isConnected ||
-    (!session.isHost && !hasSynced) ||
-    (!hasSeenEditor && !isHostOnline)
-  ) {
+  const onEndSessionWrapper = () => {
+    saveMarkdown(session, value).then(() => {
+      onEndSession();
+      stopSessionCallback(session);
+    });
+  };
+
+  if (!webrtcProvider || !isConnected || (!hasSeenEditor && !isHostOnline)) {
     return (
       <Loading
         copy="If you cannot connect, either the host is offline or the secret URL is incorrect."
@@ -91,7 +94,7 @@ const Session = () => {
     <div className="flex h-full flex-col">
       <StatusBar
         copyMarkdownToClipboard={copyMarkdownToClipboard}
-        onEndSession={onEndSession}
+        onEndSession={onEndSessionWrapper}
         session={session}
       />
       <Separator />

@@ -14,19 +14,27 @@ import {
 import { Session } from '@/utils/session';
 
 type UseWebrtcProviderProps = {
+  initialMarkdown: string;
   session: Session;
   setValue: (value: string) => void;
 };
 
-const useWebrtcProvider = ({ session, setValue }: UseWebrtcProviderProps) => {
+const useWebrtcProvider = ({
+  initialMarkdown,
+  session,
+  setValue,
+}: UseWebrtcProviderProps) => {
   const [webrtcProvider, setWebrtcProvider] = useState<WebrtcProvider | null>(
     null,
   );
   const [awarenessStates, setAwarenessStates] = useState<AwarenessState>(
     new Map(),
   );
-  const [isConnected, setIsConnected] = useState(false);
-  const [hasSynced, setHasSynced] = useState(false);
+  const [isWebrtcConnected, setIsWebrtcConnected] = useState(false);
+  const [hasWebrtcSynced, setHasWebrtcSynced] = useState(session.isHost);
+  const [hasIndexedDbSynced, setHasIndexedDbSynced] = useState(false);
+  const [hasInitialMarkdownLoaded, setHasInitialMarkdownLoaded] =
+    useState(false);
 
   // Create a new webrtcProvider when the session changes
   useEffect(() => {
@@ -40,6 +48,7 @@ const useWebrtcProvider = ({ session, setValue }: UseWebrtcProviderProps) => {
     const indexedDbProvider = createIndexedDbPersistence({ session, ydoc });
     indexedDbProvider.on('synced', (event: IndexeddbPersistence) => {
       setValue(event.doc.getText('content').toString());
+      setHasIndexedDbSynced(true);
     });
 
     setWebrtcProvider(newWebrtcProvider);
@@ -57,12 +66,15 @@ const useWebrtcProvider = ({ session, setValue }: UseWebrtcProviderProps) => {
   // Handle webrtcProvider events
   useEffect(() => {
     const onStatus = (event: StatusEvent) => {
-      setIsConnected(event.connected);
+      setIsWebrtcConnected(event.connected);
     };
 
     const onSynced = () => {
-      if (!hasSynced) {
-        setHasSynced(true);
+      if (!hasWebrtcSynced) {
+        if (webrtcProvider) {
+          setValue(webrtcProvider?.doc.getText('content').toString());
+        }
+        setHasWebrtcSynced(true);
       }
     };
 
@@ -81,27 +93,63 @@ const useWebrtcProvider = ({ session, setValue }: UseWebrtcProviderProps) => {
       webrtcProvider?.awareness.off('update', onAwarenessUpdate);
     };
   }, [
-    hasSynced,
-    setHasSynced,
+    hasWebrtcSynced,
+    setHasWebrtcSynced,
     setAwarenessStates,
     webrtcProvider,
     webrtcProvider?.awareness,
+    setValue,
+  ]);
+
+  const hasSyncedAllProviders = hasWebrtcSynced && hasIndexedDbSynced;
+
+  // Set intial markdown when the webrtcProvider is connected and has synced
+  useEffect(() => {
+    if (
+      isWebrtcConnected &&
+      hasSyncedAllProviders &&
+      webrtcProvider &&
+      !hasInitialMarkdownLoaded
+    ) {
+      if (initialMarkdown) {
+        const statusMap = webrtcProvider.doc.getMap('status');
+        if (!statusMap.get('loadedInitialMarkdown')) {
+          setValue(initialMarkdown);
+          webrtcProvider.doc
+            .getText('content')
+            .delete(0, webrtcProvider.doc.getText('content').length);
+          webrtcProvider.doc.getText('content').insert(0, initialMarkdown);
+          statusMap.set('loadedInitialMarkdown', true);
+        }
+      }
+      setHasInitialMarkdownLoaded(true);
+    }
+  }, [
+    isWebrtcConnected,
+    hasSyncedAllProviders,
+    hasInitialMarkdownLoaded,
+    setHasInitialMarkdownLoaded,
+    setValue,
+    webrtcProvider,
+    initialMarkdown,
   ]);
 
   return {
     awarenessStates,
-    hasSynced,
-    isConnected,
+    isConnected:
+      isWebrtcConnected && hasSyncedAllProviders && hasInitialMarkdownLoaded,
     webrtcProvider,
   };
 };
 
 type UseCollabProviderProps = {
+  initialMarkdown: string;
   session: Session;
   setValue: (value: string) => void;
 };
 
 export const useCollabProvider = ({
+  initialMarkdown,
   session,
   setValue,
 }: UseCollabProviderProps) => {
@@ -109,11 +157,11 @@ export const useCollabProvider = ({
 
   const { settings } = useSettings();
 
-  const { awarenessStates, hasSynced, isConnected, webrtcProvider } =
-    useWebrtcProvider({
-      session,
-      setValue,
-    });
+  const { awarenessStates, isConnected, webrtcProvider } = useWebrtcProvider({
+    initialMarkdown,
+    session,
+    setValue,
+  });
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
@@ -149,7 +197,6 @@ export const useCollabProvider = ({
 
   return {
     awarenessStates,
-    hasSynced,
     isActive,
     isConnected,
     isHostOnline,

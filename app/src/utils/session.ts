@@ -1,11 +1,12 @@
 import routes from '@/routes';
 
+import type { ApiSettings } from './api';
 import { generateSecureAlphanumericString } from './random';
 
 const SESSION_LOCAL_STORAGE_KEY_PREFIX = 'session.v1.';
 
 export type Session = {
-  apiUrl?: string;
+  apiSettings?: ApiSettings;
   createdAt: string;
   id: string;
   isHost: boolean;
@@ -28,21 +29,21 @@ function loadSession(id: string): Session | null {
 }
 
 type CreateAndSaveSessionProps = {
-  apiUrl?: string;
+  apiSettings?: ApiSettings;
   id?: string;
   isHost: boolean;
   secret?: string;
 };
 
 function createAndSaveSession({
-  apiUrl,
+  apiSettings,
   id,
   isHost,
   secret,
 }: CreateAndSaveSessionProps): Session {
   const now = new Date().toISOString();
   const session = {
-    apiUrl,
+    apiSettings,
     createdAt: now,
     id: id || generateSecureAlphanumericString(10),
     isHost,
@@ -54,11 +55,13 @@ function createAndSaveSession({
 }
 
 type CreateNewSessionProps = {
-  apiUrl?: string;
+  apiSettings?: ApiSettings;
 };
 
-export function createNewSession({ apiUrl }: CreateNewSessionProps): Session {
-  return createAndSaveSession({ apiUrl, isHost: true });
+export function createNewSession({
+  apiSettings,
+}: CreateNewSessionProps): Session {
+  return createAndSaveSession({ apiSettings, isHost: true });
 }
 
 export function buildSessionUrlFragment(session: Session): string {
@@ -117,4 +120,8 @@ export function buildJoinUrl(session: Session): string {
   }).toString();
 
   return `${window.location.origin}${routes.join.path}#${joinUrlFragment}`;
+}
+
+export function buildSessionUrl(session: Session): string {
+  return `${window.location.origin}${routes.session.path}#${buildSessionUrlFragment(session)}`;
 }
