@@ -4,6 +4,7 @@ Hide processing instructions when line is not active. Use width and height = 0 b
 */
 :not(.cm-activeLine) > .md-header-processing-instruction {
   display: inline-block;
+  position: absolute;
   width: 0;
   height: 0;
   overflow: hidden;
