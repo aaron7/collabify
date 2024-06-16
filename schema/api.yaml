@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: Collabify API
+  description: Get and update markdown files
+  version: '1.0.0'
+servers:
+  - url: /v1
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+
+security:
+  - bearerAuth: []
+
+paths:
+  /file/{fileId}:
+    get:
+      summary: Retrieve a Markdown file
+      operationId: getFile
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for a Markdown file
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            text/markdown:
+              schema:
+                type: string
+                format: binary
+                example:
+                  content: '# Markdown Content'
+        '404':
+          description: File not found
+
+    put:
+      summary: Update a markdown file
+      operationId: updateFile
+      parameters:
+        - name: fileId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Unique identifier for a Markdown file
+      requestBody:
+        required: true
+        content:
+          text/markdown:
+            schema:
+              type: string
+              format: binary
+      responses:
+        '200':
+          description: Updated the file successfully
+
+  /session:
+    post:
+      summary: Callback for session starts
+      operationId: postSession
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  example: 'https://collabify.it/session#id=1234'
+                joinUrl:
+                  type: string
+                  example: 'https://collabify.it/join#secret=12345678'
+      responses:
+        '200':
+          description: Acknowledged the new session
+        '400':
+          description: Invalid input
+
+  /stop:
+    post:
+      summary: Stop the server
+      operationId: stop
+      responses:
+        '202':
+          description: Accepted the request to stop
