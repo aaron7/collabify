@@ -1,0 +1,6 @@
+package: api
+output: collabify.gen.go
+generate:
+  models: true
+  chi-server: true
+  embedded-spec: true
