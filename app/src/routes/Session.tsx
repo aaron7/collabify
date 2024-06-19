@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import EndOfSession from '@/components/EndOfSession/EndOfSession';
 import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
 import StatusBar from '@/components/StatusBar/StatusBar';
@@ -10,7 +11,6 @@ import { useSession } from '@/hooks/session';
 import { useCollabProvider } from '@/hooks/webrtc';
 import routes from '@/routes';
 import { saveMarkdown, stopSessionCallback } from '@/utils/api';
-import { copyToClipboard } from '@/utils/clipboard';
 
 const Session = () => {
   const navigate = useNavigate();
@@ -31,11 +31,6 @@ const Session = () => {
   const onEditorChange = React.useCallback((val: string) => {
     setValue(val);
   }, []);
-
-  const copyMarkdownToClipboard = () => {
-    copyToClipboard(value);
-    saveMarkdown(session, value);
-  };
 
   // Focus the editor when the user clicks the empty space when the editor
   // doesn't have enough lines to fill the screen.
@@ -66,14 +61,7 @@ const Session = () => {
   }
 
   if (!isActive) {
-    return (
-      <Loading
-        ctaCopy="Exit session"
-        onCtaClick={() => navigate(routes.landing.path)}
-        showLoader={false}
-        title="The session has ended"
-      />
-    );
+    return <EndOfSession session={session} value={value} />;
   }
 
   if (!isHostOnline) {
@@ -93,9 +81,9 @@ const Session = () => {
   return (
     <div className="flex h-full flex-col">
       <StatusBar
-        copyMarkdownToClipboard={copyMarkdownToClipboard}
         onEndSession={onEndSessionWrapper}
         session={session}
+        value={value}
       />
       <Separator />
       <div className="flex-grow overflow-y-auto">

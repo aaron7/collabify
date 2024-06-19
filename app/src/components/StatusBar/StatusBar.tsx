@@ -1,9 +1,10 @@
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { Check, ClipboardCopy, Download, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import ThemeButton from '@/components/ThemeButton/ThemeButton';
 import { Button } from '@/components/ui/button';
+import { useActiveTimeout } from '@/hooks/timeout';
 import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
 import { buildJoinUrl, type Session } from '@/utils/session';
@@ -11,43 +12,22 @@ import { buildJoinUrl, type Session } from '@/utils/session';
 import { EndSessionButton } from './EndSessionButton';
 import { SettingsButton } from './SettingsButton';
 
-const COPIED_TO_CLIPBOARD_TIMEOUT = 3000;
-
 type StatusBarProps = {
-  copyMarkdownToClipboard: () => void;
   onEndSession: () => void;
   session: Session;
+  value: string;
 };
 
-const StatusBar = ({
-  copyMarkdownToClipboard,
-  onEndSession,
-  session,
-}: StatusBarProps) => {
-  const [copiedJoinUrlToClipboard, setCopiedJoinUrlToClipboard] =
-    useState(false);
-  const [copiedMarkdownToClipboard, setCopiedMarkdownToClipboard] =
-    useState(false);
-
+const StatusBar = ({ onEndSession, session, value }: StatusBarProps) => {
   const joinUrl = useMemo(() => buildJoinUrl(session), [session]);
 
-  const onCopyInviteUrlClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    copyToClipboard(joinUrl);
+  const [copyJoinUrlToClipboard, copiedJoinUrlToClipboard] = useActiveTimeout(
+    () => copyToClipboard(joinUrl),
+  );
 
-    setCopiedJoinUrlToClipboard(true);
-    setTimeout(() => {
-      setCopiedJoinUrlToClipboard(false);
-    }, COPIED_TO_CLIPBOARD_TIMEOUT);
-  };
-
-  const onDownloadMarkdown = () => {
-    copyMarkdownToClipboard();
-
-    setCopiedMarkdownToClipboard(true);
-    setTimeout(() => {
-      setCopiedMarkdownToClipboard(false);
-    }, COPIED_TO_CLIPBOARD_TIMEOUT);
-  };
+  const [copyMarkdownToClipboard, copiedMarkdownToClipboard] = useActiveTimeout(
+    () => copyToClipboard(value),
+  );
 
   return (
     <div className="background-prim flex justify-between p-1">
@@ -59,7 +39,7 @@ const StatusBar = ({
       <div className="flex space-x-2">
         {session.isHost && <EndSessionButton onEndSession={onEndSession} />}
 
-        <Button onClick={onCopyInviteUrlClick} variant="outline">
+        <Button onClick={copyJoinUrlToClipboard} variant="outline">
           {copiedJoinUrlToClipboard ? (
             <Check className="text-success h-4 w-4" />
           ) : (
@@ -71,7 +51,7 @@ const StatusBar = ({
           <span className="ml-2 hidden sm:block">Copy invite URL</span>
         </Button>
 
-        <Button onClick={onDownloadMarkdown} size="icon" variant="ghost">
+        <Button onClick={copyMarkdownToClipboard} size="icon" variant="ghost">
           {copiedMarkdownToClipboard ? (
             <Check className="text-success h-4 w-4" />
           ) : (

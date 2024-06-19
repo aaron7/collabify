@@ -30,7 +30,7 @@ export function EndSessionButton({ onEndSession }: EndSessionButtonProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            Your collaborators will be disconnected and the session will end.
+            Your collaborators will be disconnected.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
