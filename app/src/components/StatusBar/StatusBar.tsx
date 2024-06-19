@@ -7,18 +7,28 @@ import { Button } from '@/components/ui/button';
 import { useActiveTimeout } from '@/hooks/timeout';
 import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
+import type { AwarenessStates } from '@/utils/collab';
 import { buildJoinUrl, type Session } from '@/utils/session';
 
+import { Collaborators } from './Collaborators';
 import { EndSessionButton } from './EndSessionButton';
 import { SettingsButton } from './SettingsButton';
 
 type StatusBarProps = {
+  awarenessClientId: number | null;
+  awarenessStates: AwarenessStates;
   onEndSession: () => void;
   session: Session;
   value: string;
 };
 
-const StatusBar = ({ onEndSession, session, value }: StatusBarProps) => {
+const StatusBar = ({
+  awarenessClientId,
+  awarenessStates,
+  onEndSession,
+  session,
+  value,
+}: StatusBarProps) => {
   const joinUrl = useMemo(() => buildJoinUrl(session), [session]);
 
   const [copyJoinUrlToClipboard, copiedJoinUrlToClipboard] = useActiveTimeout(
@@ -37,6 +47,11 @@ const StatusBar = ({ onEndSession, session, value }: StatusBarProps) => {
         </Link>
       </div>
       <div className="flex space-x-2">
+        <Collaborators
+          awarenessClientId={awarenessClientId}
+          awarenessStates={awarenessStates}
+        />
+
         {session.isHost && <EndSessionButton onEndSession={onEndSession} />}
 
         <Button onClick={copyJoinUrlToClipboard} variant="outline">

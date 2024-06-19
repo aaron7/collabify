@@ -21,12 +21,19 @@ const Session = () => {
   const [value, setValue] = useState<string>('');
   const [hasSeenEditor, setHasSeenEditor] = useState(false);
 
-  const { isActive, isConnected, isHostOnline, onEndSession, webrtcProvider } =
-    useCollabProvider({
-      initialMarkdown: location.state?.initialMarkdown || '',
-      session,
-      setValue,
-    });
+  const {
+    awarenessClientId,
+    awarenessStates,
+    isActive,
+    isConnected,
+    isHostOnline,
+    onEndSession,
+    webrtcProvider,
+  } = useCollabProvider({
+    initialMarkdown: location.state?.initialMarkdown || '',
+    session,
+    setValue,
+  });
 
   const onEditorChange = React.useCallback((val: string) => {
     setValue(val);
@@ -81,6 +88,8 @@ const Session = () => {
   return (
     <div className="flex h-full flex-col">
       <StatusBar
+        awarenessClientId={awarenessClientId}
+        awarenessStates={awarenessStates}
         onEndSession={onEndSessionWrapper}
         session={session}
         value={value}

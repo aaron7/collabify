@@ -8,7 +8,7 @@ import {
   createIndexedDbPersistence,
   createWebrtcProvider,
   findHostId,
-  type AwarenessState,
+  type AwarenessStates,
   type StatusEvent,
 } from '@/utils/collab';
 import { Session } from '@/utils/session';
@@ -27,8 +27,11 @@ const useWebrtcProvider = ({
   const [webrtcProvider, setWebrtcProvider] = useState<WebrtcProvider | null>(
     null,
   );
-  const [awarenessStates, setAwarenessStates] = useState<AwarenessState>(
+  const [awarenessStates, setAwarenessStates] = useState<AwarenessStates>(
     new Map(),
+  );
+  const [awarenessClientId, setAwarenessClientId] = useState<number | null>(
+    null,
   );
   const [isWebrtcConnected, setIsWebrtcConnected] = useState(false);
   const [hasWebrtcSynced, setHasWebrtcSynced] = useState(session.isHost);
@@ -81,6 +84,7 @@ const useWebrtcProvider = ({
     const onAwarenessUpdate = () => {
       const awarenessStates = webrtcProvider?.awareness.getStates();
       setAwarenessStates(new Map(awarenessStates));
+      setAwarenessClientId(webrtcProvider?.awareness.clientID || null);
     };
 
     webrtcProvider?.on('status', onStatus);
@@ -135,6 +139,7 @@ const useWebrtcProvider = ({
   ]);
 
   return {
+    awarenessClientId,
     awarenessStates,
     isConnected:
       isWebrtcConnected && hasSyncedAllProviders && hasInitialMarkdownLoaded,
@@ -157,11 +162,12 @@ export const useCollabProvider = ({
 
   const { settings } = useSettings();
 
-  const { awarenessStates, isConnected, webrtcProvider } = useWebrtcProvider({
-    initialMarkdown,
-    session,
-    setValue,
-  });
+  const { awarenessClientId, awarenessStates, isConnected, webrtcProvider } =
+    useWebrtcProvider({
+      initialMarkdown,
+      session,
+      setValue,
+    });
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
@@ -196,6 +202,7 @@ export const useCollabProvider = ({
   const isHostOnline = isHost || (hostId && awarenessStates.get(hostId));
 
   return {
+    awarenessClientId,
     awarenessStates,
     isActive,
     isConnected,

@@ -6,10 +6,13 @@ import { Doc } from 'yjs';
 import { type Session } from './session';
 
 interface AwarenessStateUser {
+  color: string;
+  colorLight: string;
   isHost: boolean;
+  name: string;
 }
 
-export type AwarenessState = Map<
+export type AwarenessStates = Map<
   number,
   {
     [x: string]: AwarenessStateUser;
@@ -86,7 +89,7 @@ export const createIndexedDbPersistence = ({
   return new IndexeddbPersistence(indexedDbKey, ydoc);
 };
 
-export function findHostId(awarenessState: AwarenessState) {
+export function findHostId(awarenessState: AwarenessStates) {
   for (const [key, value] of awarenessState.entries()) {
     if (value.user.isHost) {
       return key;
