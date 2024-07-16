@@ -17,7 +17,7 @@ type IdenticonProps = {
 const Identicon = ({ alt, value }: IdenticonProps) => {
   const svgString = useMemo(() => minidenticon(value), [value]);
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={200}>
       <Tooltip>
         <TooltipTrigger asChild>
           <AvatarImage
