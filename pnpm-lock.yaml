@@ -40,7 +40,7 @@ importers:
         version: 3.3.3
       prettier-plugin-tailwindcss:
         specifier: ^0.6.0
-        version: 0.6.1(@ianvs/prettier-plugin-sort-imports@4.3.1(prettier@3.3.3))(prettier@3.3.3)
+        version: 0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.1(prettier@3.3.3))(prettier@3.3.3)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.6.13(@swc/helpers@0.5.5))(@types/node@20.14.10)(typescript@5.5.3)
@@ -120,14 +120,14 @@ importers:
         specifier: ^0.2.93
         version: 0.2.94
       lucide-react:
-        specifier: ^0.383.0
-        version: 0.383.0(react@18.3.1)
+        specifier: ^0.408.0
+        version: 0.408.0(react@18.3.1)
       minidenticons:
         specifier: ^4.2.1
         version: 4.2.1
       openapi-fetch:
-        specifier: ^0.9.7
-        version: 0.9.7
+        specifier: ^0.10.0
+        version: 0.10.2
       react:
         specifier: ^18.2.0
         version: 18.3.1
@@ -145,7 +145,7 @@ importers:
         version: 8.18.0
       y-codemirror.next:
         specifier: ^0.3.4
-        version: 0.3.4(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18)
+        version: 0.3.5(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18)
       y-indexeddb:
         specifier: ^9.0.12
         version: 9.0.12(yjs@13.6.18)
@@ -2635,10 +2635,10 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
-  lucide-react@0.383.0:
-    resolution: {integrity: sha512-13xlG0CQCJtzjSQYwwJ3WRqMHtRj3EXmLlorrARt7y+IHnxUCp3XyFNL1DfaGySWxHObDvnu1u1dV+0VMKHUSg==}
+  lucide-react@0.408.0:
+    resolution: {integrity: sha512-8kETAAeWmOvtGIr7HPHm51DXoxlfkNncQ5FZWXR+abX8saQwMYXANWIkUstaYtcKSo/imOe/q+tVFA8ANzdSVA==}
     peerDependencies:
-      react: ^16.5.1 || ^17.0.0 || ^18.0.0
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
 
   magic-string@0.30.10:
     resolution: {integrity: sha512-iIRwTIf0QKV3UAnYK4PU8uiEc4SRh5jX0mwpIwETPpHdhVM4f53RSwS/vXvN1JhGX+Cs7B8qIq3d6AH49O5fAQ==}
@@ -2801,11 +2801,11 @@ packages:
     resolution: {integrity: sha512-1FlR+gjXK7X+AsAHso35MnyN5KqGwJRi/31ft6x0M194ht7S+rWAvd7PHss9xSKMzE0asv1pyIHaJYq+BbacAQ==}
     engines: {node: '>=12'}
 
-  openapi-fetch@0.9.7:
-    resolution: {integrity: sha512-NMp/GEmWSGO0b2d731IdGXcMP2PF85Rk1q+oy2Mx/DYMdP3pgTZTRamKxgZpkHhM4iOVsyD1iP5HKL9Fr6CH2Q==}
+  openapi-fetch@0.10.2:
+    resolution: {integrity: sha512-GCzgKIZchnxZRnztiOlRTKk9tQT0NHvs5MNXYFtOwG7xaj1iCJOGDsTLbn/2QUP37PjGTT890qERFjvmjxzQMg==}
 
-  openapi-typescript-helpers@0.0.8:
-    resolution: {integrity: sha512-1eNjQtbfNi5Z/kFhagDIaIRj6qqDzhjNJKz8cmMW0CVdGwT6e1GLbAfgI0d28VTJa1A8jz82jm/4dG8qNoNS8g==}
+  openapi-typescript-helpers@0.0.9:
+    resolution: {integrity: sha512-BO2TvIDAO/FPVKz1Nj2gy+pUOHfaoENdK5UP3H0Jbh0VXBf3dwYMs58ZwOjiezrbHA2LamdquoyQgahTPvIxGA==}
 
   openapi-typescript@7.0.2:
     resolution: {integrity: sha512-BBrYEf0YdW31Ernd07cD/qHoalSuiiUQvy+rHvU/1Iz9WbcFpRsIXrnfEnrEuiGTRuKCG6cDQCrxNK/rbwQRLg==}
@@ -2962,8 +2962,8 @@ packages:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
 
-  prettier-plugin-tailwindcss@0.6.1:
-    resolution: {integrity: sha512-AnbeYZu0WGj+QgKciUgdMnRxrqcxltleZPgdwfA5104BHM3siBLONN/HLW1yS2HvzSNkzpQ/JAj+LN0jcJO+0w==}
+  prettier-plugin-tailwindcss@0.6.5:
+    resolution: {integrity: sha512-axfeOArc/RiGHjOIy9HytehlC0ZLeMaqY09mm8YCkMzznKiDkwFzOpBvtuhuv3xG5qB73+Mj7OCe2j/L1ryfuQ==}
     engines: {node: '>=14.21.3'}
     peerDependencies:
       '@ianvs/prettier-plugin-sort-imports': '*'
@@ -3700,8 +3700,8 @@ packages:
   xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
 
-  y-codemirror.next@0.3.4:
-    resolution: {integrity: sha512-G4l0P0MA0v9LFYuBgQU5M5fwzcDSa6757mQ46iJCmU2rHC/iT+k9L6ufIp/DYFY5DfJ/QYNj66qGKQ6EL9WEtw==}
+  y-codemirror.next@0.3.5:
+    resolution: {integrity: sha512-VluNu3e5HfEXybnypnsGwKAj+fKLd4iAnR7JuX1Sfyydmn1jCBS5wwEL/uS04Ch2ib0DnMAOF6ZRR/8kK3wyGw==}
     peerDependencies:
       '@codemirror/state': ^6.0.0
       '@codemirror/view': ^6.0.0
@@ -6643,7 +6643,7 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
-  lucide-react@0.383.0(react@18.3.1):
+  lucide-react@0.408.0(react@18.3.1):
     dependencies:
       react: 18.3.1
 
@@ -6791,11 +6791,11 @@ snapshots:
     dependencies:
       mimic-fn: 4.0.0
 
-  openapi-fetch@0.9.7:
+  openapi-fetch@0.10.2:
     dependencies:
-      openapi-typescript-helpers: 0.0.8
+      openapi-typescript-helpers: 0.0.9
 
-  openapi-typescript-helpers@0.0.8: {}
+  openapi-typescript-helpers@0.0.9: {}
 
   openapi-typescript@7.0.2(typescript@5.5.3):
     dependencies:
@@ -6933,7 +6933,7 @@ snapshots:
 
   prelude-ls@1.2.1: {}
 
-  prettier-plugin-tailwindcss@0.6.1(@ianvs/prettier-plugin-sort-imports@4.3.1(prettier@3.3.3))(prettier@3.3.3):
+  prettier-plugin-tailwindcss@0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.1(prettier@3.3.3))(prettier@3.3.3):
     dependencies:
       prettier: 3.3.3
     optionalDependencies:
@@ -7701,7 +7701,7 @@ snapshots:
 
   xmlchars@2.2.0: {}
 
-  y-codemirror.next@0.3.4(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18):
+  y-codemirror.next@0.3.5(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18):
     dependencies:
       '@codemirror/state': 6.4.1
       '@codemirror/view': 6.28.4
