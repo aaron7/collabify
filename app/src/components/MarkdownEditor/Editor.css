@@ -8,4 +8,5 @@
 }
 .cm-editor .cm-scroller {
   @apply font-sans;
+  @apply overflow-x-hidden;
 }
