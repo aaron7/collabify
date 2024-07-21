@@ -16,7 +16,7 @@ export class EmptyWidget extends WidgetType {
   override coordsAt(dom: HTMLElement): Rect | null {
     // Return the position of the element after the empty widget
     // which allows remote cursors to render correctly.
-    const elementAfterWidget = dom.nextElementSibling;
+    const elementAfterWidget = dom.nextElementSibling?.nextElementSibling;
     if (elementAfterWidget) {
       const elementAfterWidgetPos = this.view.posAtDOM(elementAfterWidget);
       return this.view.coordsAtPos(elementAfterWidgetPos, 1);
