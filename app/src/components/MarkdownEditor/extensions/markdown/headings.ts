@@ -10,9 +10,10 @@ import {
   EditorView,
   ViewPlugin,
   ViewUpdate,
-  WidgetType,
 } from '@codemirror/view';
-import { tags, type Tag } from '@lezer/highlight';
+import { tags } from '@lezer/highlight';
+
+import { EmptyWidget } from './empty-widget';
 
 function getLinesFromSelection(view: EditorView) {
   const ranges = view.state.selection.ranges;
@@ -26,22 +27,6 @@ function getLinesFromSelection(view: EditorView) {
     }
   }
   return lines;
-}
-
-class EmptySpanWidget extends WidgetType {
-  constructor(readonly className: string) {
-    super();
-  }
-
-  override eq(other: EmptySpanWidget) {
-    return other.className === this.className;
-  }
-
-  toDOM() {
-    const emptySpan = document.createElement('span');
-    emptySpan.className = this.className;
-    return emptySpan;
-  }
 }
 
 const emptyHeadingRegex = new RegExp('^#+ *$', 'i');
@@ -80,17 +65,11 @@ function headings(view: EditorView, oldHeadings: DecorationSet) {
             return;
           }
 
-          const num = Number.parseInt(node.type.name.slice(-1));
-
-          // Apply the same heading classname to the empty span widget
-          // to ensure remote cursors are correctly positioned when
-          // within the widget.
-          const tag = tags[`heading${num}` as keyof typeof tags] as Tag;
-          const className = headingsHighlightStyle.style([tag]) || '';
           const deco = Decoration.replace({
-            widget: new EmptySpanWidget(className),
+            widget: new EmptyWidget(view),
           });
 
+          const num = Number.parseInt(node.type.name.slice(-1));
           headings.push(deco.range(node.from, node.from + num + 1));
         }
       },
