@@ -12,7 +12,7 @@ import {
   ViewUpdate,
   WidgetType,
 } from '@codemirror/view';
-import { tags } from '@lezer/highlight';
+import { tags, type Tag } from '@lezer/highlight';
 
 function getLinesFromSelection(view: EditorView) {
   const ranges = view.state.selection.ranges;
@@ -29,12 +29,18 @@ function getLinesFromSelection(view: EditorView) {
 }
 
 class EmptySpanWidget extends WidgetType {
-  override eq() {
-    return true;
+  constructor(readonly className: string) {
+    super();
+  }
+
+  override eq(other: EmptySpanWidget) {
+    return other.className === this.className;
   }
 
   toDOM() {
-    return document.createElement('span');
+    const emptySpan = document.createElement('span');
+    emptySpan.className = this.className;
+    return emptySpan;
   }
 }
 
@@ -74,10 +80,17 @@ function headings(view: EditorView, oldHeadings: DecorationSet) {
             return;
           }
 
-          const deco = Decoration.replace({
-            widget: new EmptySpanWidget(),
-          });
           const num = Number.parseInt(node.type.name.slice(-1));
+
+          // Apply the same heading classname to the empty span widget
+          // to ensure remote cursors are correctly positioned when
+          // within the widget.
+          const tag = tags[`heading${num}` as keyof typeof tags] as Tag;
+          const className = headingsHighlightStyle.style([tag]) || '';
+          const deco = Decoration.replace({
+            widget: new EmptySpanWidget(className),
+          });
+
           headings.push(deco.range(node.from, node.from + num + 1));
         }
       },
