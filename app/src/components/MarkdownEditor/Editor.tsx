@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { markdown, markdownLanguage } from '@codemirror/lang-markdown';
 import { languages } from '@codemirror/language-data';
-import { Prec } from '@codemirror/state';
 import { EditorView, ViewUpdate } from '@codemirror/view';
 import CodeMirror, {
   EditorView as RCEditorView,
@@ -13,9 +12,7 @@ import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 
 import createCollabPlugin from './extensions/collab/collab';
 import fenchedCodePlugin from './extensions/fenced-code/decoration';
-import markdownCommands from './extensions/markdown/commands';
-import markdownFormatting from './extensions/markdown/formatting';
-import markdownHeadings from './extensions/markdown/headings';
+import markdownPlugin from './extensions/markdown';
 import { getTheme } from './extensions/theme/theme';
 
 import './Editor.css';
@@ -56,9 +53,7 @@ const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
         baseTheme,
         getTheme(theme === 'system' ? systemTheme : theme),
         markdown({ base: markdownLanguage, codeLanguages: languages }),
-        markdownHeadings,
-        markdownFormatting,
-        Prec.high(markdownCommands),
+        markdownPlugin,
         RCEditorView.lineWrapping,
         RCEditorView.contentAttributes.of({ autocapitalize: 'on' }),
         ...(collabPlugin ? [collabPlugin] : []),
