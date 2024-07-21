@@ -14,6 +14,7 @@ import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import createCollabPlugin from './extensions/collab/collab';
 import fenchedCodePlugin from './extensions/fenced-code/decoration';
 import markdownCommands from './extensions/markdown/commands';
+import markdownFormatting from './extensions/markdown/formatting';
 import markdownHeadings from './extensions/markdown/headings';
 import { getTheme } from './extensions/theme/theme';
 
@@ -56,6 +57,7 @@ const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
         getTheme(theme === 'system' ? systemTheme : theme),
         markdown({ base: markdownLanguage, codeLanguages: languages }),
         markdownHeadings,
+        markdownFormatting,
         Prec.high(markdownCommands),
         RCEditorView.lineWrapping,
         RCEditorView.contentAttributes.of({ autocapitalize: 'on' }),
