@@ -147,8 +147,8 @@ importers:
         specifier: ^8.17.0
         version: 8.18.0
       y-codemirror.next:
-        specifier: https://github.com/aaron7/y-codemirror.next.git#9e075f0
-        version: github.com/aaron7/y-codemirror.next/9e075f0(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18)
+        specifier: https://github.com/aaron7/y-codemirror.next.git#847145b
+        version: github.com/aaron7/y-codemirror.next/847145b(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18)
       y-indexeddb:
         specifier: ^9.0.12
         version: 9.0.12(yjs@13.6.18)
@@ -6722,9 +6722,9 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/aaron7/y-codemirror.next/9e075f0(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18):
-    resolution: {tarball: https://codeload.github.com/aaron7/y-codemirror.next/tar.gz/9e075f0}
-    id: github.com/aaron7/y-codemirror.next/9e075f0
+  github.com/aaron7/y-codemirror.next/847145b(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18):
+    resolution: {tarball: https://codeload.github.com/aaron7/y-codemirror.next/tar.gz/847145b}
+    id: github.com/aaron7/y-codemirror.next/847145b
     name: y-codemirror.next
     version: 0.3.5
     peerDependencies:

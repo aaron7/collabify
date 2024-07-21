@@ -43,7 +43,7 @@
     "react-router-dom": "^6.23.1",
     "tailwind-merge": "^2.3.0",
     "ws": "^8.17.0",
-    "y-codemirror.next": "https://github.com/aaron7/y-codemirror.next.git#9e075f0",
+    "y-codemirror.next": "https://github.com/aaron7/y-codemirror.next.git#847145b",
     "y-indexeddb": "^9.0.12",
     "y-webrtc": "^10.3.0",
     "yjs": "^13.6.15"
