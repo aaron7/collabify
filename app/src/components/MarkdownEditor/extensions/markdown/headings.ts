@@ -1,7 +1,7 @@
 import {
+  ensureSyntaxTree,
   HighlightStyle,
   syntaxHighlighting,
-  syntaxTree,
 } from '@codemirror/language';
 import { Range } from '@codemirror/state';
 import {
@@ -10,18 +10,52 @@ import {
   EditorView,
   ViewPlugin,
   ViewUpdate,
+  WidgetType,
 } from '@codemirror/view';
 import { tags } from '@lezer/highlight';
 
-import './headings.css';
+function getLinesFromSelection(view: EditorView) {
+  const ranges = view.state.selection.ranges;
+  const lines = new Set<number>();
+
+  for (const range of ranges) {
+    const startLine = view.state.doc.lineAt(range.from).number;
+    const endLine = view.state.doc.lineAt(range.to).number;
+    for (let line = startLine; line <= endLine; line++) {
+      lines.add(line);
+    }
+  }
+  return lines;
+}
+
+class EmptySpanWidget extends WidgetType {
+  override eq() {
+    return true;
+  }
+
+  toDOM() {
+    return document.createElement('span');
+  }
+}
 
 const emptyHeadingRegex = new RegExp('^#+ *$', 'i');
 
-function headings(view: EditorView) {
+function headings(view: EditorView, oldHeadings: DecorationSet) {
   const headings: Range<Decoration>[] = [];
 
+  const selectedLines = getLinesFromSelection(view);
+
   for (const { from, to } of view.visibleRanges) {
-    syntaxTree(view.state).iterate({
+    const syntaxTree = ensureSyntaxTree(view.state, view.visibleRanges[0].to);
+
+    // If a syntax tree was not available and we couldn't parse it within a
+    // reasonable time then don't block the thread and return the old headings
+    // for now.
+    if (!syntaxTree) {
+      return oldHeadings;
+    }
+
+    syntaxTree.iterate({
       enter: (node) => {
         if (
           node.type.is('ATXHeading1') ||
@@ -31,11 +65,17 @@ function headings(view: EditorView) {
           node.type.is('ATXHeading5') ||
           node.type.is('ATXHeading6')
         ) {
+          // Only highlight the heading if the line is selected
           const line = view.state.doc.lineAt(node.from);
-          const deco = Decoration.mark({
-            class: emptyHeadingRegex.test(line.text)
-              ? 'md-empty-header-processing-instruction'
-              : 'md-header-processing-instruction',
+          if (
+            emptyHeadingRegex.test(line.text) ||
+            selectedLines.has(line.number)
+          ) {
+            return;
+          }
+
+          const deco = Decoration.replace({
+            widget: new EmptySpanWidget(),
           });
           const num = Number.parseInt(node.type.name.slice(-1));
           headings.push(deco.range(node.from, node.from + num + 1));
@@ -53,16 +93,12 @@ const headingsPlugin = ViewPlugin.fromClass(
     headings: DecorationSet;
 
     constructor(view: EditorView) {
-      this.headings = headings(view);
+      this.headings = headings(view, Decoration.none);
     }
 
     update(update: ViewUpdate) {
-      if (
-        update.docChanged ||
-        update.viewportChanged ||
-        syntaxTree(update.startState) != syntaxTree(update.state)
-      ) {
-        this.headings = headings(update.view);
+      if (update.docChanged || update.viewportChanged || update.selectionSet) {
+        this.headings = headings(update.view, this.headings);
       }
     }
 
