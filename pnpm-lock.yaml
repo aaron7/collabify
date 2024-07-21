@@ -41,6 +41,9 @@ importers:
       prettier-plugin-tailwindcss:
         specifier: ^0.6.0
         version: 0.6.5(@ianvs/prettier-plugin-sort-imports@4.3.1)(prettier@3.3.3)
+      tailwindcss:
+        specifier: ^3.4.1
+        version: 3.4.6(ts-node@10.9.2)
       ts-node:
         specifier: ^10.9.2
         version: 10.9.2(@swc/core@1.6.13)(@types/node@20.14.10)(typescript@5.5.3)
@@ -144,8 +147,8 @@ importers:
         specifier: ^8.17.0
         version: 8.18.0
       y-codemirror.next:
-        specifier: https://github.com/aaron7/y-codemirror.next.git#dbe10e4
-        version: github.com/aaron7/y-codemirror.next/dbe10e4(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18)
+        specifier: https://github.com/aaron7/y-codemirror.next.git#9e075f0
+        version: github.com/aaron7/y-codemirror.next/9e075f0(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18)
       y-indexeddb:
         specifier: ^9.0.12
         version: 9.0.12(yjs@13.6.18)
@@ -6719,9 +6722,9 @@ packages:
     engines: {node: '>=10'}
     dev: true
 
-  github.com/aaron7/y-codemirror.next/dbe10e4(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18):
-    resolution: {tarball: https://codeload.github.com/aaron7/y-codemirror.next/tar.gz/dbe10e4}
-    id: github.com/aaron7/y-codemirror.next/dbe10e4
+  github.com/aaron7/y-codemirror.next/9e075f0(@codemirror/state@6.4.1)(@codemirror/view@6.28.4)(yjs@13.6.18):
+    resolution: {tarball: https://codeload.github.com/aaron7/y-codemirror.next/tar.gz/9e075f0}
+    id: github.com/aaron7/y-codemirror.next/9e075f0
     name: y-codemirror.next
     version: 0.3.5
     peerDependencies:
