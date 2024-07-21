@@ -11,6 +11,7 @@ import { WebrtcProvider } from 'y-webrtc';
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 
 import createCollabPlugin from './extensions/collab/collab';
+import emojiPlugin from './extensions/emoji';
 import fenchedCodePlugin from './extensions/fenced-code/decoration';
 import markdownPlugin from './extensions/markdown';
 import { getTheme } from './extensions/theme/theme';
@@ -54,6 +55,7 @@ const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
         getTheme(theme === 'system' ? systemTheme : theme),
         markdown({ base: markdownLanguage, codeLanguages: languages }),
         markdownPlugin,
+        emojiPlugin,
         RCEditorView.lineWrapping,
         RCEditorView.contentAttributes.of({ autocapitalize: 'on' }),
         ...(collabPlugin ? [collabPlugin] : []),

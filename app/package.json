@@ -37,6 +37,7 @@
     "lib0": "^0.2.93",
     "lucide-react": "^0.408.0",
     "minidenticons": "^4.2.1",
+    "node-emoji": "^2.1.3",
     "openapi-fetch": "^0.10.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
