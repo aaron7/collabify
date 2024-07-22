@@ -22,24 +22,38 @@ const formatDefinitions = {
   },
 };
 
-function getLinesFromSelection(view: EditorView) {
+function doesRangeOverlapWithSelection({
+  from,
+  to,
+  view,
+}: {
+  from: number;
+  to: number;
+  view: EditorView;
+}) {
   const ranges = view.state.selection.ranges;
-  const lines = new Set<number>();
 
-  for (const range of ranges) {
-    const startLine = view.state.doc.lineAt(range.from).number;
-    const endLine = view.state.doc.lineAt(range.to).number;
-    for (let line = startLine; line <= endLine; line++) {
-      lines.add(line);
+  let low = 0;
+  let high = ranges.length - 1;
+
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const range = ranges[mid];
+
+    if (range.to < from) {
+      low = mid + 1;
+    } else if (range.from > to) {
+      high = mid - 1;
+    } else {
+      return true;
     }
   }
-  return lines;
+
+  return false;
 }
 
 function formatting(view: EditorView, oldFormatting: DecorationSet) {
   const formatting: Range<Decoration>[] = [];
-
-  const selectedLines = getLinesFromSelection(view);
 
   for (const { from, to } of view.visibleRanges) {
     const syntaxTree = ensureSyntaxTree(view.state, view.visibleRanges[0].to);
@@ -59,10 +73,15 @@ function formatting(view: EditorView, oldFormatting: DecorationSet) {
       enter: (node) => {
         const nodeType = node.type.name;
         if (nodeType in formatDefinitions) {
-          // Only highlight the heading if the line is selected
-          const line = view.state.doc.lineAt(node.from);
-          if (selectedLines.has(line.number)) {
-            return;
+          if (
+            doesRangeOverlapWithSelection({
+              from: node.from,
+              to: node.to,
+              view,
+            })
+          ) {
+            // Don't format nested nodes so return false to skip children
+            return false;
           }
 
           const definition =
