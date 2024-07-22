@@ -1,15 +1,10 @@
 import { Prec } from '@codemirror/state';
 
-import markdownCommands from './commands';
-import markdownFormatting from './formatting';
-import markdownHeadings from './headings';
+import commands from './commands';
+import formatting from './formatting';
+import headings from './headings';
 import inlineCode from './inline-code';
 
-const markdownPlugin = [
-  markdownHeadings,
-  markdownFormatting,
-  inlineCode,
-  Prec.high(markdownCommands),
-];
+const markdownPlugin = [headings, formatting, inlineCode, Prec.high(commands)];
 
 export default markdownPlugin;
