@@ -1,0 +1,8 @@
+.cm-line.md-horizontal-rule-line {
+  display: flex;
+  align-items: center;
+}
+
+.md-horizontal-rule {
+  width: 100%;
+}
