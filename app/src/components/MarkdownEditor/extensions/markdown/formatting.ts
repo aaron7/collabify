@@ -14,6 +14,9 @@ const formatDefinitions = {
   Emphasis: {
     syntaxLength: 1,
   },
+  InlineCode: {
+    syntaxLength: 1,
+  },
   Strikethrough: {
     syntaxLength: 2,
   },
