@@ -10,6 +10,8 @@ import {
 
 import './inline-code.css';
 
+const deco = Decoration.mark({ class: 'md-inline-code' });
+
 function inlineCode(view: EditorView, oldInlineCode: DecorationSet) {
   const inlineCode: Range<Decoration>[] = [];
 
@@ -26,7 +28,6 @@ function inlineCode(view: EditorView, oldInlineCode: DecorationSet) {
     syntaxTree.iterate({
       enter: (node) => {
         if (node.type.is('InlineCode')) {
-          const deco = Decoration.mark({ class: 'md-inline-code' });
           inlineCode.push(deco.range(node.from, node.to));
         }
       },

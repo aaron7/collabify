@@ -42,6 +42,8 @@ function getLinesFromSelection(view: EditorView) {
   return lines;
 }
 
+const deco = Decoration.line({ class: 'md-horizontal-rule-line' });
+
 function horizontalRule(view: EditorView, oldHorizontalRule: DecorationSet) {
   const horizontalRule: Range<Decoration>[] = [];
 
@@ -60,7 +62,6 @@ function horizontalRule(view: EditorView, oldHorizontalRule: DecorationSet) {
     syntaxTree.iterate({
       enter: (node) => {
         if (node.type.is('HorizontalRule')) {
-          const deco = Decoration.line({ class: 'md-horizontal-rule-line' });
           const decoWidget = Decoration.replace({
             widget: new HorizontalRuleWidget(),
           });
