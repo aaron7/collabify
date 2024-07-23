@@ -86,7 +86,7 @@ const Session = () => {
   }
 
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex h-screen flex-col">
       <StatusBar
         awarenessClientId={awarenessClientId}
         awarenessStates={awarenessStates}
@@ -97,7 +97,7 @@ const Session = () => {
       <Separator />
       <div className="flex-grow overflow-y-auto">
         <div
-          className="mx-auto h-full cursor-text lg:max-w-3xl"
+          className="mx-auto cursor-text lg:max-w-3xl"
           onClick={onEmptySpaceBehindEditorClick}
         >
           <Editor
