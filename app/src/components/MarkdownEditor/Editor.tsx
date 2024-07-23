@@ -46,7 +46,7 @@ const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
     <CodeMirror
       basicSetup={{
         foldGutter: false,
-        highlightActiveLine: true,
+        highlightActiveLine: false,
         highlightSelectionMatches: false,
         lineNumbers: false,
       }}
