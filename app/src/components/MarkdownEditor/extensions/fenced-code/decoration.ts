@@ -1,6 +1,12 @@
-import { syntaxTree } from '@codemirror/language';
-import { EditorState, RangeSetBuilder, StateField } from '@codemirror/state';
-import { Decoration, DecorationSet, EditorView } from '@codemirror/view';
+import { ensureSyntaxTree } from '@codemirror/language';
+import { Range } from '@codemirror/state';
+import {
+  Decoration,
+  DecorationSet,
+  EditorView,
+  ViewPlugin,
+  ViewUpdate,
+} from '@codemirror/view';
 
 import './fenced-code.css';
 
@@ -8,55 +14,65 @@ const codeBlockMarker = Decoration.line({ class: 'md-codeblock' });
 const codeBlockMarkerStart = Decoration.line({ class: 'md-codeblock-start' });
 const codeBlockMarkerEnd = Decoration.line({ class: 'md-codeblock-end' });
 
-const decorateFencedCode = (state: EditorState) => {
-  const builder = new RangeSetBuilder<Decoration>();
-  syntaxTree(state).iterate({
-    enter(node) {
-      if (node.type.is('FencedCode')) {
-        const firstLine = state.doc.lineAt(node.from).number;
-        const lastLine = state.doc.lineAt(node.to).number;
-        for (let i = firstLine; i <= lastLine; i++) {
-          builder.add(
-            state.doc.line(i).from,
-            state.doc.line(i).from,
-            codeBlockMarker,
-          );
+function fencedCode(view: EditorView, oldFencedCode: DecorationSet) {
+  const fencedCode: Range<Decoration>[] = [];
 
-          // Add addional markers for the first and last line of the code block
-          if (i === firstLine) {
-            builder.add(
-              state.doc.line(i).from,
-              state.doc.line(i).from,
-              codeBlockMarkerStart,
-            );
-          }
-          if (i === lastLine) {
-            builder.add(
-              state.doc.line(i).from,
-              state.doc.line(i).from,
-              codeBlockMarkerEnd,
-            );
+  for (const { from, to } of view.visibleRanges) {
+    const syntaxTree = ensureSyntaxTree(view.state, view.visibleRanges[0].to);
+
+    // If a syntax tree was not available and we couldn't parse it within a
+    // reasonable time then don't block the thread and return the old inlineCode
+    // for now.
+    if (!syntaxTree) {
+      return oldFencedCode;
+    }
+
+    syntaxTree.iterate({
+      enter: (node) => {
+        if (node.type.is('FencedCode')) {
+          const firstLine = view.state.doc.lineAt(node.from).number;
+          const lastLine = view.state.doc.lineAt(node.to).number;
+          for (let i = firstLine; i <= lastLine; i++) {
+            const lineFrom = view.state.doc.line(i).from;
+
+            fencedCode.push(codeBlockMarker.range(lineFrom, lineFrom));
+
+            if (i === firstLine) {
+              fencedCode.push(codeBlockMarkerStart.range(lineFrom, lineFrom));
+            }
+
+            if (i === lastLine) {
+              fencedCode.push(codeBlockMarkerEnd.range(lineFrom, lineFrom));
+            }
           }
         }
+      },
+      from,
+      to,
+    });
+  }
+  return Decoration.set(fencedCode);
+}
+
+const fencedCodePlugin = ViewPlugin.fromClass(
+  class {
+    fencedCode: DecorationSet;
+
+    constructor(view: EditorView) {
+      this.fencedCode = fencedCode(view, Decoration.none);
+    }
+
+    update(update: ViewUpdate) {
+      if (update.docChanged || update.viewportChanged || update.selectionSet) {
+        this.fencedCode = fencedCode(update.view, this.fencedCode);
       }
-    },
-  });
-  return builder.finish();
-};
+    }
 
-const CodeBlockField = StateField.define<DecorationSet>({
-  create(state) {
-    return decorateFencedCode(state);
+    destroy() {}
   },
-
-  provide(field) {
-    return EditorView.decorations.from(field);
+  {
+    decorations: (v) => v.fencedCode,
   },
+);
 
-  update(decorations, tr) {
-    decorations = decorations.map(tr.changes);
-    return decorateFencedCode(tr.state);
-  },
-});
-
-export default CodeBlockField;
+export default fencedCodePlugin;
