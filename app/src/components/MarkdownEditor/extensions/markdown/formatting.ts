@@ -75,6 +75,10 @@ function formatting(view: EditorView, oldFormatting: DecorationSet) {
       widget: new EmptyWidget(view),
     });
 
+    const fencedCodeInactive = Decoration.line({
+      class: 'md-codeblock-start-inactive',
+    });
+
     syntaxTree.iterate({
       enter: (node) => {
         const nodeType = node.type.name;
@@ -100,6 +104,10 @@ function formatting(view: EditorView, oldFormatting: DecorationSet) {
 
           const definition =
             formatDefinitions[nodeType as keyof typeof formatDefinitions];
+
+          if (nodeType === 'FencedCode') {
+            formatting.push(fencedCodeInactive.range(node.from, node.from));
+          }
 
           formatting.push(
             deco.range(node.from, node.from + definition.syntaxLength),

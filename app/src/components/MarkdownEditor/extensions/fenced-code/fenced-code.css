@@ -1,9 +1,13 @@
-.md-codeblock {
-  @apply bg-secondary/50 font-mono;
+.cm-line.md-codeblock {
+  @apply bg-secondary/50 px-4 font-mono;
 }
 
 .md-codeblock-start {
   @apply rounded-t-lg;
+}
+
+.cm-line.md-codeblock-start-inactive {
+  @apply flex justify-end pr-1;
 }
 
 .md-codeblock-end {
