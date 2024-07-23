@@ -28,7 +28,11 @@ function inlineCode(view: EditorView, oldInlineCode: DecorationSet) {
     syntaxTree.iterate({
       enter: (node) => {
         if (node.type.is('InlineCode')) {
-          inlineCode.push(deco.range(node.from, node.to));
+          const lineFrom = view.state.doc.lineAt(node.from).number;
+          const lineTo = view.state.doc.lineAt(node.to).number;
+          if (lineFrom === lineTo) {
+            inlineCode.push(deco.range(node.from, node.to));
+          }
         }
       },
       from,

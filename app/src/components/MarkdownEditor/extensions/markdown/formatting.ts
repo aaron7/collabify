@@ -76,6 +76,12 @@ function formatting(view: EditorView, oldFormatting: DecorationSet) {
       enter: (node) => {
         const nodeType = node.type.name;
         if (nodeType in formatDefinitions) {
+          const lineFrom = view.state.doc.lineAt(node.from).number;
+          const lineTo = view.state.doc.lineAt(node.to).number;
+          if (lineFrom !== lineTo) {
+            return;
+          }
+
           if (
             doesRangeOverlapWithSelection({
               from: node.from,
