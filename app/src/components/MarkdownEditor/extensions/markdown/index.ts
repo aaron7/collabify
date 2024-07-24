@@ -6,7 +6,6 @@ import formatting from './formatting';
 import headings from './headings';
 import horizontalRule from './horizontal-rule';
 import inlineCode from './inline-code';
-import link from './link.tsx';
 
 const markdownPlugin = [
   headings,
@@ -15,7 +14,6 @@ const markdownPlugin = [
   Prec.high(commands),
   horizontalRule,
   closeBrackets,
-  link,
 ];
 
 export default markdownPlugin;
