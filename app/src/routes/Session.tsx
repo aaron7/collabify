@@ -96,6 +96,9 @@ const Session = () => {
     updateTitle(value);
   }
 
+  const initialSelection = location.state?.initialSelection || { anchor: 0 };
+  const autoFocus = location.state?.autoFocus || false;
+
   return (
     <div className="flex h-screen flex-col">
       <StatusBar
@@ -112,6 +115,8 @@ const Session = () => {
           onClick={onEmptySpaceBehindEditorClick}
         >
           <Editor
+            autoFocus={autoFocus}
+            initialSelection={initialSelection}
             onChange={onEditorChange}
             refs={editorRefs}
             value={value}

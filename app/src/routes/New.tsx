@@ -32,7 +32,11 @@ const New = () => {
     } else {
       navigate(`${routes.session.path}#${sessionUrlFragment}`, {
         replace: true,
-        state: { initialMarkdown: '# ' },
+        state: {
+          autoFocus: true,
+          initialMarkdown: '# ',
+          initialSelection: { anchor: 2 },
+        },
       });
     }
   }, [navigate, location.hash]);

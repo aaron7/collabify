@@ -19,6 +19,8 @@ import { getTheme } from './extensions/theme/theme';
 import './Editor.css';
 
 type EditorProps = {
+  autoFocus: boolean;
+  initialSelection: { anchor: number };
   onChange: (value: string, viewUpdate: ViewUpdate) => void;
   refs: React.RefObject<ReactCodeMirrorRef>;
   value: string;
@@ -32,7 +34,14 @@ const baseTheme = EditorView.baseTheme({
   },
 });
 
-const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
+const Editor = ({
+  autoFocus,
+  initialSelection,
+  onChange,
+  refs,
+  value,
+  webrtcProvider,
+}: EditorProps) => {
   const collabPlugin = useMemo(
     () => createCollabPlugin({ webrtcProvider }),
     [webrtcProvider],
@@ -44,6 +53,7 @@ const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
 
   return (
     <CodeMirror
+      autoFocus={autoFocus}
       basicSetup={{
         foldGutter: false,
         highlightActiveLine: false,
@@ -64,6 +74,7 @@ const Editor = ({ onChange, refs, value, webrtcProvider }: EditorProps) => {
       height="100%"
       onChange={onChange}
       ref={refs}
+      selection={initialSelection}
       theme="none"
       value={value}
     />
