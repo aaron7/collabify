@@ -11,18 +11,23 @@ import {
 
 type IdenticonProps = {
   alt: string;
+  colour: string;
   value: string;
 };
 
-const Identicon = ({ alt, value }: IdenticonProps) => {
+const Identicon = ({ alt, colour, value }: IdenticonProps) => {
   const svgString = useMemo(() => minidenticon(value), [value]);
+  const svgStringWithColor = svgString.replace(
+    /fill="hsl\(\d+\s+\d+%\s+\d+%\s*\)"/,
+    `fill="${colour}"`,
+  );
   return (
     <TooltipProvider delayDuration={200}>
       <Tooltip>
         <TooltipTrigger asChild>
           <AvatarImage
             alt={alt}
-            src={`data:image/svg+xml;utf8,${encodeURIComponent(minidenticon(svgString))}`}
+            src={`data:image/svg+xml;utf8,${encodeURIComponent(svgStringWithColor)}`}
           />
         </TooltipTrigger>
         <TooltipContent>

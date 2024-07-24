@@ -36,7 +36,11 @@ export const Collaborators = ({
           className="border-secondary h-8 w-8 border border-solid"
           key={key}
         >
-          <Identicon alt={value.user.name} value={key.toString()} />
+          <Identicon
+            alt={value.user.name}
+            colour={value.user.color}
+            value={key.toString()}
+          />
         </Avatar>
       ))}
     </div>
