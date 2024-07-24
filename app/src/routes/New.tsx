@@ -32,6 +32,7 @@ const New = () => {
     } else {
       navigate(`${routes.session.path}#${sessionUrlFragment}`, {
         replace: true,
+        state: { initialMarkdown: '# ' },
       });
     }
   }, [navigate, location.hash]);
