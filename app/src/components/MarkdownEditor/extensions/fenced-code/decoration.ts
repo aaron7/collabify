@@ -8,11 +8,17 @@ import {
   ViewUpdate,
 } from '@codemirror/view';
 
+import { EmptyWidget } from '../utils/empty-widget';
+import { overlapsWithSelection } from '../utils/selection';
+
 import './fenced-code.css';
 
 const codeBlockMarker = Decoration.line({ class: 'md-codeblock' });
 const codeBlockMarkerStart = Decoration.line({ class: 'md-codeblock-start' });
 const codeBlockMarkerEnd = Decoration.line({ class: 'md-codeblock-end' });
+const codeBlockInactive = Decoration.line({
+  class: 'md-codeblock-start-inactive',
+});
 
 function fencedCode(view: EditorView, oldFencedCode: DecorationSet) {
   const fencedCode: Range<Decoration>[] = [];
@@ -27,9 +33,26 @@ function fencedCode(view: EditorView, oldFencedCode: DecorationSet) {
       return oldFencedCode;
     }
 
+    const emptyWidget = Decoration.replace({
+      widget: new EmptyWidget(view),
+    });
+
     syntaxTree.iterate({
       enter: (node) => {
         if (node.type.is('FencedCode')) {
+          const isSelected = overlapsWithSelection({
+            range: { from: node.from, to: node.to },
+            state: view.state,
+          });
+
+          if (!isSelected) {
+            fencedCode.push(codeBlockInactive.range(node.from, node.from));
+            const codeMarks = node.node.getChildren('CodeMark');
+            for (const codeMark of codeMarks) {
+              fencedCode.push(emptyWidget.range(codeMark.from, codeMark.to));
+            }
+          }
+
           const firstLine = view.state.doc.lineAt(node.from).number;
           const lastLine = view.state.doc.lineAt(node.to).number;
           for (let i = firstLine; i <= lastLine; i++) {
@@ -51,7 +74,11 @@ function fencedCode(view: EditorView, oldFencedCode: DecorationSet) {
       to,
     });
   }
-  return Decoration.set(fencedCode);
+  return Decoration.set(
+    fencedCode.sort(
+      (a, b) => a.from - b.from || a.value.startSide - b.value.startSide,
+    ),
+  );
 }
 
 const fencedCodePlugin = ViewPlugin.fromClass(

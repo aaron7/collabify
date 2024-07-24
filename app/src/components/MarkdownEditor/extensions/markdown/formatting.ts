@@ -8,14 +8,12 @@ import {
   ViewUpdate,
 } from '@codemirror/view';
 
-import { EmptyWidget } from './empty-widget';
+import { EmptyWidget } from '../utils/empty-widget';
+import { overlapsWithSelection } from '../utils/selection';
 
 const formatDefinitions = {
   Emphasis: {
     syntaxLength: 1,
-  },
-  FencedCode: {
-    syntaxLength: 3,
   },
   InlineCode: {
     syntaxLength: 1,
@@ -27,36 +25,6 @@ const formatDefinitions = {
     syntaxLength: 2,
   },
 };
-
-function doesRangeOverlapWithSelection({
-  from,
-  to,
-  view,
-}: {
-  from: number;
-  to: number;
-  view: EditorView;
-}) {
-  const ranges = view.state.selection.ranges;
-
-  let low = 0;
-  let high = ranges.length - 1;
-
-  while (low <= high) {
-    const mid = Math.floor((low + high) / 2);
-    const range = ranges[mid];
-
-    if (range.to < from) {
-      low = mid + 1;
-    } else if (range.from > to) {
-      high = mid - 1;
-    } else {
-      return true;
-    }
-  }
-
-  return false;
-}
 
 function formatting(view: EditorView, oldFormatting: DecorationSet) {
   const formatting: Range<Decoration>[] = [];
@@ -75,10 +43,6 @@ function formatting(view: EditorView, oldFormatting: DecorationSet) {
       widget: new EmptyWidget(view),
     });
 
-    const fencedCodeInactive = Decoration.line({
-      class: 'md-codeblock-start-inactive',
-    });
-
     syntaxTree.iterate({
       enter: (node) => {
         const nodeType = node.type.name;
@@ -92,10 +56,9 @@ function formatting(view: EditorView, oldFormatting: DecorationSet) {
           }
 
           if (
-            doesRangeOverlapWithSelection({
-              from: node.from,
-              to: node.to,
-              view,
+            overlapsWithSelection({
+              range: { from: node.from, to: node.to },
+              state: view.state,
             })
           ) {
             // Don't format nested nodes so return false to skip children
@@ -104,10 +67,6 @@ function formatting(view: EditorView, oldFormatting: DecorationSet) {
 
           const definition =
             formatDefinitions[nodeType as keyof typeof formatDefinitions];
-
-          if (nodeType === 'FencedCode') {
-            formatting.push(fencedCodeInactive.range(node.from, node.from));
-          }
 
           formatting.push(
             deco.range(node.from, node.from + definition.syntaxLength),

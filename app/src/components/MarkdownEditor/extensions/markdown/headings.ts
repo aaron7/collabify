@@ -13,7 +13,7 @@ import {
 } from '@codemirror/view';
 import { tags } from '@lezer/highlight';
 
-import { EmptyWidget } from './empty-widget';
+import { EmptyWidget } from '../utils/empty-widget';
 
 function getLinesFromSelection(view: EditorView) {
   const ranges = view.state.selection.ranges;
