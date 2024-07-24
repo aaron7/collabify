@@ -12,6 +12,15 @@ import { useCollabProvider } from '@/hooks/webrtc';
 import routes from '@/routes';
 import { saveMarkdown, stopSessionCallback } from '@/utils/api';
 
+const updateTitle = (doc: string) => {
+  const titleMatch = doc.match(/^# (.+)$/m);
+  const title = titleMatch ? titleMatch[1] : 'Untitled';
+
+  if (document.title !== title) {
+    document.title = title;
+  }
+};
+
 const Session = () => {
   const navigate = useNavigate();
   const session = useSession();
@@ -37,6 +46,7 @@ const Session = () => {
 
   const onEditorChange = React.useCallback((val: string) => {
     setValue(val);
+    updateTitle(val);
   }, []);
 
   // Focus the editor when the user clicks the empty space when the editor
@@ -83,6 +93,7 @@ const Session = () => {
 
   if (!hasSeenEditor) {
     setHasSeenEditor(true);
+    updateTitle(value);
   }
 
   return (
