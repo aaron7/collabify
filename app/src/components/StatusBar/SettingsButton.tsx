@@ -23,7 +23,7 @@ export function SettingsButton() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSettings({ name });
+    setSettings({ ...settings, name });
   };
 
   return (

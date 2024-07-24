@@ -7,8 +7,10 @@ import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
+import { WelcomeDialog } from '@/components/WelcomeDialog/WelcomeDialog';
 import { useSession } from '@/hooks/session';
 import { useCollabProvider } from '@/hooks/webrtc';
+import { useSettings } from '@/providers/SettingsProvider';
 import routes from '@/routes';
 import { saveMarkdown, stopSessionCallback } from '@/utils/api';
 
@@ -26,9 +28,12 @@ const Session = () => {
   const session = useSession();
   const location = useLocation();
 
+  const { settings } = useSettings();
+
   const editorRefs = React.useRef<ReactCodeMirrorRef>({});
   const [value, setValue] = useState<string>('');
   const [hasSeenEditor, setHasSeenEditor] = useState(false);
+  const [isWelcomeDialogOpen, setIsWelcomeDialogOpen] = useState(false);
 
   const {
     awarenessClientId,
@@ -94,6 +99,7 @@ const Session = () => {
   if (!hasSeenEditor) {
     setHasSeenEditor(true);
     updateTitle(value);
+    setIsWelcomeDialogOpen(!settings.doNotShowWelcomeDialog);
   }
 
   const initialSelection = location.state?.initialSelection || { anchor: 0 };
@@ -124,6 +130,10 @@ const Session = () => {
           />
         </div>
       </div>
+      <WelcomeDialog
+        isOpen={isWelcomeDialogOpen}
+        setIsOpen={setIsWelcomeDialogOpen}
+      />
     </div>
   );
 };

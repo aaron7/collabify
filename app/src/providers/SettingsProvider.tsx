@@ -1,6 +1,7 @@
 import { createContext, useContext, useState } from 'react';
 
 type Settings = {
+  doNotShowWelcomeDialog: boolean;
   name: string;
 };
 
@@ -17,7 +18,7 @@ type SettingsProviderState = {
 
 const initialState: SettingsProviderState = {
   setSettings: () => null,
-  settings: { name: '' },
+  settings: { doNotShowWelcomeDialog: false, name: '' },
 };
 
 const SettingsProviderContext =
@@ -25,7 +26,7 @@ const SettingsProviderContext =
 
 export function SettingsProvider({
   children,
-  defaultSettings = { name: 'Anonymous' },
+  defaultSettings = { doNotShowWelcomeDialog: false, name: 'Anonymous' },
   storageKey = 'settings',
   ...props
 }: SettingsProviderProps) {
