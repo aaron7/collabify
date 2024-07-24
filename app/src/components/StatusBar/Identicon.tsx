@@ -22,7 +22,7 @@ const Identicon = ({ alt, colour, value }: IdenticonProps) => {
     `fill="${colour}"`,
   );
   return (
-    <TooltipProvider delayDuration={200}>
+    <TooltipProvider delayDuration={100}>
       <Tooltip>
         <TooltipTrigger asChild>
           <AvatarImage

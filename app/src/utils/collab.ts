@@ -5,7 +5,7 @@ import { Doc } from 'yjs';
 
 import { type Session } from './session';
 
-interface AwarenessStateUser {
+export interface AwarenessStateUser {
   color: string;
   colorLight: string;
   isHost: boolean;
