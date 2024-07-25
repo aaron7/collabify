@@ -38,39 +38,48 @@ export function WelcomeDialog({
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Collabify.it</DialogTitle>
+          <DialogTitle>Welcome</DialogTitle>
           <DialogDescription>Simple collaborative markdown</DialogDescription>
         </DialogHeader>
         <ul className="ml-6 list-disc text-sm">
-          <li>Fast & unsurprising editing</li>
-          <li>End-to-end encrypted with zero analytics</li>
-          <li>Sync back to your favourite local editor</li>
-          <li>Free & open source</li>
+          <li>Your data is end-to-end encrypted.</li>
+          <li>
+            Your feedback is welcome at{' '}
+            <a
+              className="text-blue-500"
+              href="https://feedback.collabify.it"
+              rel="noreferrer"
+              target="_blank"
+            >
+              feedback.collabify.it
+            </a>{' '}
+            or in our{' '}
+            <a
+              className="text-blue-500"
+              href="https://github.com/aaron7/collabify"
+              rel="noreferrer"
+              target="_blank"
+            >
+              GitHub repo
+            </a>
+            .
+          </li>
+          {/* <li>
+            Learn more at{' '}
+            <a
+              className="text-blue-500"
+              href="https://collabify.it"
+              rel="noreferrer"
+              target="_blank"
+            >
+              collabify.it
+            </a>
+          </li> */}
         </ul>
-        <p className="text-sm">
-          Please submit any feedback to{' '}
-          <a
-            className="text-blue-500"
-            href="https://feedback.collabify.it"
-            rel="noreferrer"
-            target="_blank"
-          >
-            feedback.collabify.it
-          </a>{' '}
-          or you’re welcome to create a{' '}
-          <a
-            className="text-blue-500"
-            href="https://github.com/aaron7/collabify"
-            rel="noreferrer"
-            target="_blank"
-          >
-            GitHub issue
-          </a>
-          .
-        </p>
         <hr />
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 pb-6 pt-2">
+            {/* <span>Providing a name can be helpful to others</span> */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right" htmlFor="name">
                 Name
