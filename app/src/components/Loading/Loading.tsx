@@ -7,7 +7,7 @@ import { downloadAsMarkdown } from '@/utils/download';
 type LoadingProps = {
   copy?: string;
   ctaCopy: string;
-  mostRecentMarkdown: string;
+  mostRecentMarkdown?: string;
   onCtaClick: () => void;
   showLoader?: boolean;
   title: string;
