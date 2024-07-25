@@ -56,11 +56,11 @@ const StatusBar = ({
             <Check className="text-success h-4 w-4" />
           ) : (
             <>
-              <ClipboardCopy className="hidden h-4 w-4 sm:block" />
-              <LinkIcon className="h-4 w-4 sm:hidden" />
+              <ClipboardCopy className="hidden h-4 w-4 md:block" />
+              <LinkIcon className="h-4 w-4 md:hidden" />
             </>
           )}
-          <span className="ml-2 hidden sm:block">Copy invite URL</span>
+          <span className="ml-2 hidden md:block">Copy invite URL</span>
         </Button>
 
         <ExportButton markdownValue={value} />

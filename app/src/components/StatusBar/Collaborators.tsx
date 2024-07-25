@@ -59,7 +59,7 @@ export const Collaborators = ({
   const others = Array.from(collaborators.entries()).slice(NUM_TO_INCLUDE);
 
   return (
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-1 max-[520px]:hidden">
       {firstGroup.map(([key, value]) => (
         <CollobaratorAvatar clientId={key} key={key} user={value.user} />
       ))}
