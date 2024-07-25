@@ -41,6 +41,7 @@ const Session = () => {
     isActive,
     isConnected,
     isHostOnline,
+    isSignalingConnected,
     onEndSession,
     webrtcProvider,
   } = useCollabProvider({
@@ -71,13 +72,24 @@ const Session = () => {
     });
   };
 
+  if (!isSignalingConnected) {
+    return (
+      <Loading
+        copy="If you cannot connect, our signaling servers may be down"
+        ctaCopy="Stop connecting"
+        onCtaClick={() => navigate(routes.landing.path)}
+        title="Connecting to collabify.it"
+      />
+    );
+  }
+
   if (!webrtcProvider || !isConnected || (!hasSeenEditor && !isHostOnline)) {
     return (
       <Loading
         copy="If you cannot connect, either the host is offline or the secret URL is incorrect."
         ctaCopy="Stop connecting"
         onCtaClick={() => navigate(routes.landing.path)}
-        title="Connecting"
+        title="Connecting to host"
       />
     );
   }

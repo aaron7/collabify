@@ -33,6 +33,7 @@ const useWebrtcProvider = ({
   const [awarenessClientId, setAwarenessClientId] = useState<number | null>(
     null,
   );
+  const [isSignalingConnected, setIsSignalingConnected] = useState(false);
   const [isWebrtcConnected, setIsWebrtcConnected] = useState(false);
   const [hasWebrtcSynced, setHasWebrtcSynced] = useState(session.isHost);
   const [hasIndexedDbSynced, setHasIndexedDbSynced] = useState(false);
@@ -65,6 +66,16 @@ const useWebrtcProvider = ({
       }
     };
   }, [session, setValue]);
+
+  useEffect(() => {
+    if (webrtcProvider?.signalingConns) {
+      webrtcProvider?.signalingConns?.map((conn) =>
+        conn.on('connect', () => {
+          setIsSignalingConnected(true);
+        }),
+      );
+    }
+  }, [webrtcProvider?.signalingConns]);
 
   // Handle webrtcProvider events
   useEffect(() => {
@@ -143,6 +154,7 @@ const useWebrtcProvider = ({
     awarenessStates,
     isConnected:
       isWebrtcConnected && hasSyncedAllProviders && hasInitialMarkdownLoaded,
+    isSignalingConnected,
     webrtcProvider,
   };
 };
@@ -162,12 +174,17 @@ export const useCollabProvider = ({
 
   const { settings } = useSettings();
 
-  const { awarenessClientId, awarenessStates, isConnected, webrtcProvider } =
-    useWebrtcProvider({
-      initialMarkdown,
-      session,
-      setValue,
-    });
+  const {
+    awarenessClientId,
+    awarenessStates,
+    isConnected,
+    isSignalingConnected,
+    webrtcProvider,
+  } = useWebrtcProvider({
+    initialMarkdown,
+    session,
+    setValue,
+  });
   const [isActive, setIsActive] = useState(true);
 
   useEffect(() => {
@@ -207,6 +224,7 @@ export const useCollabProvider = ({
     isActive,
     isConnected,
     isHostOnline,
+    isSignalingConnected,
     onEndSession,
     webrtcProvider,
   };
