@@ -36,12 +36,14 @@ export function ExportButton({ markdownValue }: ExportButtonProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
-        <Button size="icon" variant="ghost">
-          {copiedToClipboard || downloaded ? (
-            <Check className="text-success h-4 w-4" />
-          ) : (
-            <Download className="h-4 w-4" />
-          )}
+        <Button asChild size="icon" variant="ghost">
+          <span>
+            {copiedToClipboard || downloaded ? (
+              <Check className="text-success h-4 w-4" />
+            ) : (
+              <Download className="h-4 w-4" />
+            )}
+          </span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
