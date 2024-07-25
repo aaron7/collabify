@@ -6,7 +6,7 @@ import routes from '@/routes';
 
 type ErrorProps = {
   error: Error;
-  resetErrorBoundary: () => null;
+  resetErrorBoundary: () => void;
 };
 
 const Error = ({ error, resetErrorBoundary }: ErrorProps) => {

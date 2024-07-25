@@ -21,7 +21,8 @@ const Loading = ({
   showLoader = true,
   title,
 }: LoadingProps) => {
-  const onDownloadMarkdown = () => downloadAsMarkdown(mostRecentMarkdown);
+  const onDownloadMarkdown = () =>
+    mostRecentMarkdown && downloadAsMarkdown(mostRecentMarkdown);
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center max-sm:px-4">
@@ -37,14 +38,20 @@ const Loading = ({
       </Button>
       {copy && (
         <p className="mt-12 max-w-96 font-light">
-          {copy} You can download the most recently seen markdown{' '}
-          <span
-            className="cursor-pointer text-blue-500"
-            onClick={onDownloadMarkdown}
-          >
-            here
-          </span>
-          .
+          {copy}
+          {mostRecentMarkdown && (
+            <>
+              {' '}
+              You can download the most recently seen markdown{' '}
+              <span
+                className="cursor-pointer text-blue-500"
+                onClick={onDownloadMarkdown}
+              >
+                here
+              </span>
+              .
+            </>
+          )}
         </p>
       )}
     </div>
