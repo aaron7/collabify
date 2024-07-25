@@ -82,25 +82,31 @@ const Session = () => {
     );
   }
 
+  if (!isActive) {
+    return <EndOfSession session={session} value={value} />;
+  }
+
   if (!webrtcProvider || !isConnected || (!hasSeenEditor && !isHostOnline)) {
+    const copy = value
+      ? 'If you cannot connect, the host is offline.'
+      : 'If you cannot connect, either the host is offline or the secret URL is incorrect.';
     return (
       <Loading
-        copy="If you cannot connect, either the host is offline or the secret URL is incorrect."
+        copy={copy}
         ctaCopy="Stop connecting"
+        mostRecentMarkdown={value}
         onCtaClick={() => navigate(routes.landing.path)}
         title="Connecting to host"
       />
     );
   }
 
-  if (!isActive) {
-    return <EndOfSession session={session} value={value} />;
-  }
-
   if (!isHostOnline) {
     return (
       <Loading
+        copy="Please wait until you host is back online."
         ctaCopy="Exit session"
+        mostRecentMarkdown={value}
         onCtaClick={() => navigate(routes.landing.path)}
         title="Your host has gone offline"
       />
