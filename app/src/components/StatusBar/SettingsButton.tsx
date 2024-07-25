@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -36,13 +35,9 @@ export function SettingsButton() {
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Settings</DialogTitle>
-          <DialogDescription>
-            Your data is stored in your browser and only shared with people you
-            collaborate with over an end-to-end encrypted connection.
-          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 py-4">
+          <div className="grid gap-4 space-y-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right" htmlFor="name">
                 Name
@@ -53,6 +48,29 @@ export function SettingsButton() {
                 onChange={(e) => setName(e.target.value)}
                 value={name}
               />
+            </div>
+            <div>
+              <p className="text-sm">
+                Your feedback is welcome at{' '}
+                <a
+                  className="text-blue-500"
+                  href="https://feedback.collabify.it"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  feedback.collabify.it
+                </a>{' '}
+                or via our{' '}
+                <a
+                  className="text-blue-500"
+                  href="https://github.com/aaron7/collabify"
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  GitHub repo
+                </a>
+                .
+              </p>
             </div>
           </div>
           <DialogFooter>
