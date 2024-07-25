@@ -15,7 +15,7 @@ const Landing = () => {
         <ThemeButton />
       </div>
       <div className="flex min-h-screen justify-center">
-        <div className="flex flex-col items-center justify-center space-y-12 px-6 py-8 md:px-0 md:py-0">
+        <div className="flex flex-col items-center justify-center space-y-12 px-6 py-8 md:py-0 lg:px-0">
           <div className="flex flex-col items-center">
             <h1 className="text-5xl font-bold">Collabify.it</h1>
             <span className="mt-5 italic">Simple collaborative markdown</span>

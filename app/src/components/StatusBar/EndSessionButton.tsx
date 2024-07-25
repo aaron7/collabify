@@ -30,7 +30,8 @@ export function EndSessionButton({ onEndSession }: EndSessionButtonProps) {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you sure?</AlertDialogTitle>
           <AlertDialogDescription>
-            Your collaborators will be disconnected.
+            Your collaborators will be disconnected but they will be able to
+            download a copy of the markdown.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>

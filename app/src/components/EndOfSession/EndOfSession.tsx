@@ -5,6 +5,9 @@ import {
   ClipboardCopy,
   DoorClosed,
   Download,
+  Github,
+  House,
+  MessageCircle,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -33,11 +36,11 @@ const EndOfSession = ({ session, value }: EndOfSessionProps) => {
   );
 
   return (
-    <div className="flex h-screen w-full flex-col items-center justify-center max-sm:px-4">
-      <h2 className="mb-5 text-center text-3xl">The session has ended</h2>
+    <div className="flex h-screen w-full flex-col items-center justify-center space-y-8 max-sm:px-4">
+      <h2 className="text-center text-3xl">Thank you for collaborating</h2>
 
       {/* TODO: Show true sync status */}
-      <div className="mb-10 flex items-center justify-center">
+      <div className="flex items-center justify-center">
         {session.isHost ? (
           session.apiSettings ? (
             <>
@@ -45,7 +48,7 @@ const EndOfSession = ({ session, value }: EndOfSessionProps) => {
               <span>Synced to your file successfully</span>
             </>
           ) : (
-            <span>Please export your markdown</span>
+            <span>Please download your markdown</span>
           )
         ) : (
           <>
@@ -55,14 +58,16 @@ const EndOfSession = ({ session, value }: EndOfSessionProps) => {
         )}
       </div>
 
-      <div className="mb-3 flex space-x-2">
+      <div className="flex space-x-2">
         <Button onClick={downloadMarkdown} variant="outline">
           {downloadedMarkdown ? (
             <Check className="text-success mr-2 h-4 w-4" />
           ) : (
             <Download className="mr-2 h-4 w-4" />
           )}
-          Download a copy
+          {session.isHost && !session.apiSettings
+            ? 'Download file'
+            : 'Download a copy'}
         </Button>
         <Button onClick={copyMarkdownToClipboard} variant="outline">
           {copiedMarkdownToClipboard ? (
@@ -80,9 +85,32 @@ const EndOfSession = ({ session, value }: EndOfSessionProps) => {
         )}
       </div>
 
-      <div className="flex">
+      <div className="sm:place-items-auto grid grid-cols-1 place-items-center sm:grid-cols-3">
+        <a
+          href="https://feedback.collabify.it"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Button variant="link">
+            <MessageCircle className="mr-1 h-4 w-4" />
+            Give feedback
+          </Button>
+        </a>
+        <a
+          href="https://github.com/aaron7/collabify"
+          rel="noreferrer"
+          target="_blank"
+        >
+          <Button variant="link">
+            <Github className="mr-1 h-4 w-4" />
+            GitHub
+          </Button>
+        </a>
         <Link to={routes.landing.path}>
-          <Button variant="link">Go to collabify.it</Button>
+          <Button variant="link">
+            <House className="mr-1 h-4 w-4" />
+            Go to collabify.it
+          </Button>
         </Link>
       </div>
     </div>
