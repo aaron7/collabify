@@ -1,21 +1,16 @@
-import ComingSoon from '@/routes/ComingSoon';
 import Join from '@/routes/Join';
 import Landing from '@/routes/Landing';
 import New from '@/routes/New';
 import Session from '@/routes/Session';
 
 const routesConfig = {
-  comingSoon: {
-    element: ComingSoon,
-    path: '/',
-  },
   join: {
     element: Join,
     path: '/join',
   },
   landing: {
     element: Landing,
-    path: '/landing',
+    path: '/',
   },
   new: {
     element: New,
