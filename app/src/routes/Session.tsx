@@ -119,7 +119,12 @@ const Session = () => {
     setIsWelcomeDialogOpen(!settings.doNotShowWelcomeDialog);
   }
 
-  const initialSelection = location.state?.initialSelection || { anchor: 0 };
+  const requstedInitialSelection = location.state?.initialSelection;
+  const initialSelection =
+    requstedInitialSelection && requstedInitialSelection.anchor <= value.length
+      ? requstedInitialSelection
+      : { anchor: 0 };
+
   const autoFocus = location.state?.autoFocus || false;
 
   return (
