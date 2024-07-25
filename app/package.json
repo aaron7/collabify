@@ -37,7 +37,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lib0": "^0.2.93",
-    "lucide-react": "^0.414.0",
+    "lucide-react": "^0.416.0",
     "minidenticons": "^4.2.1",
     "node-emoji": "^2.1.3",
     "openapi-fetch": "^0.10.0",
