@@ -13,11 +13,10 @@ import { useCollabProvider } from '@/hooks/webrtc';
 import { useSettings } from '@/providers/SettingsProvider';
 import routes from '@/routes';
 import { saveMarkdown, stopSessionCallback } from '@/utils/api';
+import { getTitle } from '@/utils/doc';
 
 const updateTitle = (doc: string) => {
-  const titleMatch = doc.match(/^# (.+)$/m);
-  const title = titleMatch ? titleMatch[1] : 'Untitled';
-
+  const title = getTitle(doc);
   if (document.title !== title) {
     document.title = title;
   }

@@ -15,8 +15,10 @@ import { Button } from '@/components/ui/button';
 import { useActiveTimeout } from '@/hooks/timeout';
 import routes from '@/routes';
 import { copyToClipboard } from '@/utils/clipboard';
+import { getTitle } from '@/utils/doc';
 import { downloadAsMarkdown } from '@/utils/download';
 import { Session } from '@/utils/session';
+import { slugify } from '@/utils/string';
 
 type EndOfSessionProps = {
   session: Session;
@@ -28,7 +30,7 @@ const EndOfSession = ({ session, value }: EndOfSessionProps) => {
 
   // TODO: Extract a better filename
   const [downloadMarkdown, downloadedMarkdown] = useActiveTimeout(() =>
-    downloadAsMarkdown('collabify.md', value),
+    downloadAsMarkdown(`${slugify(getTitle(value))}.md`, value),
   );
 
   const [copyMarkdownToClipboard, copiedMarkdownToClipboard] = useActiveTimeout(
