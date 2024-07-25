@@ -64,22 +64,10 @@ export function WelcomeDialog({
             </a>
             .
           </li>
-          {/* <li>
-            Learn more at{' '}
-            <a
-              className="text-blue-500"
-              href="https://collabify.it"
-              rel="noreferrer"
-              target="_blank"
-            >
-              collabify.it
-            </a>
-          </li> */}
         </ul>
         <hr />
         <form onSubmit={handleSubmit}>
           <div className="grid gap-4 pb-6 pt-2">
-            {/* <span>Providing a name can be helpful to others</span> */}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label className="text-right" htmlFor="name">
                 Name
