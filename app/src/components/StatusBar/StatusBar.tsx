@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Check, ClipboardCopy, Download, Link as LinkIcon } from 'lucide-react';
+import { Check, ClipboardCopy, Link as LinkIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import ThemeButton from '@/components/ThemeButton/ThemeButton';
@@ -12,6 +12,7 @@ import { buildJoinUrl, type Session } from '@/utils/session';
 
 import { Collaborators } from './Collaborators';
 import { EndSessionButton } from './EndSessionButton';
+import { ExportButton } from './ExportButton';
 import { SettingsButton } from './SettingsButton';
 
 type StatusBarProps = {
@@ -33,10 +34,6 @@ const StatusBar = ({
 
   const [copyJoinUrlToClipboard, copiedJoinUrlToClipboard] = useActiveTimeout(
     () => copyToClipboard(joinUrl),
-  );
-
-  const [copyMarkdownToClipboard, copiedMarkdownToClipboard] = useActiveTimeout(
-    () => copyToClipboard(value),
   );
 
   return (
@@ -66,13 +63,7 @@ const StatusBar = ({
           <span className="ml-2 hidden sm:block">Copy invite URL</span>
         </Button>
 
-        <Button onClick={copyMarkdownToClipboard} size="icon" variant="ghost">
-          {copiedMarkdownToClipboard ? (
-            <Check className="text-success h-4 w-4" />
-          ) : (
-            <Download className="h-4 w-4" />
-          )}
-        </Button>
+        <ExportButton markdownValue={value} />
 
         <ThemeButton />
 
