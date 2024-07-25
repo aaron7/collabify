@@ -134,7 +134,7 @@ const Session = () => {
       <Separator />
       <div className="flex-grow overflow-y-auto">
         <div
-          className="mx-auto cursor-text lg:max-w-3xl"
+          className="mx-auto max-w-3xl cursor-text px-2"
           onClick={onEmptySpaceBehindEditorClick}
         >
           <Editor
