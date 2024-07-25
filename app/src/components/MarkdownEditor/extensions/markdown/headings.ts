@@ -102,12 +102,30 @@ const headingsPlugin = ViewPlugin.fromClass(
 );
 
 const headingsHighlightStyle = HighlightStyle.define([
-  { class: 'my-4 text-4xl font-semibold no-underline', tag: tags.heading1 },
-  { class: 'my-3 text-3xl font-semibold no-underline', tag: tags.heading2 },
-  { class: 'my-2 text-2xl font-semibold no-underline', tag: tags.heading3 },
-  { class: 'my-2 text-xl font-semibold no-underline', tag: tags.heading4 },
-  { class: 'my-1 text-lg font-semibold no-underline', tag: tags.heading5 },
-  { class: 'text-base font-semibold no-underline', tag: tags.heading6 },
+  {
+    class: 'text-4xl font-extrabold tracking-tight lg:text-5xl no-underline',
+    tag: tags.heading1,
+  },
+  {
+    class: 'text-3xl font-semibold tracking-tight no-underline',
+    tag: tags.heading2,
+  },
+  {
+    class: 'text-2xl font-semibold tracking-tight no-underline',
+    tag: tags.heading3,
+  },
+  {
+    class: 'text-xl font-semibold tracking-tight no-underline',
+    tag: tags.heading4,
+  },
+  {
+    class: 'text-lg font-semibold tracking-tight no-underline',
+    tag: tags.heading5,
+  },
+  {
+    class: 'text-base font-semibold tracking-tight no-underline',
+    tag: tags.heading6,
+  },
 ]);
 
 const headingsSyntaxHighlighting = syntaxHighlighting(headingsHighlightStyle);
