@@ -18,12 +18,12 @@ const Landing = () => {
         <div className="flex flex-col items-center justify-center space-y-12 px-6 py-8 md:py-0 lg:px-0">
           <div className="flex flex-col items-center">
             <h1 className="text-5xl font-bold">Collabify.it</h1>
-            <span className="mt-5 italic">Simple collaborative markdown</span>
+            <span className="mt-5 italic">Simple Collaborative Markdown</span>
           </div>
 
           <div className="grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-2">
             <div className="space-y-2">
-              <h3 className="text-2xl">Unsurprising & fast editing</h3>
+              <h3 className="text-2xl">Unsurprising Markdown</h3>
               <p className="font-light">
                 Inspired by{' '}
                 <a className="text-blue-500" href="https://typora.io/">
@@ -33,7 +33,7 @@ const Landing = () => {
                 <a className="text-blue-500" href="https://obsidian.md/">
                   Obsidian
                 </a>
-                , the web markdown editor won’t surprise you or get in your way.
+                , the web Markdown editor won’t surprise you or get in your way.
               </p>
             </div>
             <div className="space-y-2">

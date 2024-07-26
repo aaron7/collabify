@@ -77,7 +77,7 @@ const Session = () => {
         copy="If you cannot connect, our signaling servers may be down"
         ctaCopy="Stop connecting"
         onCtaClick={() => navigate(routes.landing.path)}
-        title="Connecting to collabify.it"
+        title="Connecting"
       />
     );
   }
