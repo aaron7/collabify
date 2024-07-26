@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoaderCircle } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,7 @@ type LoadingProps = {
   ctaCopy: string;
   mostRecentMarkdown?: string;
   onCtaClick: () => void;
+  showCopyAfter?: number;
   showLoader?: boolean;
   title: string;
 };
@@ -18,11 +19,22 @@ const Loading = ({
   ctaCopy,
   mostRecentMarkdown,
   onCtaClick,
+  showCopyAfter = 0,
   showLoader = true,
   title,
 }: LoadingProps) => {
   const onDownloadMarkdown = () =>
     mostRecentMarkdown && downloadAsMarkdown(mostRecentMarkdown);
+
+  const [showCopy, setShowCopy] = useState(false);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setShowCopy(true);
+    }, showCopyAfter);
+
+    return () => clearTimeout(timeoutId);
+  }, [showCopyAfter, setShowCopy]);
 
   return (
     <div className="flex h-screen w-full flex-col items-center justify-center max-sm:px-4">
@@ -36,7 +48,7 @@ const Loading = ({
       <Button onClick={onCtaClick} variant="outline">
         {ctaCopy}
       </Button>
-      {copy && (
+      {showCopy && copy && (
         <p className="text-muted-foreground mt-12 max-w-96 font-light">
           {copy}
           {mostRecentMarkdown && (

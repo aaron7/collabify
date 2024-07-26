@@ -77,6 +77,7 @@ const Session = () => {
         copy="If you cannot connect, our signaling servers may be down"
         ctaCopy="Stop connecting"
         onCtaClick={() => navigate(routes.landing.path)}
+        showCopyAfter={5000}
         title="Connecting"
       />
     );
@@ -96,6 +97,7 @@ const Session = () => {
         ctaCopy="Stop connecting"
         mostRecentMarkdown={value}
         onCtaClick={() => navigate(routes.landing.path)}
+        showCopyAfter={5000}
         title="Connecting to host"
       />
     );
