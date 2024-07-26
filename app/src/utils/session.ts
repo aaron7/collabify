@@ -81,7 +81,7 @@ export function getSessionFromUrlFragment(urlFragement: string): Session {
   const session = loadSession(id);
   if (!session) {
     throw new Error(
-      'Please ask the host for a join URL instead of the session URL',
+      'Please ask your host for a join URL instead of the session URL',
     );
   }
 

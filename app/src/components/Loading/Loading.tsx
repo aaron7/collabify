@@ -37,7 +37,7 @@ const Loading = ({
         {ctaCopy}
       </Button>
       {copy && (
-        <p className="mt-12 max-w-96 font-light">
+        <p className="text-muted-foreground mt-12 max-w-96 font-light">
           {copy}
           {mostRecentMarkdown && (
             <>
