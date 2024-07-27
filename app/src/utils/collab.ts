@@ -54,7 +54,8 @@ export const createWebrtcProvider = ({
 }: CreateWebrtcProviderProps) => {
   const roomId = `${ROOM_ID_PREFIX}${session.id}`;
 
-  const signalingServerUrl = import.meta.env.VITE_WEBRTC_SIGNALING_SERVER_URL;
+  const signalingServersJson = import.meta.env
+    .VITE_WEBRTC_SIGNALING_SERVERS_JSON;
   const iceServersJson = import.meta.env.VITE_WEBRTC_ICE_SERVERS_JSON;
   const webrtcProvider = new WebrtcProvider(roomId, ydoc, {
     password: session.secret,
@@ -63,7 +64,9 @@ export const createWebrtcProvider = ({
         ...(iceServersJson ? { iceServers: JSON.parse(iceServersJson) } : {}),
       },
     },
-    signaling: [signalingServerUrl || 'ws://localhost:4444'],
+    signaling: signalingServersJson
+      ? JSON.parse(signalingServersJson)
+      : ['ws://localhost:4444'],
   });
 
   const userColor = usercolors[uint32() % usercolors.length];
