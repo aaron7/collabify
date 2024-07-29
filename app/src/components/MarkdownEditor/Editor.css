@@ -6,7 +6,7 @@
 }
 
 .cm-editor .cm-scroller {
-  @apply h-max flex-grow flex-col !items-baseline justify-start overflow-x-hidden font-sans;
+  @apply h-max flex-grow flex-col !items-baseline justify-start overflow-x-hidden font-sans text-base;
 }
 
 .cm-theme-none {
