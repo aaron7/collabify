@@ -1,17 +1,12 @@
 .cm-editor {
-  border: none;
-  outline: none;
+  @apply flex-grow border-none outline-none;
 }
 .cm-editor.cm-focused {
-  border: none;
-  outline: none;
-}
-.cm-editor .cm-scroller {
-  @apply h-max flex-grow flex-col !items-baseline justify-start overflow-x-hidden font-sans;
+  @apply border-none outline-none;
 }
 
-.cm-editor {
-  @apply flex-grow;
+.cm-editor .cm-scroller {
+  @apply h-max flex-grow flex-col !items-baseline justify-start overflow-x-hidden font-sans;
 }
 
 .cm-theme-none {
