@@ -13,6 +13,6 @@
   @apply flex flex-grow flex-col;
 }
 
-.cm-content {
-  @apply w-full;
+.cm-editor .cm-content {
+  @apply w-full pb-96;
 }
