@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
@@ -39,7 +38,6 @@ export function WelcomeDialog({
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
           <DialogTitle>Welcome</DialogTitle>
-          <DialogDescription>Simple collaborative markdown</DialogDescription>
         </DialogHeader>
         <ul className="ml-6 list-disc text-sm">
           <li>Your data is end-to-end encrypted.</li>

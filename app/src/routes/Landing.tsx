@@ -15,25 +15,18 @@ const Landing = () => {
         <ThemeButton />
       </div>
       <div className="flex min-h-screen justify-center">
-        <div className="flex flex-col items-center justify-center space-y-12 px-6 py-8 md:py-0 lg:px-0">
+        <div className="flex flex-col items-center justify-center space-y-16 px-6 py-8 md:py-0 lg:px-0">
           <div className="flex flex-col items-center">
             <h1 className="text-5xl font-bold">Collabify.it</h1>
-            <span className="mt-5 italic">Simple Collaborative Markdown</span>
           </div>
 
           <div className="grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-2">
             <div className="space-y-2">
               <h3 className="text-2xl">Unsurprising Markdown</h3>
               <p className="font-light">
-                Inspired by{' '}
-                <a className="text-blue-500" href="https://typora.io/">
-                  Typora
-                </a>{' '}
-                and{' '}
-                <a className="text-blue-500" href="https://obsidian.md/">
-                  Obsidian
-                </a>
-                , the web Markdown editor won’t surprise you or get in your way.
+                Inspired by <a href="https://typora.io/">Typora</a> and{' '}
+                <a href="https://obsidian.md/">Obsidian</a>, the collaborative
+                Markdown editor won’t surprise you or get in your way.
               </p>
             </div>
             <div className="space-y-2">
@@ -48,7 +41,7 @@ const Landing = () => {
               <h3 className="text-2xl">Integrated with your tooling</h3>
               <p className="font-light">
                 Launch live sessions from your favourite Markdown editor, and
-                get back quickly when you’re done.
+                sync back when you’re done.
               </p>
             </div>
             <div className="space-y-2">
@@ -79,11 +72,10 @@ const Landing = () => {
 
           <div className="grid grid-cols-1 gap-x-5 gap-y-10 md:grid-cols-3">
             <div className="flex flex-col items-center space-y-2">
-              <span className="text-2xl">CLI</span>
-              <div className="bg-secondary flex flex-col rounded-xl px-4 py-2 font-mono">
-                <span className="text-l">brew install aaron7/collabify</span>
-                <span className="text-l">collabify notes.md</span>
-              </div>
+              <span className="text-2xl">Your favourite editor</span>
+              <span className="text-l flex h-full items-center justify-center italic">
+                Obsidian and VSCode coming soon
+              </span>
             </div>
 
             <div className="flex flex-col items-center space-y-2">
@@ -98,10 +90,11 @@ const Landing = () => {
             </div>
 
             <div className="flex flex-col items-center space-y-2">
-              <span className="text-2xl">Your favourite editor</span>
-              <span className="text-l flex h-full items-center justify-center italic">
-                Obsidian and VSCode coming soon
-              </span>
+              <span className="text-2xl">CLI</span>
+              <div className="bg-secondary flex flex-col rounded-xl px-4 py-2 font-mono">
+                <span className="text-l">brew install aaron7/collabify</span>
+                <span className="text-l">collabify notes.md</span>
+              </div>
             </div>
           </div>
         </div>
