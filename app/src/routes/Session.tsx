@@ -54,16 +54,6 @@ const Session = () => {
     updateTitle(val);
   }, []);
 
-  // Focus the editor when the user clicks the empty space when the editor
-  // doesn't have enough lines to fill the screen.
-  const onEmptySpaceBehindEditorClick = (
-    e: React.MouseEvent<HTMLDivElement>,
-  ) => {
-    if (e.target === e.currentTarget) {
-      editorRefs?.current?.view?.focus();
-    }
-  };
-
   const onEndSessionWrapper = () => {
     saveMarkdown(session, value).then(() => {
       onEndSession();
@@ -140,10 +130,7 @@ const Session = () => {
       />
       <Separator />
       <div className="flex-grow overflow-y-auto">
-        <div
-          className="mx-auto max-w-3xl cursor-text px-2"
-          onClick={onEmptySpaceBehindEditorClick}
-        >
+        <div className="mx-auto flex min-h-full max-w-3xl flex-col px-2">
           <Editor
             autoFocus={autoFocus}
             initialSelection={initialSelection}

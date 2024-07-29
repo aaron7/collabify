@@ -7,6 +7,17 @@
   outline: none;
 }
 .cm-editor .cm-scroller {
-  @apply font-sans;
-  @apply overflow-x-hidden;
+  @apply h-max flex-grow flex-col !items-baseline justify-start overflow-x-hidden font-sans;
+}
+
+.cm-editor {
+  @apply flex-grow;
+}
+
+.cm-theme-none {
+  @apply flex flex-grow flex-col;
+}
+
+.cm-content {
+  @apply w-full;
 }
