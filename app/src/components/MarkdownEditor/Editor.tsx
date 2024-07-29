@@ -63,7 +63,11 @@ const Editor = ({
       extensions={[
         baseTheme,
         getTheme(theme === 'system' ? systemTheme : theme),
-        markdown({ base: markdownLanguage, codeLanguages: languages }),
+        markdown({
+          addKeymap: false, // We add our own keymap in markdownPlugin
+          base: markdownLanguage,
+          codeLanguages: languages,
+        }),
         markdownPlugin,
         emojiPlugin,
         RCEditorView.lineWrapping,
