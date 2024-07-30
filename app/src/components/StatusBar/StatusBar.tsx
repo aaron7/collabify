@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Check, ClipboardCopy, Link as LinkIcon } from 'lucide-react';
+import { Check, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import ThemeButton from '@/components/ThemeButton/ThemeButton';
@@ -56,8 +56,7 @@ const StatusBar = ({
             <Check className="text-success h-4 w-4" />
           ) : (
             <>
-              <ClipboardCopy className="hidden h-4 w-4 md:block" />
-              <LinkIcon className="h-4 w-4 md:hidden" />
+              <UserPlus className="h-4 w-4" />
             </>
           )}
           <span className="ml-2 hidden md:block">Copy invite URL</span>
