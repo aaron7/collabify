@@ -14,7 +14,7 @@ turndownService.use(gfm);
 
 const getCurrentSelectedNode = (view: EditorView) => {
   const currentSelection = view.state.selection.main;
-  const syntaxTree = ensureSyntaxTree(view.state, currentSelection.from, 1500);
+  const syntaxTree = ensureSyntaxTree(view.state, currentSelection.from);
   if (!syntaxTree) {
     // Don't worry if we couldn't get the syntax tree in time
     return null;
