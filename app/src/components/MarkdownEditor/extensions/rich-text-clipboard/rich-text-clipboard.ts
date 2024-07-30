@@ -12,6 +12,11 @@ const turndownService = new TurndownService({
 });
 turndownService.use(gfm);
 
+const showdownConverter = new showdown.Converter({
+  strikethrough: true,
+  tables: true,
+});
+
 const getCurrentSelectedNode = (view: EditorView) => {
   const currentSelection = view.state.selection.main;
   const syntaxTree = ensureSyntaxTree(view.state, currentSelection.from);
@@ -82,17 +87,12 @@ const richTextClipboardPlugin = createRichTextClipboardPlugin();
 const includeRichTextOnCopyPlugin = ViewPlugin.fromClass(
   class {
     constructor(view: EditorView) {
-      const converter = new showdown.Converter({
-        strikethrough: true,
-        tables: true,
-      });
-
       view.dom.addEventListener('copy', (event: ClipboardEvent) => {
         const plainText = event.clipboardData?.getData('text/plain');
         if (plainText) {
           event.clipboardData?.setData(
             'text/html',
-            converter.makeHtml(plainText),
+            showdownConverter.makeHtml(plainText),
           );
         }
       });
