@@ -14,6 +14,7 @@ import createCollabPlugin from './extensions/collab/collab';
 import emojiPlugin from './extensions/emoji';
 import fenchedCodePlugin from './extensions/fenced-code/decoration';
 import markdownPlugin from './extensions/markdown';
+import richTextClipboardPlugin from './extensions/rich-text-clipboard/rich-text-clipboard';
 import { getTheme } from './extensions/theme/theme';
 
 import './Editor.css';
@@ -74,6 +75,7 @@ const Editor = ({
         RCEditorView.contentAttributes.of({ autocapitalize: 'on' }),
         ...(collabPlugin ? [collabPlugin] : []),
         fenchedCodePlugin,
+        richTextClipboardPlugin,
       ]}
       height="100%"
       onChange={onChange}

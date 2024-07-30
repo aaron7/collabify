@@ -33,5 +33,6 @@
       "module": "esnext",
       "isolatedModules": false
     }
-  }
+  },
+  "files": ["declarations.d.ts"]
 }
