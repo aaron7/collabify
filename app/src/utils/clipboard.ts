@@ -8,8 +8,8 @@ const showdownConverter = new showdown.Converter({
 export async function copyToClipboard(text: string): Promise<void> {
   const richText = showdownConverter.makeHtml(text);
   const clipboardItem = new ClipboardItem({
-    'text/plain': new Blob([text], { type: 'text/plain' }),
     'text/html': new Blob([richText], { type: 'text/html' }),
+    'text/plain': new Blob([text], { type: 'text/plain' }),
   });
 
   await navigator.clipboard.write([clipboardItem]).catch((error) => {

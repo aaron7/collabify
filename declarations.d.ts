@@ -52,6 +52,7 @@ declare namespace TurndownService {
 
     blankRule: ReplacementFunction;
     defaultRule: ReplacementFunction;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     forEach(callback: (rule: Rule, index: number) => any): void;
 
     forNode(node: Node): Rule;
