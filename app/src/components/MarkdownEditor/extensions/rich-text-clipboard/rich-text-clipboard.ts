@@ -1,7 +1,8 @@
 import { ensureSyntaxTree } from '@codemirror/language';
-import { EditorView } from '@codemirror/view';
+import { EditorView, ViewPlugin } from '@codemirror/view';
 import TurndownService from '@joplin/turndown';
 import { gfm } from '@joplin/turndown-plugin-gfm';
+import showdown from 'showdown';
 
 const turndownService = new TurndownService({
   codeBlockStyle: 'fenced',
@@ -78,4 +79,27 @@ const createRichTextClipboardPlugin = () => {
 
 const richTextClipboardPlugin = createRichTextClipboardPlugin();
 
-export default richTextClipboardPlugin;
+const includeRichTextOnCopyPlugin = ViewPlugin.fromClass(
+  class {
+    constructor(view: EditorView) {
+      const converter = new showdown.Converter({
+        strikethrough: true,
+        tables: true,
+      });
+
+      view.dom.addEventListener('copy', (event: ClipboardEvent) => {
+        const plainText = event.clipboardData?.getData('text/plain');
+        if (plainText) {
+          event.clipboardData?.setData(
+            'text/html',
+            converter.makeHtml(plainText),
+          );
+        }
+      });
+    }
+
+    destroy() {}
+  },
+);
+
+export default [richTextClipboardPlugin, includeRichTextOnCopyPlugin];
