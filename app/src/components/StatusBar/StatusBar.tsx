@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { Check, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { toast } from 'sonner';
 
 import ThemeButton from '@/components/ThemeButton/ThemeButton';
 import { Button } from '@/components/ui/button';
@@ -33,7 +34,10 @@ const StatusBar = ({
   const joinUrl = useMemo(() => buildJoinUrl(session), [session]);
 
   const [copyJoinUrlToClipboard, copiedJoinUrlToClipboard] = useActiveTimeout(
-    () => copyToClipboard(joinUrl),
+    () => {
+      copyToClipboard(joinUrl);
+      toast.success('Copied URL to clipboard');
+    },
   );
 
   return (

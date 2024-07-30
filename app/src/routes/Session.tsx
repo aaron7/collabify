@@ -7,6 +7,7 @@ import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
+import { Toaster } from '@/components/ui/sonner';
 import { WelcomeDialog } from '@/components/WelcomeDialog/WelcomeDialog';
 import { useSession } from '@/hooks/session';
 import { useCollabProvider } from '@/hooks/webrtc';
@@ -145,6 +146,7 @@ const Session = () => {
         isOpen={isWelcomeDialogOpen}
         setIsOpen={setIsWelcomeDialogOpen}
       />
+      <Toaster richColors />
     </div>
   );
 };
