@@ -10,7 +10,7 @@ import {
 } from '@codemirror/view';
 import { SyntaxNode } from '@lezer/common';
 
-import { overlapsWithSelection } from '../utils/selection';
+import { overlapsWithSelection } from './utils/selection';
 
 export class BulletWidget extends WidgetType {
   override eq() {

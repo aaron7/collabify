@@ -8,8 +8,8 @@ import {
   ViewUpdate,
 } from '@codemirror/view';
 
-import { EmptyWidget } from '../utils/empty-widget';
-import { overlapsWithSelection } from '../utils/selection';
+import { EmptyWidget } from './utils/empty-widget';
+import { overlapsWithSelection } from './utils/selection';
 
 import './fenced-code.css';
 

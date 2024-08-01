@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import { mkState, stateStr } from '@/test-utils/state';
 
-import { makeBold, makeItalic, makeStrikethrough } from './commands';
+import { makeBold, makeItalic, makeStrikethrough } from './command-keymap';
 
 const cmd = (state: EditorState, command: StateCommand) => {
   command({

@@ -12,7 +12,6 @@ import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 
 import createCollabPlugin from './extensions/collab/collab';
 import emojiPlugin from './extensions/emoji';
-import fenchedCodePlugin from './extensions/fenced-code/decoration';
 import markdownPlugin from './extensions/markdown';
 import richTextClipboardPlugin from './extensions/rich-text-clipboard/rich-text-clipboard';
 import { getTheme } from './extensions/theme/theme';
@@ -64,18 +63,18 @@ const Editor = ({
       extensions={[
         baseTheme,
         getTheme(theme === 'system' ? systemTheme : theme),
+        RCEditorView.lineWrapping,
+        RCEditorView.contentAttributes.of({ autocapitalize: 'on' }),
         markdown({
           addKeymap: false, // We add our own keymap in markdownPlugin
           base: markdownLanguage,
           codeLanguages: languages,
         }),
+
         markdownPlugin,
-        emojiPlugin,
-        RCEditorView.lineWrapping,
-        RCEditorView.contentAttributes.of({ autocapitalize: 'on' }),
-        ...(collabPlugin ? [collabPlugin] : []),
-        fenchedCodePlugin,
         richTextClipboardPlugin,
+        emojiPlugin,
+        ...(collabPlugin ? [collabPlugin] : []),
       ]}
       height="100%"
       onChange={onChange}

@@ -1,6 +1,6 @@
-import emojiCompletion from './completion';
-import emojiDecoration from './decoration';
+import autocompletion from './autocompletion';
+import emoji from './emoji';
 
-const emojiPlugin = [emojiCompletion, emojiDecoration];
+const emojiPlugin = [autocompletion, emoji];
 
 export default emojiPlugin;

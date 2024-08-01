@@ -4,7 +4,8 @@ import { Prec } from '@codemirror/state';
 import { keymap } from '@codemirror/view';
 
 import closeBrackets from './close-brackets';
-import commands from './commands';
+import commandKeymap from './command-keymap';
+import fencedCode from './fenced-code';
 import formatting from './formatting';
 import headings from './headings';
 import horizontalRule from './horizontal-rule';
@@ -20,13 +21,14 @@ const markdownKeymapWithoutDeletion = markdownKeymap.filter(
 
 const markdownPlugin = [
   closeBrackets,
+  fencedCode,
   formatting,
   headings,
   horizontalRule,
   indentUnit.of('    '),
   inlineCode,
   lists,
-  Prec.high(commands),
+  Prec.high(commandKeymap),
   Prec.high(keymap.of(markdownKeymapWithoutDeletion)),
 ];
 
