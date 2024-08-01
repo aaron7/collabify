@@ -86,6 +86,9 @@ importers:
       '@joplin/turndown-plugin-gfm':
         specifier: ^1.0.56
         version: 1.0.56
+      '@lezer/common':
+        specifier: ^1.2.1
+        version: 1.2.1
       '@lezer/highlight':
         specifier: ^1.2.0
         version: 1.2.0

@@ -8,14 +8,11 @@ import {
   ViewUpdate,
   WidgetType,
 } from '@codemirror/view';
+import { SyntaxNode } from '@lezer/common';
 
 import { overlapsWithSelection } from '../utils/selection';
 
 export class BulletWidget extends WidgetType {
-  constructor(readonly view: EditorView) {
-    super();
-  }
-
   override eq() {
     return true;
   }
@@ -27,6 +24,72 @@ export class BulletWidget extends WidgetType {
     return span;
   }
 }
+
+export class TaskWidget extends WidgetType {
+  constructor(readonly checked: boolean) {
+    super();
+  }
+
+  override eq(other: TaskWidget) {
+    return other.checked == this.checked;
+  }
+
+  toDOM() {
+    const wrap = document.createElement('span');
+    wrap.className = 'md-task-checkbox';
+
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = this.checked;
+
+    wrap.append(checkbox);
+    return wrap;
+  }
+
+  override ignoreEvent() {
+    return false;
+  }
+}
+
+function isNodeChecked(view: EditorView, node: SyntaxNode) {
+  return view.state.sliceDoc(node.from, node.to) === '[x]';
+}
+
+function toogleCheckbox(view: EditorView, pos: number) {
+  const syntaxTree = ensureSyntaxTree(view.state, pos);
+  if (!syntaxTree) {
+    // Don't worry if we couldn't get the syntax tree in time
+    return true;
+  }
+
+  const taskMarker = syntaxTree.resolve(pos, -1);
+  if (!taskMarker || taskMarker.type.name !== 'TaskMarker') {
+    return false;
+  }
+
+  const isChecked = isNodeChecked(view, taskMarker);
+  view.dispatch({
+    changes: {
+      from: taskMarker.from + 1,
+      insert: isChecked ? ' ' : 'x',
+      to: taskMarker.to - 1,
+    },
+  });
+
+  return true;
+}
+
+const bulletDeco = Decoration.replace({
+  widget: new BulletWidget(),
+});
+
+const uncheckedTaskDeco = Decoration.replace({
+  widget: new TaskWidget(false),
+});
+
+const checkedTaskDeco = Decoration.replace({
+  widget: new TaskWidget(true),
+});
 
 function lists(view: EditorView, oldLists: DecorationSet) {
   const lists: Range<Decoration>[] = [];
@@ -41,10 +104,6 @@ function lists(view: EditorView, oldLists: DecorationSet) {
       return oldLists;
     }
 
-    const deco = Decoration.replace({
-      widget: new BulletWidget(view),
-    });
-
     syntaxTree.iterate({
       enter: (node) => {
         const nodeType = node.type.name;
@@ -52,16 +111,25 @@ function lists(view: EditorView, oldLists: DecorationSet) {
           nodeType === 'ListMark' &&
           node.matchContext(['BulletList', 'ListItem'])
         ) {
+          const taskMarker = node.node.nextSibling?.getChild('TaskMarker');
+
           if (
             overlapsWithSelection({
-              range: { from: node.from, to: node.to },
+              range: { from: node.from, to: taskMarker?.to || node.to },
               state: view.state,
             })
           ) {
             return;
           }
 
-          lists.push(deco.range(node.from, node.to));
+          if (taskMarker) {
+            const taskDeco = isNodeChecked(view, taskMarker)
+              ? checkedTaskDeco
+              : uncheckedTaskDeco;
+            lists.push(taskDeco.range(node.from, taskMarker.to));
+          } else {
+            lists.push(bulletDeco.range(node.from, node.to));
+          }
         }
       },
       from,
@@ -90,6 +158,17 @@ const listsPlugin = ViewPlugin.fromClass(
   },
   {
     decorations: (v) => v.lists,
+    eventHandlers: {
+      mousedown: (e, view) => {
+        const target = e.target as HTMLElement;
+        if (
+          target.nodeName == 'INPUT' &&
+          target.parentElement?.classList.contains('md-task-checkbox')
+        ) {
+          return toogleCheckbox(view, view.posAtDOM(target));
+        }
+      },
+    },
   },
 );
 

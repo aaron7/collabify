@@ -23,6 +23,7 @@
     "@codemirror/view": "^6.26.3",
     "@joplin/turndown": "^4.0.74",
     "@joplin/turndown-plugin-gfm": "^1.0.56",
+    "@lezer/common": "^1.2.1",
     "@lezer/highlight": "^1.2.0",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
