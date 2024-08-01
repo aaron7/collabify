@@ -26,7 +26,7 @@ const Landing = () => {
               <p className="font-light">
                 Inspired by <a href="https://typora.io/">Typora</a> and{' '}
                 <a href="https://obsidian.md/">Obsidian</a>, the collaborative
-                Markdown editor won’t surprise you or get in your way.
+                editor won’t surprise you or get in your way.
               </p>
             </div>
             <div className="space-y-2">
@@ -38,7 +38,7 @@ const Landing = () => {
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl">Integrated with your tooling</h3>
+              <h3 className="text-2xl">Integrated with your editor</h3>
               <p className="font-light">
                 Launch live sessions from your favourite Markdown editor, and
                 sync back when you’re done.
