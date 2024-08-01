@@ -26,7 +26,6 @@ type EndOfSessionProps = {
 const EndOfSession = ({ session, value }: EndOfSessionProps) => {
   const canCloseWindow = window.opener != null || window.history.length == 1;
 
-  // TODO: Extract a better filename
   const [downloadMarkdown, downloadedMarkdown] = useActiveTimeout(() =>
     downloadAsMarkdown(value),
   );
