@@ -48,7 +48,10 @@ function lists(view: EditorView, oldLists: DecorationSet) {
     syntaxTree.iterate({
       enter: (node) => {
         const nodeType = node.type.name;
-        if (nodeType === 'ListMark') {
+        if (
+          nodeType === 'ListMark' &&
+          node.matchContext(['BulletList', 'ListItem'])
+        ) {
           if (
             overlapsWithSelection({
               range: { from: node.from, to: node.to },
