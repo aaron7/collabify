@@ -21,6 +21,7 @@
     "@codemirror/state": "^6.4.1",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "^6.26.3",
+    "@icons-pack/react-simple-icons": "^9.6.0",
     "@joplin/turndown": "^4.0.74",
     "@joplin/turndown-plugin-gfm": "^1.0.56",
     "@lezer/common": "^1.2.1",

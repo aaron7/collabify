@@ -80,6 +80,9 @@ importers:
       '@codemirror/view':
         specifier: ^6.26.3
         version: 6.29.1
+      '@icons-pack/react-simple-icons':
+        specifier: ^9.6.0
+        version: 9.6.0(react@18.3.1)
       '@joplin/turndown':
         specifier: ^4.0.74
         version: 4.0.74
@@ -641,6 +644,11 @@ packages:
     peerDependenciesMeta:
       '@vue/compiler-sfc':
         optional: true
+
+  '@icons-pack/react-simple-icons@9.6.0':
+    resolution: {integrity: sha512-8lDLssg+2aJutepQV/P4zlGm0fgujSeIItCYaLKo+25NtwepozWxZJOnc5WGHSi3HjiLcGmxI6dA2eiD5w3i+w==}
+    peerDependencies:
+      react: ^16.13 || ^17 || ^18
 
   '@isaacs/cliui@8.0.2':
     resolution: {integrity: sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==}
@@ -4367,6 +4375,10 @@ snapshots:
       semver: 7.6.2
     transitivePeerDependencies:
       - supports-color
+
+  '@icons-pack/react-simple-icons@9.6.0(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
 
   '@isaacs/cliui@8.0.2':
     dependencies:

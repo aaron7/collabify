@@ -1,11 +1,11 @@
 import React from 'react';
+import { SiGithub } from '@icons-pack/react-simple-icons';
 import {
   Check,
   CircleCheckBig,
   ClipboardCopy,
   DoorClosed,
   Download,
-  Github,
   House,
   MessageCircle,
 } from 'lucide-react';
@@ -102,7 +102,7 @@ const EndOfSession = ({ session, value }: EndOfSessionProps) => {
           target="_blank"
         >
           <Button variant="link">
-            <Github className="mr-1 h-4 w-4" />
+            <SiGithub className="mr-1 h-4 w-4" />
             GitHub
           </Button>
         </a>
