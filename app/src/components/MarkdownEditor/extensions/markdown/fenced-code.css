@@ -1,5 +1,5 @@
 .cm-line.md-codeblock {
-  @apply bg-secondary/50 px-4 font-mono;
+  @apply bg-secondary/50 px-4 font-mono text-sm;
 }
 
 .md-codeblock-start {
