@@ -2,7 +2,7 @@ import { autocompletion, CompletionSource } from '@codemirror/autocomplete';
 import { search as searchEmoji } from 'node-emoji';
 
 const emojiCompletionSource: CompletionSource = (context) => {
-  const word = context.matchBefore(/(?<=^|\s):\w*$/);
+  const word = context.matchBefore(/(?<=^|\s):\w+$/);
   if (!word) {
     return null;
   }
