@@ -1,5 +1,6 @@
 import { ensureSyntaxTree } from '@codemirror/language';
-import { Range } from '@codemirror/state';
+import { languages } from '@codemirror/language-data';
+import { EditorState, Range } from '@codemirror/state';
 import {
   Decoration,
   DecorationSet,
@@ -12,6 +13,8 @@ import { EmptyWidget } from './utils/empty-widget';
 import { overlapsWithSelection } from './utils/selection';
 
 import './fenced-code.css';
+
+import { CompletionSource } from '@codemirror/autocomplete';
 
 const codeBlockMarker = Decoration.line({ class: 'md-codeblock' });
 const codeBlockMarkerStart = Decoration.line({ class: 'md-codeblock-start' });
@@ -102,4 +105,33 @@ const fencedCodePlugin = ViewPlugin.fromClass(
   },
 );
 
-export default fencedCodePlugin;
+const languageCompletionSource: CompletionSource = (context) => {
+  const word = context.matchBefore(/^```\w*/);
+
+  if (!word) {
+    return null;
+  }
+
+  const languageAliases = languages
+    .flatMap((lang) => lang.alias)
+    .map((alias) => alias.replaceAll(' ', ''));
+
+  const searchResults = languageAliases.filter((alias) =>
+    alias.startsWith(word.text.slice(3)),
+  );
+
+  return {
+    from: word.from,
+    options: searchResults.map((result) => ({
+      displayLabel: result,
+      label: `\`\`\`${result}`,
+      type: 'language',
+    })),
+  };
+};
+
+const fencedCodeLanguageAutocomplete = EditorState.languageData.of(() => [
+  { autocomplete: languageCompletionSource },
+]);
+
+export default [fencedCodePlugin, fencedCodeLanguageAutocomplete];

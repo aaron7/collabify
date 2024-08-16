@@ -1,4 +1,5 @@
-import { autocompletion, CompletionSource } from '@codemirror/autocomplete';
+import { CompletionSource } from '@codemirror/autocomplete';
+import { EditorState } from '@codemirror/state';
 import { search as searchEmoji } from 'node-emoji';
 
 const emojiCompletionSource: CompletionSource = (context) => {
@@ -18,4 +19,8 @@ const emojiCompletionSource: CompletionSource = (context) => {
   };
 };
 
-export default autocompletion({ override: [emojiCompletionSource] });
+const emojiAutocomplete = EditorState.languageData.of(() => [
+  { autocomplete: emojiCompletionSource },
+]);
+
+export default emojiAutocomplete;
