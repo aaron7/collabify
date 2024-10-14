@@ -10,9 +10,13 @@
 }
 
 .cm-theme-none {
-  @apply flex flex-grow flex-col;
+  @apply mt-12 flex flex-grow flex-col;
 }
 
 .cm-editor .cm-content {
   @apply w-full pb-96;
+}
+
+.cm-editor .cm-cursorLayer .cm-cursor {
+  display: block;
 }
