@@ -14,6 +14,9 @@ import createCollabPlugin from './extensions/collab/collab';
 import emojiPlugin from './extensions/emoji';
 import markdownPlugin from './extensions/markdown';
 import richTextClipboardPlugin from './extensions/rich-text-clipboard/rich-text-clipboard';
+import createSelectionStatePlugin, {
+  SelectionState,
+} from './extensions/selection-state/selection-state';
 import { getTheme } from './extensions/theme/theme';
 
 import './Editor.css';
@@ -23,6 +26,7 @@ type EditorProps = {
   initialSelection: { anchor: number };
   onChange: (value: string, viewUpdate: ViewUpdate) => void;
   refs: React.RefObject<ReactCodeMirrorRef>;
+  setSelectionState: (value: SelectionState) => void;
   value: string;
   webrtcProvider: WebrtcProvider;
 };
@@ -39,6 +43,7 @@ const Editor = ({
   initialSelection,
   onChange,
   refs,
+  setSelectionState,
   value,
   webrtcProvider,
 }: EditorProps) => {
@@ -46,6 +51,12 @@ const Editor = ({
     () => createCollabPlugin({ webrtcProvider }),
     [webrtcProvider],
   );
+
+  const selectionStatePlugin = useMemo(
+    () => createSelectionStatePlugin({ setSelectionState }),
+    [setSelectionState],
+  );
+
   const { theme } = useTheme();
   const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches
     ? 'dark'
@@ -73,6 +84,7 @@ const Editor = ({
 
         markdownPlugin,
         richTextClipboardPlugin,
+        selectionStatePlugin,
         emojiPlugin,
         ...(collabPlugin ? [collabPlugin] : []),
       ]}

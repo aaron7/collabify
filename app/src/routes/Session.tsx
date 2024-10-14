@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import EndOfSession from '@/components/EndOfSession/EndOfSession';
 import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
+import { SelectionState } from '@/components/MarkdownEditor/extensions/selection-state/selection-state';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Separator } from '@/components/ui/separator';
 import { Toaster } from '@/components/ui/sonner';
@@ -34,6 +35,9 @@ const Session = () => {
   const [value, setValue] = useState<string>('');
   const [hasSeenEditor, setHasSeenEditor] = useState(false);
   const [isWelcomeDialogOpen, setIsWelcomeDialogOpen] = useState(false);
+  const [selectionState, setSelectionState] = useState<SelectionState | null>(
+    null,
+  );
 
   const {
     awarenessClientId,
@@ -137,6 +141,7 @@ const Session = () => {
             initialSelection={initialSelection}
             onChange={onEditorChange}
             refs={editorRefs}
+            setSelectionState={setSelectionState}
             value={value}
             webrtcProvider={webrtcProvider}
           />
