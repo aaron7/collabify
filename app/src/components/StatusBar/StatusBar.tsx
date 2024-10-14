@@ -66,9 +66,7 @@ const StatusBar = ({
               <UserPlus className="h-4 w-4" strokeWidth={2.5} />
             </>
           )}
-          <span className="ml-2 hidden md:block">
-            Copy <span className="">invite</span>
-          </span>
+          <span className="ml-2 hidden md:block">Copy invite</span>
         </Button>
 
         <ExportButton markdownValue={value} />
