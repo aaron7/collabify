@@ -5,7 +5,9 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import EndOfSession from '@/components/EndOfSession/EndOfSession';
 import Loading from '@/components/Loading/Loading';
 import Editor from '@/components/MarkdownEditor/Editor';
+import { SelectionState } from '@/components/MarkdownEditor/extensions/selection-state/selection-state';
 import StatusBar from '@/components/StatusBar/StatusBar';
+import { Toolbar } from '@/components/Toolbar/Toolbar';
 import { Separator } from '@/components/ui/separator';
 import { Toaster } from '@/components/ui/sonner';
 import { WelcomeDialog } from '@/components/WelcomeDialog/WelcomeDialog';
@@ -34,6 +36,9 @@ const Session = () => {
   const [value, setValue] = useState<string>('');
   const [hasSeenEditor, setHasSeenEditor] = useState(false);
   const [isWelcomeDialogOpen, setIsWelcomeDialogOpen] = useState(false);
+  const [selectionState, setSelectionState] = useState<SelectionState | null>(
+    null,
+  );
 
   const {
     awarenessClientId,
@@ -130,6 +135,10 @@ const Session = () => {
         value={value}
       />
       <Separator />
+      {selectionState && (
+        <Toolbar editorRefs={editorRefs} selectionState={selectionState} />
+      )}
+
       <div className="flex-grow overflow-y-auto">
         <div className="mx-auto flex min-h-full max-w-3xl flex-col px-2">
           <Editor
@@ -137,6 +146,7 @@ const Session = () => {
             initialSelection={initialSelection}
             onChange={onEditorChange}
             refs={editorRefs}
+            setSelectionState={setSelectionState}
             value={value}
             webrtcProvider={webrtcProvider}
           />
