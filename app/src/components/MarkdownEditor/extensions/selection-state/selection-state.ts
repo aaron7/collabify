@@ -100,6 +100,12 @@ const getSelectionState = (state: EditorState): SelectionState => {
     return acc;
   }, {} as SelectionState);
 
+  // Task lists are also lists, so only return the task key
+  if (result.task) {
+    result.bulletList = false;
+    result.orderedList = false;
+  }
+
   return result;
 };
 

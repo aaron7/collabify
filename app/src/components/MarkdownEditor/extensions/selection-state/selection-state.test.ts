@@ -80,7 +80,7 @@ describe('selection-state', () => {
         prefix: '> ',
       },
       {
-        expectedKeys: ['bulletList', 'task'],
+        expectedKeys: ['task'],
         prefix: '- [ ] ',
       },
     ])('$prefix', ({ expectedKeys, prefix }) => {
