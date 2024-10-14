@@ -64,7 +64,7 @@ function wrapSelectedTextWith(
 
 // TODO(markdown-commands): Instead of using a regex to find existing prefixes,
 // identify the marks and positions from the syntax tree.
-const existingPrefixRegex = /^(#+|[*+-]( \[[ x]])?|\d+\.|\d+\. \[[ x]])\s/;
+const existingPrefixRegex = /^(#+|[*+-]( \[[ x]])?|\d+\.|\d+\. \[[ x]]|>)\s/;
 
 function prefixSelectedLinesWith(
   state: EditorState,
