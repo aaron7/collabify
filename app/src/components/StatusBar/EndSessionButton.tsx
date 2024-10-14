@@ -1,4 +1,4 @@
-import { RefreshCwOff } from 'lucide-react';
+import { LogOut } from 'lucide-react';
 
 import {
   AlertDialog,
@@ -21,8 +21,8 @@ export function EndSessionButton({ onEndSession }: EndSessionButtonProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button variant="outline">
-          <RefreshCwOff className="text-destructive h-4 w-4" />
+        <Button variant="ghost">
+          <LogOut className="text-destructive h-4 w-4" strokeWidth={2.5} />
           <span className="ml-2 hidden md:block">End session</span>
         </Button>
       </AlertDialogTrigger>
