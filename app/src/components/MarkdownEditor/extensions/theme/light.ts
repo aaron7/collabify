@@ -1,5 +1,6 @@
-import { defaultHighlightStyle } from '@codemirror/language';
+import { defaultHighlightStyle, HighlightStyle } from '@codemirror/language';
 import { EditorView } from '@codemirror/view';
+import { tags } from '@lezer/highlight';
 
 export const lightTheme = EditorView.theme(
   {
@@ -12,4 +13,10 @@ export const lightTheme = EditorView.theme(
   },
 );
 
-export const lightHighlightStyle = defaultHighlightStyle;
+export const lightHighlightStyle = HighlightStyle.define([
+  ...defaultHighlightStyle.specs,
+  {
+    color: 'hsl(var(--primary))',
+    tag: [tags.processingInstruction, tags.string, tags.inserted],
+  },
+]);
