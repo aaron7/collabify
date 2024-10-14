@@ -44,7 +44,10 @@ const StatusBar = ({
     <div className="background-prim flex justify-between p-1">
       <div className="ml-2 flex items-center">
         <Link to={routes.landing.path}>
-          <h2 className="text-lg font-semibold">Collabify.it</h2>
+          <h2 className="text-primary text-lg font-semibold">
+            <span>Collabify</span>
+            <span className="text-xs opacity-50">.it</span>
+          </h2>
         </Link>
       </div>
       <div className="flex space-x-2">
@@ -55,15 +58,17 @@ const StatusBar = ({
 
         {session.isHost && <EndSessionButton onEndSession={onEndSession} />}
 
-        <Button onClick={copyJoinUrlToClipboard} variant="outline">
+        <Button onClick={copyJoinUrlToClipboard} variant="ghost">
           {copiedJoinUrlToClipboard ? (
             <Check className="text-success h-4 w-4" />
           ) : (
             <>
-              <UserPlus className="h-4 w-4" />
+              <UserPlus className="h-4 w-4" strokeWidth={2.5} />
             </>
           )}
-          <span className="ml-2 hidden md:block">Copy invite URL</span>
+          <span className="ml-2 hidden md:block">
+            Copy <span className="">invite</span>
+          </span>
         </Button>
 
         <ExportButton markdownValue={value} />

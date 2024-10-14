@@ -17,44 +17,63 @@ const Landing = () => {
       <div className="flex min-h-screen justify-center">
         <div className="flex flex-col items-center justify-center space-y-16 px-6 py-8 md:py-0 lg:px-0">
           <div className="flex flex-col items-center">
-            <h1 className="text-5xl font-bold">Collabify.it</h1>
+            <h1 className="text-primary text-6xl font-bold">
+              <span>Collabify</span>
+              <span className="text-3xl opacity-50">.it</span>
+            </h1>
           </div>
 
-          <div className="grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-2">
+          <div className="grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-3">
             <div className="space-y-2">
-              <h3 className="text-2xl">Unsurprising Markdown</h3>
+              <h3 className="text-2xl">Real-time</h3>
               <p className="font-light">
-                Inspired by <a href="https://typora.io/">Typora</a> and{' '}
-                <a href="https://obsidian.md/">Obsidian</a>, the collaborative
-                editor won’t surprise you or get in your way.
+                Just like Google Docs, but for your local Markdown.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl">Private & secure</h3>
+              <h3 className="text-2xl">Frictionless</h3>
               <p className="font-light">
-                Sessions are end-to-end encrypted with zero analytics. The
-                secret key is shared in the URL fragment which browsers don’t
-                send to servers.
+                An editor that doesn’t get in your way. Inspired by Obsidian.
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <h3 className="text-2xl">Private</h3>
+              <p className="font-light">
+                End-to-end encrypted with zero analytics. Your keys never touch
+                our servers.{' '}
+                <a
+                  className="text-sm text-blue-500"
+                  href="https://github.com/aaron7/collabify"
+                >
+                  Learn more.
+                </a>
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl">Integrated with your editor</h3>
+              <h3 className="text-2xl">Integrated</h3>
               <p className="font-light">
-                Launch live sessions from your favourite Markdown editor, and
-                sync back when you’re done.
+                Launch from your favourite Markdown editor, and sync back when
+                you’re done.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl">Free & open source</h3>
+              <h3 className="text-2xl">Friendly</h3>
               <p className="font-light">
-                Check out the{' '}
+                Designed with both engineers and non-engineers in mind.
+              </p>
+            </div>
+            <div className="space-y-2">
+              <h3 className="text-2xl">Free</h3>
+              <p className="font-light">
+                Free &{' '}
                 <a
                   className="text-blue-500"
                   href="https://github.com/aaron7/collabify"
                 >
-                  GitHub repo
+                  open source
                 </a>
-                . You can host your own instance for free on GitHub pages.
+                . Host your own instance on GitHub pages.
               </p>
             </div>
           </div>
@@ -65,7 +84,7 @@ const Landing = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background text-muted-foreground px-2">
-                Ready to go?
+                Start a new session from...
               </span>
             </div>
           </div>
@@ -93,7 +112,7 @@ const Landing = () => {
               <span className="text-2xl">CLI</span>
               <div className="bg-secondary flex flex-col rounded-xl px-4 py-2 font-mono">
                 <span className="text-l">brew install aaron7/collabify</span>
-                <span className="text-l">collabify notes.md</span>
+                <span className="text-l">collabify ./my-notes.md</span>
               </div>
             </div>
           </div>
