@@ -1,3 +1,4 @@
+import React from 'react';
 import { ensureSyntaxTree } from '@codemirror/language';
 import { Range } from '@codemirror/state';
 import {
@@ -9,6 +10,9 @@ import {
   WidgetType,
 } from '@codemirror/view';
 import { SyntaxNode } from '@lezer/common';
+import ReactDOM from 'react-dom/client';
+
+import { Checkbox } from '@/components/ui/checkbox';
 
 import { overlapsWithSelection } from './utils/selection';
 
@@ -38,11 +42,9 @@ export class TaskWidget extends WidgetType {
     const wrap = document.createElement('span');
     wrap.className = 'md-task-checkbox';
 
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.checked = this.checked;
+    const root = ReactDOM.createRoot(wrap);
+    root.render(React.createElement(Checkbox, { checked: this.checked }));
 
-    wrap.append(checkbox);
     return wrap;
   }
 
@@ -162,10 +164,14 @@ const listsPlugin = ViewPlugin.fromClass(
       mousedown: (e, view) => {
         const target = e.target as HTMLElement;
         if (
-          target.nodeName == 'INPUT' &&
+          target.nodeName == 'BUTTON' &&
           target.parentElement?.classList.contains('md-task-checkbox')
         ) {
-          return toogleCheckbox(view, view.posAtDOM(target));
+          const taskMarkerOffset = 5;
+          return toogleCheckbox(
+            view,
+            view.posAtDOM(target.parentElement) + taskMarkerOffset,
+          );
         }
       },
     },
