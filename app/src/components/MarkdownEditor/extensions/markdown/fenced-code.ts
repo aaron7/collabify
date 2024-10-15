@@ -47,8 +47,11 @@ function fencedCode(view: EditorView, oldFencedCode: DecorationSet) {
             range: { from: node.from, to: node.to },
             state: view.state,
           });
+          const hasEndBackticks =
+            node.to - node.from > 3 &&
+            view.state.doc.sliceString(node.to - 3, node.to) === '```';
 
-          if (!isSelected) {
+          if (!isSelected && hasEndBackticks) {
             fencedCode.push(codeBlockInactive.range(node.from, node.from));
             const codeMarks = node.node.getChildren('CodeMark');
             for (const codeMark of codeMarks) {
