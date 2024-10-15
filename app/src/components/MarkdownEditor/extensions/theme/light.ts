@@ -19,4 +19,5 @@ export const lightHighlightStyle = HighlightStyle.define([
     color: 'hsl(var(--primary))',
     tag: [tags.processingInstruction, tags.string, tags.inserted],
   },
+  { color: 'hsl(var(--primary))', tag: tags.heading },
 ]);
