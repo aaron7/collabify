@@ -10,6 +10,7 @@ import formatting from './formatting';
 import headings from './headings';
 import horizontalRule from './horizontal-rule';
 import inlineCode from './inline-code';
+import isMouseDown from './is-mouse-down';
 import lists from './lists';
 
 // Remove the Backspace binding from the default markdown keymap because
@@ -20,6 +21,7 @@ const markdownKeymapWithoutDeletion = markdownKeymap.filter(
 );
 
 const markdownPlugin = [
+  isMouseDown,
   closeBrackets,
   fencedCode,
   formatting,
