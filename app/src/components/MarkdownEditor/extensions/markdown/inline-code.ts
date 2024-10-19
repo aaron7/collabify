@@ -8,6 +8,8 @@ import {
   ViewUpdate,
 } from '@codemirror/view';
 
+import { hasMouseDownStateChanged, isMouseDown } from './is-mouse-down';
+
 import './inline-code.css';
 
 const deco = Decoration.mark({ class: 'md-inline-code' });
@@ -51,7 +53,13 @@ const inlineCodePlugin = ViewPlugin.fromClass(
     }
 
     update(update: ViewUpdate) {
-      if (update.docChanged || update.viewportChanged || update.selectionSet) {
+      if (
+        !isMouseDown(update) &&
+        (update.docChanged ||
+          update.viewportChanged ||
+          update.selectionSet ||
+          hasMouseDownStateChanged(update))
+      ) {
         this.inlineCode = inlineCode(update.view, this.inlineCode);
       }
     }

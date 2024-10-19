@@ -9,6 +9,8 @@ import {
   WidgetType,
 } from '@codemirror/view';
 
+import { hasMouseDownStateChanged, isMouseDown } from './is-mouse-down';
+
 import './horizontal-rule.css';
 
 export class HorizontalRuleWidget extends WidgetType {
@@ -91,7 +93,13 @@ const horizontalRulePlugin = ViewPlugin.fromClass(
     }
 
     update(update: ViewUpdate) {
-      if (update.docChanged || update.viewportChanged || update.selectionSet) {
+      if (
+        !isMouseDown(update) &&
+        (update.docChanged ||
+          update.viewportChanged ||
+          update.selectionSet ||
+          hasMouseDownStateChanged(update))
+      ) {
         this.horizontalRule = horizontalRule(update.view, this.horizontalRule);
       }
     }

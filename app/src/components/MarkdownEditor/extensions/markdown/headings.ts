@@ -13,6 +13,7 @@ import {
 } from '@codemirror/view';
 import { tags } from '@lezer/highlight';
 
+import { hasMouseDownStateChanged, isMouseDown } from './is-mouse-down';
 import { EmptyWidget } from './utils/empty-widget';
 
 function getLinesFromSelection(view: EditorView) {
@@ -89,7 +90,13 @@ const headingsPlugin = ViewPlugin.fromClass(
     }
 
     update(update: ViewUpdate) {
-      if (update.docChanged || update.viewportChanged || update.selectionSet) {
+      if (
+        !isMouseDown(update) &&
+        (update.docChanged ||
+          update.viewportChanged ||
+          update.selectionSet ||
+          hasMouseDownStateChanged(update))
+      ) {
         this.headings = headings(update.view, this.headings);
       }
     }

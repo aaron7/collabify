@@ -14,6 +14,7 @@ import ReactDOM from 'react-dom/client';
 
 import { Checkbox } from '@/components/ui/checkbox';
 
+import { hasMouseDownStateChanged, isMouseDown } from './is-mouse-down';
 import { overlapsWithSelection } from './utils/selection';
 
 export class BulletWidget extends WidgetType {
@@ -151,7 +152,13 @@ const listsPlugin = ViewPlugin.fromClass(
     }
 
     update(update: ViewUpdate) {
-      if (update.docChanged || update.viewportChanged || update.selectionSet) {
+      if (
+        !isMouseDown(update) &&
+        (update.docChanged ||
+          update.viewportChanged ||
+          update.selectionSet ||
+          hasMouseDownStateChanged(update))
+      ) {
         this.lists = lists(update.view, this.lists);
       }
     }

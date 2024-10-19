@@ -8,6 +8,7 @@ import {
   ViewUpdate,
 } from '@codemirror/view';
 
+import { hasMouseDownStateChanged, isMouseDown } from './is-mouse-down';
 import { EmptyWidget } from './utils/empty-widget';
 import { overlapsWithSelection } from './utils/selection';
 
@@ -93,7 +94,13 @@ const formattingPlugin = ViewPlugin.fromClass(
     }
 
     update(update: ViewUpdate) {
-      if (update.docChanged || update.viewportChanged || update.selectionSet) {
+      if (
+        !isMouseDown(update) &&
+        (update.docChanged ||
+          update.viewportChanged ||
+          update.selectionSet ||
+          hasMouseDownStateChanged(update))
+      ) {
         this.formatting = formatting(update.view, this.formatting);
       }
     }

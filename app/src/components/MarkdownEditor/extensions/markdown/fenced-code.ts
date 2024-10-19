@@ -16,6 +16,8 @@ import './fenced-code.css';
 
 import { CompletionSource } from '@codemirror/autocomplete';
 
+import { hasMouseDownStateChanged, isMouseDown } from './is-mouse-down';
+
 const codeBlockMarker = Decoration.line({ class: 'md-codeblock' });
 const codeBlockMarkerStart = Decoration.line({ class: 'md-codeblock-start' });
 const codeBlockMarkerEnd = Decoration.line({ class: 'md-codeblock-end' });
@@ -96,7 +98,13 @@ const fencedCodePlugin = ViewPlugin.fromClass(
     }
 
     update(update: ViewUpdate) {
-      if (update.docChanged || update.viewportChanged || update.selectionSet) {
+      if (
+        !isMouseDown(update) &&
+        (update.docChanged ||
+          update.viewportChanged ||
+          update.selectionSet ||
+          hasMouseDownStateChanged(update))
+      ) {
         this.fencedCode = fencedCode(update.view, this.fencedCode);
       }
     }
