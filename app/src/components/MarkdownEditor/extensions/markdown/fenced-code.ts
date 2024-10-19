@@ -39,7 +39,7 @@ function fencedCode(view: EditorView, oldFencedCode: DecorationSet) {
     }
 
     const emptyWidget = Decoration.replace({
-      widget: new EmptyWidget(view),
+      widget: new EmptyWidget(),
     });
 
     syntaxTree.iterate({

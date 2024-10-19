@@ -67,7 +67,7 @@ function headings(view: EditorView, oldHeadings: DecorationSet) {
           }
 
           const deco = Decoration.replace({
-            widget: new EmptyWidget(view),
+            widget: new EmptyWidget(),
           });
 
           const num = Number.parseInt(node.type.name.slice(-1));

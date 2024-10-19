@@ -41,7 +41,7 @@ function formatting(view: EditorView, oldFormatting: DecorationSet) {
     }
 
     const deco = Decoration.replace({
-      widget: new EmptyWidget(view),
+      widget: new EmptyWidget(),
     });
 
     syntaxTree.iterate({
