@@ -11,6 +11,7 @@ import headings from './headings';
 import horizontalRule from './horizontal-rule';
 import inlineCode from './inline-code';
 import isMouseDown from './is-mouse-down';
+import links from './links';
 import lists from './lists';
 
 // Remove the Backspace binding from the default markdown keymap because
@@ -30,6 +31,7 @@ const markdownPlugin = [
   indentUnit.of('    '),
   inlineCode,
   lists,
+  links,
   Prec.high(commandKeymap),
   Prec.high(keymap.of(markdownKeymapWithoutDeletion)),
 ];
