@@ -9,6 +9,7 @@ import fencedCode from './fenced-code';
 import formatting from './formatting';
 import headings from './headings';
 import horizontalRule from './horizontal-rule';
+import images from './images';
 import inlineCode from './inline-code';
 import isMouseDown from './is-mouse-down';
 import links from './links';
@@ -32,6 +33,7 @@ const markdownPlugin = [
   inlineCode,
   lists,
   links,
+  images,
   Prec.high(commandKeymap),
   Prec.high(keymap.of(markdownKeymapWithoutDeletion)),
 ];
