@@ -5,6 +5,8 @@ import {
   Transaction,
 } from '@codemirror/state';
 
+import { LinkState } from './links';
+
 function getWrapTargetRange(state: EditorState, from: number, to: number) {
   if (from === to) {
     // If no selection, use the word at the cursor
@@ -198,6 +200,61 @@ export const insertImage: StateCommand = ({ dispatch, state }) =>
 export const insertTable: StateCommand = ({ dispatch, state }) =>
   insertOrReplaceText(state, dispatch, '|   |   |\n|---|---|\n|   |   |');
 
-// TODO(markdown-commands): Implement a more sophisticated link insertion command
-export const insertLink: StateCommand = ({ dispatch, state }) =>
-  insertOrReplaceText(state, dispatch, '[text](url)');
+export const insertEmptyLink: StateCommand = ({ dispatch, state }) =>
+  insertOrReplaceText(state, dispatch, `[]()`);
+
+export const insertLink: ({
+  text,
+  url,
+}: {
+  text: string;
+  url: string;
+}) => StateCommand =
+  ({ text, url }) =>
+  ({ dispatch, state }) =>
+    insertOrReplaceText(state, dispatch, `[${text}](${url})`);
+
+export function updateLink({
+  dispatch,
+  state,
+  text,
+  url,
+}: {
+  dispatch: (tr: Transaction) => void;
+  state: EditorState;
+  text: { content: string; from: number; to: number };
+  url: { content: string; from: number; to: number };
+}) {
+  dispatch(
+    state.update({
+      changes: [
+        { from: text.from, insert: text.content, to: text.to },
+        { from: url.from, insert: url.content, to: url.to },
+      ],
+    }),
+  );
+  return true;
+}
+
+export function removeLink({
+  dispatch,
+  selectedLink,
+  state,
+}: {
+  dispatch: (tr: Transaction) => void;
+  selectedLink: LinkState;
+  state: EditorState;
+}) {
+  dispatch(
+    state.update({
+      changes: [
+        {
+          from: selectedLink.from,
+          insert: selectedLink.text.content,
+          to: selectedLink.to,
+        },
+      ],
+    }),
+  );
+  return true;
+}
