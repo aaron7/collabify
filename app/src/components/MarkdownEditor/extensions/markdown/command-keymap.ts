@@ -1,7 +1,7 @@
 import { keymap } from '@codemirror/view';
 
 import {
-  insertLink,
+  insertEmptyLink,
   makeHeading1,
   makeHeading2,
   makeHeading3,
@@ -32,7 +32,7 @@ const markdownKeymap = keymap.of([
   { key: 'Mod-Shift-8', run: makeUnorderedList },
   { key: 'Mod-Shift-9', run: makeTaskList },
   { key: 'Mod-l', run: makeTaskList },
-  { key: 'Mod-k', run: insertLink },
+  { key: 'Mod-k', run: insertEmptyLink },
 ]);
 
 export default markdownKeymap;

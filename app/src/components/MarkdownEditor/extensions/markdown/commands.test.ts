@@ -4,6 +4,7 @@ import { describe, expect, it } from 'vitest';
 import { mkState, stateStr } from '@/test-utils/state';
 
 import {
+  insertEmptyLink,
   insertFencedCode,
   insertImage,
   insertLink,
@@ -221,8 +222,15 @@ describe('commands', () => {
     },
     {
       command: 'insertLink',
-      test: assertCommandStateChange(insertLink),
-      text: '[text](url)',
+      test: assertCommandStateChange(
+        insertLink({ text: 'example', url: 'https://example.org' }),
+      ),
+      text: '[example](https://example.org)',
+    },
+    {
+      command: 'insertEmptyLink',
+      test: assertCommandStateChange(insertEmptyLink),
+      text: '[]()',
     },
     {
       command: 'insertTable',
