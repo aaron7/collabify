@@ -15,35 +15,32 @@ const Landing = () => {
         <ThemeButton />
       </div>
       <div className="flex min-h-screen justify-center">
-        <div className="flex flex-col items-center justify-center space-y-16 px-6 py-8 md:py-0 lg:px-0">
+        <div className="flex flex-col items-center justify-center space-y-16 px-6 pb-32 pt-32 sm:pb-0 sm:pt-0 lg:px-0">
           <div className="flex flex-col items-center">
-            <h1 className="text-primary text-6xl font-bold">
+            <h1 className="text-primary text-6xl font-bold sm:text-8xl">
               <span>Collabify</span>
               <span className="text-3xl opacity-50">.it</span>
             </h1>
           </div>
 
-          <div className="grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-3">
-            <div className="space-y-2">
-              <h3 className="text-2xl">Real-time</h3>
-              <p className="font-light">
-                Just like Google Docs, but for your local Markdown.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-2xl">Frictionless</h3>
-              <p className="font-light">
-                An editor that doesn’t get in your way. Inspired by Obsidian.
-              </p>
-            </div>
+          <p className="text-center text-lg font-light sm:text-xl">
+            One-off collaboration sessions for your local Markdown
+          </p>
 
+          <div className="relative w-full">
+            <div className="absolute inset-0 flex items-center">
+              <span className="w-full border-t"></span>
+            </div>
+          </div>
+
+          <div className="grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-2">
             <div className="space-y-2">
               <h3 className="text-2xl">Private</h3>
               <p className="font-light">
-                End-to-end encrypted with zero analytics. Your keys never touch
-                our servers.{' '}
+                End-to-end encrypted with zero analytics and no accounts. Your
+                keys never touch any server.{' '}
                 <a
-                  className="text-sm text-blue-500"
+                  className="text-blue-500"
                   href="https://github.com/aaron7/collabify"
                 >
                   Learn more.
@@ -51,16 +48,17 @@ const Landing = () => {
               </p>
             </div>
             <div className="space-y-2">
+              <h3 className="text-2xl">Friendly</h3>
+              <p className="font-light">
+                Designed with both engineers and non-engineers in mind. Inspired
+                by Obsidian.
+              </p>
+            </div>
+            <div className="space-y-2">
               <h3 className="text-2xl">Integrated</h3>
               <p className="font-light">
                 Launch from your favourite Markdown editor, and sync back when
                 you’re done.
-              </p>
-            </div>
-            <div className="space-y-2">
-              <h3 className="text-2xl">Friendly</h3>
-              <p className="font-light">
-                Designed with both engineers and non-engineers in mind.
               </p>
             </div>
             <div className="space-y-2">
@@ -84,7 +82,7 @@ const Landing = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background text-muted-foreground px-2">
-                Start a new session from...
+                Start from...
               </span>
             </div>
           </div>
