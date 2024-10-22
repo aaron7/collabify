@@ -195,11 +195,11 @@ describe('commands', () => {
       });
 
       it('existing heading prefixes', () => {
-        test(`<# hello\n# world>`, `${prefix}<hello\n${prefix}world>`);
+        test(`<# hello\n# world>`, `<${prefix}hello\n${prefix}world>`);
       });
 
       it('existing list prefixes', () => {
-        test(`<- hello\n- world>`, `${prefix}<hello\n${prefix}world>`);
+        test(`<- hello\n- world>`, `<${prefix}hello\n${prefix}world>`);
       });
 
       it('partial selection with existing prefixes', () => {

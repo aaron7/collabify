@@ -71,70 +71,39 @@ function prefixSelectedLinesWith(
   dispatch: (tr: Transaction) => void,
   newPrefix: string,
 ) {
+  const changes = state.selection.ranges.flatMap((range) => {
+    const lineFrom = state.doc.lineAt(range.from);
+    const lineTo = state.doc.lineAt(range.to);
+
+    return Array.from(
+      { length: lineTo.number - lineFrom.number + 1 },
+      (_, index) => lineFrom.number + index,
+    ).map((lineNumber) => {
+      const line = state.doc.line(lineNumber);
+
+      let existingPrefix = '';
+      const existingPrefixMatches = existingPrefixRegex.exec(line.text);
+      if (existingPrefixMatches) {
+        existingPrefix = existingPrefixMatches[0];
+      }
+
+      const formattedNewPrefix = newPrefix.replaceAll(
+        String.raw`\d`,
+        String(lineNumber - lineFrom.number + 1),
+      );
+
+      return {
+        from: line.from,
+        insert: formattedNewPrefix,
+        to: line.from + existingPrefix.length,
+      };
+    });
+  });
+
   dispatch(
-    state.update(
-      state.changeByRange((range) => {
-        const lineFrom = state.doc.lineAt(range.from);
-        const lineTo = state.doc.lineAt(range.to);
-
-        const changes = [];
-
-        // Keep track of the first line prefix and the character count change
-        // to adjust the final cursor position correctly
-        let firstLineExistingPrefix = '';
-        let firstLineNewPrefix = '';
-        let characterCountChange = 0;
-
-        for (
-          let lineNumber = lineFrom.number;
-          lineNumber <= lineTo.number;
-          lineNumber++
-        ) {
-          const line = state.doc.line(lineNumber);
-
-          let existingPrefix = '';
-          const existingPrefixMatches = existingPrefixRegex.exec(line.text);
-          if (existingPrefixMatches) {
-            existingPrefix = existingPrefixMatches[0];
-          }
-
-          // Replace `\d` with the incremental list number
-          const formattedNewPrefix = newPrefix.replaceAll(
-            String.raw`\d`,
-            String(lineNumber - lineFrom.number + 1),
-          );
-
-          if (lineNumber === lineFrom.number) {
-            firstLineExistingPrefix = existingPrefix;
-            firstLineNewPrefix = formattedNewPrefix;
-          }
-
-          characterCountChange -= existingPrefix.length;
-          characterCountChange += formattedNewPrefix.length;
-
-          changes.push({
-            from: line.from,
-            insert: formattedNewPrefix,
-            to: line.from + existingPrefix.length,
-          });
-        }
-
-        const existingPrefixLengthBeforeCursor = Math.min(
-          firstLineExistingPrefix.length,
-          range.from - lineFrom.from,
-        );
-
-        return {
-          changes,
-          range: EditorSelection.range(
-            range.from -
-              existingPrefixLengthBeforeCursor +
-              firstLineNewPrefix.length,
-            range.to + characterCountChange,
-          ),
-        };
-      }),
-    ),
+    state.update({
+      changes,
+    }),
   );
 
   return true;
@@ -145,18 +114,29 @@ function insertText(
   dispatch: (tr: Transaction) => void,
   text: string,
 ) {
+  const changes = state.selection.ranges.map((range) => {
+    return { from: range.from, insert: text };
+  });
+
+  // Create a temporary transaction to get the new selection which we can then
+  // modify so we don't have to implement selection update logic which should
+  // include multi cursor support.
+  const transaction = state.update({
+    changes,
+  });
+
   dispatch(
-    state.update(
-      state.changeByRange((range) => {
-        return {
-          changes: [{ from: range.from, insert: text }],
-          range: EditorSelection.range(
+    state.update({
+      changes,
+      selection: EditorSelection.create(
+        transaction.newSelection.ranges.map((range) => {
+          return EditorSelection.range(
             range.from + text.length,
-            range.from + text.length,
-          ),
-        };
-      }),
-    ),
+            range.to + text.length,
+          );
+        }),
+      ),
+    }),
   );
   return true;
 }
