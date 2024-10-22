@@ -234,6 +234,10 @@ describe('commands', () => {
       it('at cursor', () => {
         test('hello |', `hello ${text}|`);
       });
+
+      it('replaces selection', () => {
+        test('hello <world>', `hello <${text}>`);
+      });
     });
   });
 });

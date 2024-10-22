@@ -109,13 +109,13 @@ function prefixSelectedLinesWith(
   return true;
 }
 
-function insertText(
+function insertOrReplaceText(
   state: EditorState,
   dispatch: (tr: Transaction) => void,
   text: string,
 ) {
   const changes = state.selection.ranges.map((range) => {
-    return { from: range.from, insert: text };
+    return { from: range.from, insert: text, to: range.to };
   });
 
   // Create a temporary transaction to get the new selection which we can then
@@ -130,10 +130,10 @@ function insertText(
       changes,
       selection: EditorSelection.create(
         transaction.newSelection.ranges.map((range) => {
-          return EditorSelection.range(
-            range.from + text.length,
-            range.to + text.length,
-          );
+          if (range.from === range.to) {
+            return EditorSelection.cursor(range.from + text.length);
+          }
+          return EditorSelection.range(range.from, range.to);
         }),
       ),
     }),
@@ -188,16 +188,16 @@ export const toggleInlineCode: StateCommand = ({ dispatch, state }) =>
 
 // TODO(markdown-commands): Insert cursor in the middle of the fenced code block
 export const insertFencedCode: StateCommand = ({ dispatch, state }) =>
-  insertText(state, dispatch, '```\n\n```');
+  insertOrReplaceText(state, dispatch, '```\n\n```');
 
 // TODO(markdown-commands): Implement a more sophisticated image insertion command
 export const insertImage: StateCommand = ({ dispatch, state }) =>
-  insertText(state, dispatch, '![alt](src)');
+  insertOrReplaceText(state, dispatch, '![alt](src)');
 
 // TOOD(markdown-commands): Implement a more sophisticated table insertion command
 export const insertTable: StateCommand = ({ dispatch, state }) =>
-  insertText(state, dispatch, '|   |   |\n|---|---|\n|   |   |');
+  insertOrReplaceText(state, dispatch, '|   |   |\n|---|---|\n|   |   |');
 
 // TODO(markdown-commands): Implement a more sophisticated link insertion command
 export const insertLink: StateCommand = ({ dispatch, state }) =>
-  insertText(state, dispatch, '[text](url)');
+  insertOrReplaceText(state, dispatch, '[text](url)');
