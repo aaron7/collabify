@@ -14,7 +14,7 @@
 }
 
 .cm-editor .cm-content {
-  @apply w-full pb-96;
+  @apply w-full;
 }
 
 .cm-editor .cm-cursorLayer .cm-cursor {
