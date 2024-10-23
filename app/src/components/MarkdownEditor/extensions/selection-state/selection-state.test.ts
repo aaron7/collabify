@@ -169,19 +169,19 @@ describe('selection-state', () => {
     });
 
     it('multi line partial selection in code', () => {
-      assertEnabledKeys('```py<thon\na = 1| +> 2\n```', ['fencedCode']);
+      assertEnabledKeys('```py<thon\na = 1 +> 2\n```', ['fencedCode']);
     });
 
     it('full selection', () => {
-      assertEnabledKeys('<```python\na = 1| + 2\n```>', ['fencedCode']);
+      assertEnabledKeys('<```python\na = 1 + 2\n```>', ['fencedCode']);
     });
 
     it('beginning of code cursor', () => {
-      assertEnabledKeys('|```python\na = 1| + 2\n```', ['fencedCode']);
+      assertEnabledKeys('|```python\na = 1 + 2\n```', ['fencedCode']);
     });
 
     it('end of code cursor', () => {
-      assertEnabledKeys('```python\na = 1| + 2\n```|', ['fencedCode']);
+      assertEnabledKeys('```python\na = 1 + 2\n```|', ['fencedCode']);
     });
   });
 
