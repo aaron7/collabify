@@ -5,8 +5,6 @@ import {
   Transaction,
 } from '@codemirror/state';
 
-import { LinkState } from './links';
-
 function getWrapTargetRange(state: EditorState, from: number, to: number) {
   if (from === to) {
     // If no selection, use the word at the cursor
@@ -210,18 +208,24 @@ export const insertTable: StateCommand = ({ dispatch, state }) =>
 export const insertEmptyLink: StateCommand = ({ dispatch, state }) =>
   insertOrReplaceText(state, dispatch, `[]()`);
 
-export const insertLink: ({
+export const insertLinkOrImage: ({
   text,
   url,
+  variant,
 }: {
   text: string;
   url: string;
+  variant: 'link' | 'image';
 }) => StateCommand =
-  ({ text, url }) =>
+  ({ text, url, variant }) =>
   ({ dispatch, state }) =>
-    insertOrReplaceText(state, dispatch, `[${text}](${url})`);
+    insertOrReplaceText(
+      state,
+      dispatch,
+      `${variant === 'image' ? '!' : ''}[${text}](${url})`,
+    );
 
-export function updateLink({
+export function updateLinkOrImage({
   dispatch,
   state,
   text,
@@ -243,22 +247,39 @@ export function updateLink({
   return true;
 }
 
-export function removeLink({
+export type LinkOrImageState = {
+  from: number;
+  text: {
+    content: string;
+    from: number;
+    to: number;
+  };
+  to: number;
+  url: {
+    content: string;
+    from: number;
+    to: number;
+  } | null;
+};
+
+export function removeLinkOrImage({
   dispatch,
-  selectedLink,
+  selected,
   state,
+  variant,
 }: {
   dispatch: (tr: Transaction) => void;
-  selectedLink: LinkState;
+  selected: LinkOrImageState;
   state: EditorState;
+  variant: 'link' | 'image';
 }) {
   dispatch(
     state.update({
       changes: [
         {
-          from: selectedLink.from,
-          insert: selectedLink.text.content,
-          to: selectedLink.to,
+          from: selected.from,
+          insert: variant == 'image' ? '' : selected.text.content,
+          to: selected.to,
         },
       ],
     }),

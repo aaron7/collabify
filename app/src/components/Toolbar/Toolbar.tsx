@@ -11,7 +11,6 @@ import {
   Heading4,
   Heading5,
   Heading6,
-  Image,
   Italic,
   List,
   ListOrdered,
@@ -23,7 +22,6 @@ import {
 
 import {
   insertFencedCode,
-  insertImage,
   insertTable,
   makeBlockquote,
   makeHeading1,
@@ -55,7 +53,7 @@ import { Separator } from '@/components/ui/separator';
 import { Toggle } from '@/components/ui/toggle';
 import { cn } from '@/lib/utils';
 
-import Link from './Link';
+import LinkOrImage from './LinkOrImage';
 
 type ToolbarToggleProps = {
   ariaLabel: string;
@@ -228,14 +226,18 @@ export function Toolbar({ editorRefs, selectionState }: ToolbarProps) {
 
         <Separator orientation="vertical" />
 
-        <Link editorView={editorView} selectionState={selectionState} />
-
-        <ToolbarToggle
-          ariaLabel="Insert image"
-          command={handleToggleSelection(insertImage)}
-          icon={<Image className="h-4 w-4" />}
-          pressed={selectionState.image}
+        <LinkOrImage
+          editorView={editorView}
+          selectionState={selectionState}
+          variant="link"
         />
+
+        <LinkOrImage
+          editorView={editorView}
+          selectionState={selectionState}
+          variant="image"
+        />
+
         <ToolbarToggle
           ariaLabel="Insert table"
           command={handleToggleSelection(insertTable)}
