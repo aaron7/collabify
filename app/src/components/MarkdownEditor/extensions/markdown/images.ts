@@ -18,6 +18,7 @@ export class ImageWidget extends WidgetType {
     readonly imageUrl: string,
     readonly onClickSetSelectionFrom: number,
     readonly onClickSetSelectionTo: number,
+    readonly isSelected: boolean,
   ) {
     super();
   }
@@ -26,13 +27,16 @@ export class ImageWidget extends WidgetType {
     return (
       other.imageUrl == this.imageUrl &&
       other.onClickSetSelectionFrom == this.onClickSetSelectionFrom &&
-      other.onClickSetSelectionTo == this.onClickSetSelectionTo
+      other.onClickSetSelectionTo == this.onClickSetSelectionTo &&
+      other.isSelected == this.isSelected
     );
   }
 
   toDOM(view: EditorView) {
     const image = document.createElement('img');
-    image.classList.add('inline');
+    if (!this.isSelected) {
+      image.classList.add('inline');
+    }
     image.setAttribute('src', this.imageUrl || '');
     image.onclick = () =>
       this.handleClick(
@@ -45,6 +49,11 @@ export class ImageWidget extends WidgetType {
 
   override updateDOM(dom: HTMLElement, view: EditorView): boolean {
     const image = dom as HTMLImageElement;
+    if (this.isSelected) {
+      image.classList.remove('inline');
+    } else {
+      image.classList.add('inline');
+    }
     image.setAttribute('src', this.imageUrl || '');
     image.onclick = () =>
       this.handleClick(
@@ -92,21 +101,26 @@ function images(view: EditorView, oldImages: DecorationSet) {
         if (nodeType === 'Image') {
           const urlNode = node.node.getChild('URL');
 
+          const isSelected = overlapsWithSelection({
+            range: { from: node.from, to: node.to },
+            state: view.state,
+          });
+
           if (urlNode) {
             const imageUrl = view.state.sliceDoc(urlNode.from, urlNode.to);
             const imageWidgetDeco = Decoration.widget({
               side: 1,
-              widget: new ImageWidget(imageUrl, urlNode.from, urlNode.to),
+              widget: new ImageWidget(
+                imageUrl,
+                urlNode.from,
+                urlNode.to,
+                isSelected,
+              ),
             });
             decorations.push(imageWidgetDeco.range(node.to));
           }
 
-          if (
-            overlapsWithSelection({
-              range: { from: node.from, to: node.to },
-              state: view.state,
-            })
-          ) {
+          if (isSelected) {
             return false;
           }
 
