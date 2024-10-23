@@ -127,8 +127,8 @@ export function Toolbar({ editorRefs, selectionState }: ToolbarProps) {
   const isActiveHeading = headingKeys.some((key) => selectionState[key]);
 
   return (
-    <div className="relative flex justify-center">
-      <div className="bg-background absolute z-20 flex h-10 overflow-hidden rounded-b-lg border-x border-b">
+    <div className="relative flex sm:justify-center">
+      <div className="bg-background no-scrollbar z-20 mx-auto flex h-10 overflow-y-hidden overflow-x-scroll rounded-b-lg border-x border-b sm:absolute sm:mx-0 sm:overflow-hidden">
         <DropdownMenu>
           <DropdownMenuTrigger
             asChild={true}

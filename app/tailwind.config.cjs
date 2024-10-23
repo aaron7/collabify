@@ -1,4 +1,7 @@
 /** @type {import('tailwindcss').Config} */
+
+const plugin = require('tailwindcss/plugin');
+
 module.exports = {
   content: [
     './pages/**/*.{ts,tsx}',
@@ -8,7 +11,23 @@ module.exports = {
     './*.html',
   ],
   darkMode: ['class'],
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    plugin(({ addUtilities }) => {
+      addUtilities({
+        '.no-scrollbar': {
+          // Chrome, Safari and Opera
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+          // IE and Edge
+          '-ms-overflow-style': 'none',
+          // Firefox
+          'scrollbar-width': 'none',
+        },
+      });
+    }),
+  ],
   prefix: '',
   theme: {
     container: {

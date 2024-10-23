@@ -10,7 +10,7 @@
 }
 
 .cm-theme-none {
-  @apply mt-12 flex flex-grow flex-col;
+  @apply mt-2 flex flex-grow flex-col sm:mt-12;
 }
 
 .cm-editor .cm-content {
