@@ -76,7 +76,12 @@ function links(view: EditorView, oldLinks: DecorationSet) {
             decorations.push(linkIconDeco.range(node.to));
           }
 
+          const isEmptyLink = view.state
+            .sliceDoc(node.from, node.to)
+            .startsWith('[](');
+
           if (
+            isEmptyLink ||
             overlapsWithSelection({
               range: { from: node.from, to: node.to },
               state: view.state,
