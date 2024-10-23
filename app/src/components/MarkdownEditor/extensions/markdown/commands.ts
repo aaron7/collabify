@@ -102,9 +102,20 @@ function prefixSelectedLinesWith(
     });
   });
 
+  const changeSet = state.changes(changes);
+
   dispatch(
     state.update({
       changes,
+      // Map selection positions forward after the insertion instead of the default
+      selection: EditorSelection.create(
+        state.selection.ranges.map((range) => {
+          return EditorSelection.range(
+            changeSet.mapPos(range.from, 1),
+            changeSet.mapPos(range.to, 1),
+          );
+        }),
+      ),
     }),
   );
 
@@ -120,22 +131,18 @@ function insertOrReplaceText(
     return { from: range.from, insert: text, to: range.to };
   });
 
-  // Create a temporary transaction to get the new selection which we can then
-  // modify so we don't have to implement selection update logic which should
-  // include multi cursor support.
-  const transaction = state.update({
-    changes,
-  });
+  const changeSet = state.changes(changes);
 
   dispatch(
     state.update({
       changes,
+      // Map selection positions forward after the insertion instead of the default
       selection: EditorSelection.create(
-        transaction.newSelection.ranges.map((range) => {
-          if (range.from === range.to) {
-            return EditorSelection.cursor(range.from + text.length);
-          }
-          return EditorSelection.range(range.from, range.to);
+        state.selection.ranges.map((range) => {
+          return EditorSelection.range(
+            changeSet.mapPos(range.from, 1),
+            changeSet.mapPos(range.to, 1),
+          );
         }),
       ),
     }),

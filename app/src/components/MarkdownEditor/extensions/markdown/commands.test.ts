@@ -161,6 +161,10 @@ describe('commands', () => {
     },
   ])('$command', ({ prefix, test }) => {
     describe('prefixes single line', () => {
+      it('empty line', () => {
+        test('|', `${prefix}|`);
+      });
+
       it('no existing prefix', () => {
         test('hello| ', `${prefix}hello| `);
       });
