@@ -7,7 +7,7 @@ import {
   insertEmptyLink,
   insertFencedCode,
   insertImage,
-  insertLink,
+  insertLinkOrImage,
   insertTable,
   makeBlockquote,
   makeHeading1,
@@ -225,11 +225,26 @@ describe('commands', () => {
       text: '![alt](src)',
     },
     {
-      command: 'insertLink',
+      command: 'insertLinkOrImage > link',
       test: assertCommandStateChange(
-        insertLink({ text: 'example', url: 'https://example.org' }),
+        insertLinkOrImage({
+          text: 'example',
+          url: 'https://example.org',
+          variant: 'link',
+        }),
       ),
       text: '[example](https://example.org)',
+    },
+    {
+      command: 'insertLinkOrImage > image',
+      test: assertCommandStateChange(
+        insertLinkOrImage({
+          text: 'example',
+          url: 'https://example.org',
+          variant: 'image',
+        }),
+      ),
+      text: '![example](https://example.org)',
     },
     {
       command: 'insertEmptyLink',
