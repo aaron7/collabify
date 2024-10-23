@@ -15,7 +15,7 @@ const Landing = () => {
         <ThemeButton />
       </div>
       <div className="flex min-h-screen justify-center">
-        <div className="flex flex-col items-center justify-center space-y-16 px-6 pb-32 pt-32 sm:pb-0 sm:pt-0 lg:px-0">
+        <div className="flex flex-col items-center justify-center space-y-16 px-6 py-32 sm:py-16 lg:px-0">
           <div className="flex flex-col items-center">
             <h1 className="text-primary text-6xl font-bold sm:text-8xl">
               <span>Collabify</span>
