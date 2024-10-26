@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
-const plugin = require('tailwindcss/plugin');
+import tailwindcssAnimate from 'tailwindcss-animate';
+import plugin from 'tailwindcss/plugin';
 
 module.exports = {
   content: [
@@ -12,7 +13,7 @@ module.exports = {
   ],
   darkMode: ['class'],
   plugins: [
-    require('tailwindcss-animate'),
+    tailwindcssAnimate,
     plugin(({ addUtilities }) => {
       addUtilities({
         '.no-scrollbar': {
