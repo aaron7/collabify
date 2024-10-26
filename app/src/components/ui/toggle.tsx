@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-namespace
 import * as TogglePrimitive from '@radix-ui/react-toggle';
 import { cva, type VariantProps } from 'class-variance-authority';
 

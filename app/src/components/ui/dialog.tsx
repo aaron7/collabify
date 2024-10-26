@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-namespace
 import * as DialogPrimitive from '@radix-ui/react-dialog';
 import { X } from 'lucide-react';
 

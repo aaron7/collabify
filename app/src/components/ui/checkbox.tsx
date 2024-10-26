@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-namespace
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox';
 import { Check } from 'lucide-react';
 

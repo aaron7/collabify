@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-namespace
 import * as AlertDialogPrimitive from '@radix-ui/react-alert-dialog';
 
 import { buttonVariants } from '@/components/ui/button';

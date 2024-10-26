@@ -1,5 +1,4 @@
 import React from 'react';
-// eslint-disable-next-line import/no-namespace
 import * as PopoverPrimitive from '@radix-ui/react-popover';
 
 import { cn } from '@/lib/utils';
