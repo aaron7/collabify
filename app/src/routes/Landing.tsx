@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { SquareArrowOutUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 import ThemeButton from '@/components/ThemeButton/ThemeButton';
@@ -40,7 +41,7 @@ const Landing = () => {
                 End-to-end encrypted with zero analytics and no accounts. Your
                 keys never touch any server.{' '}
                 <a
-                  className="text-blue-500"
+                  className="text-blue-500 hover:underline"
                   href="https://github.com/aaron7/collabify"
                 >
                   Learn more.
@@ -66,7 +67,7 @@ const Landing = () => {
               <p className="font-light">
                 Free &{' '}
                 <a
-                  className="text-blue-500"
+                  className="text-blue-500 hover:underline"
                   href="https://github.com/aaron7/collabify"
                 >
                   open source
@@ -99,8 +100,9 @@ const Landing = () => {
               <span className="text-2xl">Web</span>
               <span className="flex h-full items-center justify-center text-xl">
                 <Link to={routes.new.path}>
-                  <span className="font-mono text-blue-500">
+                  <span className="flex items-center gap-x-1 font-mono text-blue-500 hover:underline">
                     collabify.it/new
+                    <SquareArrowOutUpRight size={15} />
                   </span>
                 </Link>
               </span>
