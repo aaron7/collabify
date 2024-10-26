@@ -86,8 +86,12 @@ const richTextClipboardPlugin = createRichTextClipboardPlugin();
 
 const includeRichTextOnCopyPlugin = ViewPlugin.fromClass(
   class {
+    view: EditorView;
+    onCopy: (event: ClipboardEvent) => void;
+
     constructor(view: EditorView) {
-      view.dom.addEventListener('copy', (event: ClipboardEvent) => {
+      this.view = view;
+      this.onCopy = (event: ClipboardEvent) => {
         const plainText = event.clipboardData?.getData('text/plain');
         if (plainText) {
           event.clipboardData?.setData(
@@ -95,10 +99,13 @@ const includeRichTextOnCopyPlugin = ViewPlugin.fromClass(
             showdownConverter.makeHtml(plainText),
           );
         }
-      });
+      };
+      view.dom.addEventListener('copy', this.onCopy);
     }
 
-    destroy() {}
+    destroy() {
+      this.view.dom.removeEventListener('copy', this.onCopy);
+    }
   },
 );
 

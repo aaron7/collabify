@@ -30,15 +30,20 @@ const setupMouseUpEventHandler = ViewPlugin.define((view) => {
   // Add the `mouseup` listener to the `document` so it fires even if the mouse
   // leaves the editor. Dispatch `setIsMouseDown` in the next tick to allow any
   // existing click events in the message queue to be processed first.
-  document.addEventListener('mouseup', () => {
+  const onMouseUp = () => {
     setTimeout(() => {
       view?.dispatch({
         effects: setIsMouseDown.of(false),
       });
     }, 0);
-  });
+  };
+  document.addEventListener('mouseup', onMouseUp);
 
-  return {};
+  return {
+    destroy() {
+      document.removeEventListener('mouseup', onMouseUp);
+    },
+  };
 });
 
 export function isMouseDown(update: ViewUpdate) {

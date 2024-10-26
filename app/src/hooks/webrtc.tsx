@@ -63,6 +63,7 @@ const useWebrtcProvider = ({
       if (newWebrtcProvider) {
         newWebrtcProvider.disconnect();
         newWebrtcProvider.destroy();
+        indexedDbProvider.destroy();
       }
     };
   }, [session, setValue]);
