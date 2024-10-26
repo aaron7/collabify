@@ -66,6 +66,7 @@ const Editor = ({
     <CodeMirror
       autoFocus={autoFocus}
       basicSetup={{
+        bracketMatching: false,
         foldGutter: false,
         highlightActiveLine: false,
         highlightSelectionMatches: false,
