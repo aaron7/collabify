@@ -153,6 +153,7 @@ const Session = () => {
         </div>
       </div>
       <WelcomeDialog
+        editorRefs={editorRefs}
         isOpen={isWelcomeDialogOpen}
         setIsOpen={setIsWelcomeDialogOpen}
       />

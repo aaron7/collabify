@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import { Button } from '@/components/ui/button';
@@ -17,12 +18,16 @@ import { Switch } from '@/components/ui/switch';
 import { useSettings } from '@/providers/SettingsProvider';
 
 export function WelcomeDialog({
+  editorRefs,
   isOpen,
   setIsOpen,
 }: {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
+  editorRefs: React.RefObject<ReactCodeMirrorRef>;
 }) {
+  const editorView = editorRefs?.current?.view;
+
   const { setSettings, settings } = useSettings();
   const { setTheme, theme } = useTheme();
 
@@ -30,6 +35,12 @@ export function WelcomeDialog({
   const [doNotShowWelcomeDialog, setDoNotShowWelcomeDialog] = useState(
     settings.doNotShowWelcomeDialog,
   );
+
+  useEffect(() => {
+    if (!isOpen) {
+      editorView?.focus();
+    }
+  }, [isOpen, editorView]);
 
   const isDarkMode =
     theme === 'dark' ||
