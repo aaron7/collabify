@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -12,6 +13,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
 import { useSettings } from '@/providers/SettingsProvider';
 
 export function WelcomeDialog({
@@ -22,27 +24,38 @@ export function WelcomeDialog({
   setIsOpen: (open: boolean) => void;
 }) {
   const { setSettings, settings } = useSettings();
+  const { setTheme, theme } = useTheme();
 
   const [name, setName] = useState(settings.name);
   const [doNotShowWelcomeDialog, setDoNotShowWelcomeDialog] = useState(
     settings.doNotShowWelcomeDialog,
   );
 
+  const isDarkMode =
+    theme === 'dark' ||
+    (theme === 'system' &&
+      window.matchMedia('(prefers-color-scheme: dark)').matches);
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setSettings({ doNotShowWelcomeDialog, name });
   };
 
+  const handleDarkModeSwitch = (checked: boolean) => {
+    setTheme(checked ? 'dark' : 'light');
+  };
+
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-xl">
         <DialogHeader>
-          <DialogTitle>Welcome</DialogTitle>
+          <DialogTitle>Getting started</DialogTitle>
         </DialogHeader>
-        <ul className="ml-6 list-disc text-sm">
+        <ul className="ml-4 list-disc space-y-1 sm:ml-8">
           <li>Your data is end-to-end encrypted.</li>
+          <li>Your markdown is available after a session has ended.</li>
           <li>
-            Your feedback is welcome at{' '}
+            Feedback is welcome at{' '}
             <a
               className="text-blue-500"
               href="https://feedback.collabify.it"
@@ -50,8 +63,8 @@ export function WelcomeDialog({
               target="_blank"
             >
               feedback.collabify.it
-            </a>{' '}
-            or in our{' '}
+            </a>
+            , or in the{' '}
             <a
               className="text-blue-500"
               href="https://github.com/aaron7/collabify"
@@ -64,22 +77,35 @@ export function WelcomeDialog({
           </li>
         </ul>
         <hr />
-        <form onSubmit={handleSubmit}>
-          <div className="grid gap-4 pb-6 pt-2">
-            <div className="grid grid-cols-4 items-center gap-4">
+        <form className="mt-2 space-y-6" onSubmit={handleSubmit}>
+          <div className="flex flex-col items-center justify-center">
+            <div className="grid grid-cols-[auto,1fr] items-center gap-4">
               <Label className="text-right" htmlFor="name">
-                Name
+                Your name
               </Label>
               <Input
-                className="col-span-3"
+                className="col-span-1"
                 id="name"
                 onChange={(e) => setName(e.target.value)}
                 value={name}
               />
+
+              <Label className="text-right" htmlFor="name">
+                Dark mode
+              </Label>
+              <Switch
+                checked={isDarkMode}
+                id="dark-mode"
+                onCheckedChange={handleDarkModeSwitch}
+              />
             </div>
+            <p className="text-muted-foreground mt-6 text-sm">
+              You can update later using the top-right settings icon.
+            </p>
           </div>
-          <DialogFooter className="sm:justify-between">
-            <div className="flex items-center space-x-2">
+          <hr />
+          <DialogFooter className="gap-6 sm:justify-between">
+            <div className="flex items-center justify-center space-x-2">
               <Checkbox
                 checked={doNotShowWelcomeDialog}
                 id="terms"
@@ -91,7 +117,7 @@ export function WelcomeDialog({
                 className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 htmlFor="terms"
               >
-                Don’t this show again
+                Don’t show this again
               </label>
             </div>
             <DialogClose asChild>
