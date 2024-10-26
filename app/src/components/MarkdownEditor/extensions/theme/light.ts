@@ -15,9 +15,10 @@ export const lightTheme = EditorView.theme(
 
 export const lightHighlightStyle = HighlightStyle.define([
   ...defaultHighlightStyle.specs,
+
+  { color: 'hsl(var(--primary))', tag: tags.heading },
   {
-    color: 'hsl(var(--primary))',
+    color: 'hsl(var(--secondary))',
     tag: [tags.processingInstruction, tags.string, tags.inserted],
   },
-  { color: 'hsl(var(--primary))', tag: tags.heading },
 ]);

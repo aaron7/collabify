@@ -108,7 +108,7 @@ const Landing = () => {
 
             <div className="flex flex-col items-center space-y-2">
               <span className="text-2xl">CLI</span>
-              <div className="bg-secondary flex flex-col rounded-xl px-4 py-2 font-mono">
+              <div className="bg-muted flex flex-col rounded-xl px-4 py-2 font-mono">
                 <span className="text-l">brew install aaron7/collabify</span>
                 <span className="text-l">collabify ./my-notes.md</span>
               </div>

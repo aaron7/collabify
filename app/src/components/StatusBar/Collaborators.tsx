@@ -30,7 +30,7 @@ const CollobaratorAvatar = ({
   clientId: number;
   user: AwarenessStateUser;
 }) => (
-  <Avatar className="border-secondary h-8 w-8 border border-solid">
+  <Avatar className="border-muted h-8 w-8 border border-solid">
     <Identicon
       alt={user.name}
       colour={user.color}
@@ -67,7 +67,7 @@ export const Collaborators = ({
         <HoverCard openDelay={100}>
           <HoverCardTrigger>
             <Avatar
-              className="border-secondary border-solidflex text-primary h-8 w-8 items-center justify-center border text-xs"
+              className="border-muted border-solidflex text-primary h-8 w-8 items-center justify-center border text-xs"
               key={'others'}
             >
               <span>+{others.length <= 99 ? others.length : 99}</span>
