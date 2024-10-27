@@ -102,7 +102,7 @@ export function SettingsButton({ markdownValue }: SettingsButtonProps) {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent collisionPadding={5}>
-          <DropdownMenuLabel>Session</DropdownMenuLabel>
+          <DropdownMenuLabel>Markdown</DropdownMenuLabel>
 
           <DropdownMenuSeparator />
 
