@@ -9,15 +9,15 @@ import CodeMirror, {
 import { WebrtcProvider } from 'y-webrtc';
 
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
-
-import createCollabPlugin from './extensions/collab/collab';
-import emojiPlugin from './extensions/emoji';
-import markdownPlugin from './extensions/markdown';
-import richTextClipboardPlugin from './extensions/rich-text-clipboard/rich-text-clipboard';
-import createSelectionStatePlugin, {
-  SelectionState,
-} from './extensions/selection-state/selection-state';
-import { getTheme } from './extensions/theme/theme';
+import { createCollabPlugin } from '@/extensions/collab';
+import emojiPlugin from '@/extensions/emoji';
+import markdownPlugin from '@/extensions/markdown';
+import richTextClipboardPlugin from '@/extensions/rich-text-clipboard';
+import {
+  createSelectionStatePlugin,
+  type SelectionState,
+} from '@/extensions/selection-state';
+import { getThemePlugin } from '@/extensions/theme';
 
 import './Editor.css';
 
@@ -74,7 +74,7 @@ const Editor = ({
       }}
       extensions={[
         baseTheme,
-        getTheme(theme === 'system' ? systemTheme : theme),
+        getThemePlugin(theme === 'system' ? systemTheme : theme),
         RCEditorView.lineWrapping,
         RCEditorView.contentAttributes.of({ autocapitalize: 'on' }),
         markdown({

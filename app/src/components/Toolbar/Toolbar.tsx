@@ -21,6 +21,14 @@ import {
 } from 'lucide-react';
 
 import {
+  DropdownMenu,
+  DropdownMenuCheckboxItem,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { Separator } from '@/components/ui/separator';
+import { Toggle } from '@/components/ui/toggle';
+import {
   insertFencedCode,
   insertTable,
   makeBlockquote,
@@ -38,19 +46,11 @@ import {
   toggleInlineCode,
   toggleItalic,
   toggleStrikethrough,
-} from '@/components/MarkdownEditor/extensions/markdown/commands';
-import {
+} from '@/extensions/markdown/commands';
+import type {
   SelectionState,
   SelectionStateKey,
-} from '@/components/MarkdownEditor/extensions/selection-state/selection-state';
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Separator } from '@/components/ui/separator';
-import { Toggle } from '@/components/ui/toggle';
+} from '@/extensions/selection-state';
 import { cn } from '@/lib/utils';
 
 import LinkOrImage from './LinkOrImage';

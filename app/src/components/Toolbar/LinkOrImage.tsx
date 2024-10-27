@@ -6,13 +6,6 @@ import { Image, Link2 } from 'lucide-react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import {
-  insertLinkOrImage,
-  removeLinkOrImage,
-  updateLinkOrImage,
-  type LinkOrImageState,
-} from '@/components/MarkdownEditor/extensions/markdown/commands';
-import { SelectionState } from '@/components/MarkdownEditor/extensions/selection-state/selection-state';
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -29,6 +22,13 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover';
 import { Toggle } from '@/components/ui/toggle';
+import {
+  insertLinkOrImage,
+  removeLinkOrImage,
+  updateLinkOrImage,
+  type LinkOrImageState,
+} from '@/extensions/markdown/commands';
+import { type SelectionState } from '@/extensions/selection-state';
 
 const formSchema = z.object({
   text: z.string().min(1, 'Text is required'),
