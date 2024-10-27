@@ -32,7 +32,7 @@ const CollobaratorAvatar = ({
 }) => (
   <Avatar className="border-muted h-8 w-8 border border-solid">
     <Identicon
-      alt={user.name}
+      alt={user.name || 'Anonymous'}
       colour={user.color}
       value={clientId.toString()}
     />
