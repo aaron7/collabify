@@ -22,7 +22,7 @@ import { useSettings } from '@/providers/SettingsProvider';
 
 const formSchema = z.object({
   doNotShowWelcomeDialog: z.boolean(),
-  name: z.string().max(30, 'Please choose a name under 20 characters'),
+  name: z.string().max(20, 'Please choose a name under 20 characters'),
 });
 
 export function WelcomeDialog({
