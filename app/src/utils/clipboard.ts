@@ -1,4 +1,5 @@
 import showdown from 'showdown';
+import { toast } from 'sonner';
 
 const showdownConverter = new showdown.Converter({
   strikethrough: true,
@@ -12,7 +13,7 @@ export async function copyToClipboard(text: string): Promise<void> {
     'text/plain': new Blob([text], { type: 'text/plain' }),
   });
 
-  await navigator.clipboard.write([clipboardItem]).catch((error) => {
-    // TODO: Show a toast notification to the user that the copy failed.
+  await navigator.clipboard.write([clipboardItem]).catch(() => {
+    toast.error('Failed to copy to clipboard');
   });
 }
