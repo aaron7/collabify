@@ -25,7 +25,7 @@ const Landing = () => {
           </div>
 
           <p className="text-center text-lg font-light sm:text-xl">
-            One-off collaboration sessions for your local Markdown
+            One-off collaboration sessions for your Markdown
           </p>
 
           <div className="relative w-full">
@@ -51,15 +51,15 @@ const Landing = () => {
             <div className="space-y-2">
               <h3 className="text-2xl">Friendly</h3>
               <p className="font-light">
-                Designed with both engineers and non-engineers in mind. Inspired
-                by Obsidian.
+                Live preview designed with both engineers and non-engineers in
+                mind. Inspired by Obsidian.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl">Integrated</h3>
+              <h3 className="text-2xl">Sync back</h3>
               <p className="font-light">
-                Launch from your favourite Markdown editor, and sync back when
-                you’re done.
+                Launch from your favourite Markdown editor or shell, and sync
+                back when you’re done.
               </p>
             </div>
             <div className="space-y-2">
@@ -83,7 +83,7 @@ const Landing = () => {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-background text-muted-foreground px-2">
-                Start from...
+                Launch from...
               </span>
             </div>
           </div>
