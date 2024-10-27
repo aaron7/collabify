@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 import EndOfSession from '@/components/EndOfSession/EndOfSession';
 import Loading from '@/components/Loading/Loading';
-import Editor from '@/components/MarkdownEditor/Editor';
+import MarkdownEditor from '@/components/MarkdownEditor/MarkdownEditor';
 import StatusBar from '@/components/StatusBar/StatusBar';
 import { Toolbar } from '@/components/Toolbar/Toolbar';
 import { Separator } from '@/components/ui/separator';
@@ -141,7 +141,7 @@ const Session = () => {
 
       <div className="flex flex-grow flex-col overflow-y-auto">
         <div className="mx-auto flex w-full max-w-3xl flex-grow flex-col px-2">
-          <Editor
+          <MarkdownEditor
             autoFocus={autoFocus}
             initialSelection={initialSelection}
             onChange={onEditorChange}

@@ -19,7 +19,7 @@ import {
 } from '@/extensions/selection-state';
 import { getThemePlugin } from '@/extensions/theme';
 
-import './Editor.css';
+import './MarkdownEditor.css';
 
 type EditorProps = {
   autoFocus: boolean;
