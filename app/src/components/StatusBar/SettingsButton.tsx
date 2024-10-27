@@ -136,9 +136,11 @@ export function SettingsButton({ markdownValue }: SettingsButtonProps) {
                 <RefreshCcw className="mr-2 h-4 w-4" />
                 <span>Force sync</span>
               </div>
-              <span className="mt-2 text-xs">
-                Launch via extension or CLI to auto sync
-              </span>
+              {!session.apiSettings && (
+                <span className="mt-2 text-xs">
+                  Launch via extension or CLI to auto sync
+                </span>
+              )}
             </DropdownMenuItem>
           )}
 
