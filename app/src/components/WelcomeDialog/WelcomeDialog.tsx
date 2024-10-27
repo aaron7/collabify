@@ -72,8 +72,17 @@ export function WelcomeDialog({
     setTheme(checked ? 'dark' : 'light');
   };
 
+  const handleOnOpenChange = (open: boolean) => {
+    form.trigger().then((isValid: boolean) => {
+      if (isValid) {
+        setSettings(form.getValues());
+      }
+    });
+    setIsOpen(open);
+  };
+
   return (
-    <Dialog onOpenChange={setIsOpen} open={isOpen}>
+    <Dialog onOpenChange={handleOnOpenChange} open={isOpen}>
       <DialogContent
         className="sm:max-w-xl"
         onOpenAutoFocus={(e) => e.preventDefault()}

@@ -2,7 +2,6 @@ import { useMemo } from 'react';
 import { Check, UserPlus } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-import ThemeButton from '@/components/ThemeButton/ThemeButton';
 import { Button } from '@/components/ui/button';
 import { useActiveTimeout } from '@/hooks/timeout';
 import routes from '@/routes';
@@ -12,7 +11,6 @@ import { buildJoinUrl, type Session } from '@/utils/session';
 
 import { Collaborators } from './Collaborators';
 import { EndSessionButton } from './EndSessionButton';
-import { ExportButton } from './ExportButton';
 import { SettingsButton } from './SettingsButton';
 
 type StatusBarProps = {
@@ -64,14 +62,10 @@ const StatusBar = ({
               <UserPlus className="h-4 w-4" strokeWidth={2.5} />
             </>
           )}
-          <span className="ml-2 hidden md:block">Copy invite</span>
+          <span className="ml-2 hidden sm:block">Copy invite</span>
         </Button>
 
-        <ExportButton markdownValue={value} />
-
-        <ThemeButton />
-
-        <SettingsButton />
+        <SettingsButton markdownValue={value} />
       </div>
     </div>
   );
