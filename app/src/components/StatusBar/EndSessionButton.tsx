@@ -1,17 +1,12 @@
+import { PopoverClose } from '@radix-ui/react-popover';
 import { LogOut } from 'lucide-react';
 
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 type EndSessionButtonProps = {
   onEndSession: () => void;
@@ -19,28 +14,26 @@ type EndSessionButtonProps = {
 
 export function EndSessionButton({ onEndSession }: EndSessionButtonProps) {
   return (
-    <AlertDialog>
-      <AlertDialogTrigger asChild>
+    <Popover>
+      <PopoverTrigger asChild>
         <Button variant="ghost">
           <LogOut className="text-destructive h-4 w-4" strokeWidth={2.5} />
           <span className="ml-2 hidden sm:block">End session</span>
         </Button>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            Your collaborators will be disconnected but they will be able to
-            download a copy of the markdown.
-          </AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onEndSession}>
+      </PopoverTrigger>
+      <PopoverContent>
+        <div className="flex items-center justify-center space-x-4">
+          <PopoverClose asChild>
+            <Button variant={'outline'}>Cancel</Button>
+          </PopoverClose>
+          <Button onClick={onEndSession} variant={'destructive'}>
             End session
-          </AlertDialogAction>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+          </Button>
+        </div>
+        <p className="text-muted-foreground mt-2 text-center text-xs">
+          Your Markdown will be available to download.
+        </p>
+      </PopoverContent>
+    </Popover>
   );
 }
