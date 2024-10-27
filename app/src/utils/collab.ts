@@ -92,6 +92,23 @@ export const createIndexedDbPersistence = ({
   return new IndexeddbPersistence(indexedDbKey, ydoc);
 };
 
+/**
+ * Attempt to recover raw markdown from IndexedDB using a sessionId.
+ *
+ * @param sessionId
+ * @returns Promise<string> that resolves to the raw markdown
+ */
+export function recoverIndexedDbPersistenceRawMarkdown(sessionId: string) {
+  const ydoc = new Doc();
+  const indexedDbKey = `${ROOM_ID_PREFIX}${sessionId}`;
+  const instance = new IndexeddbPersistence(indexedDbKey, ydoc);
+  return new Promise<string>((resolve) => {
+    instance.on('synced', (event: IndexeddbPersistence) => {
+      resolve(event.doc.getText('content').toString());
+    });
+  });
+}
+
 export function findHostId(awarenessState: AwarenessStates) {
   for (const [key, value] of awarenessState.entries()) {
     if (value.user.isHost) {
