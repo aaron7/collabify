@@ -8,7 +8,6 @@ import CodeMirror, {
 } from '@uiw/react-codemirror';
 import { WebrtcProvider } from 'y-webrtc';
 
-import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import { createCollabPlugin } from '@/extensions/collab';
 import emojiPlugin from '@/extensions/emoji';
 import markdownPlugin from '@/extensions/markdown';
@@ -18,6 +17,7 @@ import {
   type SelectionState,
 } from '@/extensions/selection-state';
 import { getThemePlugin } from '@/extensions/theme';
+import { useTheme } from '@/providers/ThemeProvider';
 
 import './MarkdownEditor.css';
 

@@ -4,7 +4,6 @@ import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 
-import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
@@ -19,6 +18,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useSettings } from '@/providers/SettingsProvider';
+import { useTheme } from '@/providers/ThemeProvider';
 
 const formSchema = z.object({
   doNotShowWelcomeDialog: z.boolean(),

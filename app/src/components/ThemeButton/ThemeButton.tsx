@@ -1,6 +1,5 @@
 import { Moon, Sun, SunMoon } from 'lucide-react';
 
-import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -8,6 +7,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { useTheme } from '@/providers/ThemeProvider';
 
 const ThemeButton = () => {
   const { setTheme } = useTheme();

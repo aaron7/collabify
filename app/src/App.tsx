@@ -3,8 +3,8 @@ import { ErrorBoundary } from 'react-error-boundary';
 import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom';
 
 import Error from '@/components/Error/Error';
-import { ThemeProvider } from '@/components/ThemeProvider/ThemeProvider';
 import { SettingsProvider } from '@/providers/SettingsProvider';
+import { ThemeProvider } from '@/providers/ThemeProvider';
 import routes from '@/routes';
 
 import './App.css';

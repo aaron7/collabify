@@ -15,7 +15,6 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
-import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -28,6 +27,7 @@ import {
 import { useSession } from '@/hooks/session';
 import { useActiveTimeout } from '@/hooks/timeout';
 import { useSettings } from '@/providers/SettingsProvider';
+import { useTheme } from '@/providers/ThemeProvider';
 import { saveMarkdown } from '@/utils/api';
 import { copyToClipboard } from '@/utils/clipboard';
 import { downloadAsMarkdown } from '@/utils/download';
