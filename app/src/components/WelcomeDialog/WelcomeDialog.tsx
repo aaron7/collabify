@@ -1,21 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { ReactCodeMirrorRef } from '@uiw/react-codemirror';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
 
 import { useTheme } from '@/components/ThemeProvider/ThemeProvider';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Dialog,
-  DialogClose,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
+import { Form, FormField, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { useSettings } from '@/providers/SettingsProvider';
+
+const formSchema = z.object({
+  doNotShowWelcomeDialog: z.boolean(),
+  name: z.string().max(30, 'Please choose a name under 20 characters'),
+});
 
 export function WelcomeDialog({
   editorRefs,
@@ -31,10 +39,13 @@ export function WelcomeDialog({
   const { setSettings, settings } = useSettings();
   const { setTheme, theme } = useTheme();
 
-  const [name, setName] = useState(settings.name);
-  const [doNotShowWelcomeDialog, setDoNotShowWelcomeDialog] = useState(
-    settings.doNotShowWelcomeDialog,
-  );
+  const form = useForm<z.infer<typeof formSchema>>({
+    defaultValues: {
+      doNotShowWelcomeDialog: settings.doNotShowWelcomeDialog,
+      name: settings.name,
+    },
+    resolver: zodResolver(formSchema),
+  });
 
   useEffect(() => {
     if (!isOpen) {
@@ -47,9 +58,14 @@ export function WelcomeDialog({
     (theme === 'system' &&
       window.matchMedia('(prefers-color-scheme: dark)').matches);
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setSettings({ doNotShowWelcomeDialog, name });
+  const handleSubmit = (values: z.infer<typeof formSchema>) => {
+    form.trigger().then((isValid: boolean) => {
+      if (!isValid) {
+        return;
+      }
+      setSettings(values);
+      setIsOpen(false);
+    });
   };
 
   const handleDarkModeSwitch = (checked: boolean) => {
@@ -64,7 +80,7 @@ export function WelcomeDialog({
         </DialogHeader>
         <ul className="ml-4 list-disc space-y-1 sm:ml-8">
           <li>Your data is end-to-end encrypted.</li>
-          <li>Your markdown is available after a session has ended.</li>
+          <li>Your markdown will be available after the session has ended.</li>
           <li>
             Feedback is welcome at{' '}
             <a
@@ -88,54 +104,74 @@ export function WelcomeDialog({
           </li>
         </ul>
         <hr />
-        <form className="mt-2 space-y-6" onSubmit={handleSubmit}>
-          <div className="flex flex-col items-center justify-center">
-            <div className="grid grid-cols-[auto,1fr] items-center gap-4">
-              <Label className="text-right" htmlFor="name">
-                Your name
-              </Label>
-              <Input
-                className="col-span-1"
-                id="name"
-                onChange={(e) => setName(e.target.value)}
-                value={name}
-              />
+        <Form {...form}>
+          <form
+            className="mt-2 space-y-6"
+            onSubmit={form.handleSubmit(handleSubmit)}
+          >
+            <div className="flex flex-col items-center justify-center">
+              <div className="grid grid-cols-[auto,1fr] items-center gap-4">
+                <FormField
+                  control={form.control}
+                  name="name"
+                  render={({ field }) => (
+                    <>
+                      {/* Don't use FormItem to allow us to use the grid layout */}
+                      <FormLabel className="text-right" htmlFor="name">
+                        Your name
+                      </FormLabel>
 
-              <Label className="text-right" htmlFor="name">
-                Dark mode
-              </Label>
-              <Switch
-                checked={isDarkMode}
-                id="dark-mode"
-                onCheckedChange={handleDarkModeSwitch}
-              />
+                      <Input
+                        {...field}
+                        className="col-span-1"
+                        id="name"
+                        placeholder="Anonymous"
+                      />
+                      <FormMessage className="col-span-2" />
+                    </>
+                  )}
+                />
+
+                {/* Change dark mode setting immediately */}
+                <Label className="text-right" htmlFor="name">
+                  Dark mode
+                </Label>
+                <Switch
+                  checked={isDarkMode}
+                  id="dark-mode"
+                  onCheckedChange={handleDarkModeSwitch}
+                />
+              </div>
+              <p className="text-muted-foreground mt-6 text-sm">
+                You can update later using the top-right settings icon.
+              </p>
             </div>
-            <p className="text-muted-foreground mt-6 text-sm">
-              You can update later using the top-right settings icon.
-            </p>
-          </div>
-          <hr />
-          <DialogFooter className="gap-6 sm:justify-between">
-            <div className="flex items-center justify-center space-x-2">
-              <Checkbox
-                checked={doNotShowWelcomeDialog}
-                id="terms"
-                onCheckedChange={(checked: boolean) =>
-                  setDoNotShowWelcomeDialog(checked)
-                }
+            <hr />
+            <DialogFooter className="gap-6 sm:justify-between">
+              <FormField
+                control={form.control}
+                name="doNotShowWelcomeDialog"
+                render={({ field }) => (
+                  <div className="flex items-center space-x-2">
+                    <Checkbox
+                      checked={field.value}
+                      id="doNotShowWelcomeDialog"
+                      onCheckedChange={field.onChange}
+                    />
+                    <FormLabel
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      htmlFor="doNotShowWelcomeDialog"
+                    >
+                      Don’t show this again
+                    </FormLabel>
+                    <FormMessage />
+                  </div>
+                )}
               />
-              <label
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                htmlFor="terms"
-              >
-                Don’t show this again
-              </label>
-            </div>
-            <DialogClose asChild>
               <Button type="submit">Continue</Button>
-            </DialogClose>
-          </DialogFooter>
-        </form>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
