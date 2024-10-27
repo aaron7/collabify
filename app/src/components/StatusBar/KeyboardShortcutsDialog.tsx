@@ -64,15 +64,15 @@ const shortcuts = [
   },
   {
     name: 'Ordered List',
-    shortcut: [Command, Option, '7'],
+    shortcut: [Command, ArrowBigUp, '7'],
   },
   {
     name: 'Unordered List',
-    shortcut: [Command, Option, '8'],
+    shortcut: [Command, ArrowBigUp, '8'],
   },
   {
     name: 'Task List',
-    shortcut: [Command, 'l'],
+    shortcut: [Command, ArrowBigUp, '9'],
   },
   {
     name: 'Insert Empty Link',
