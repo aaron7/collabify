@@ -144,7 +144,7 @@ export function SettingsButton({ markdownValue }: SettingsButtonProps) {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuLabel>Options</DropdownMenuLabel>
+          <DropdownMenuLabel>Settings</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setIsSettingsDialogOpen(true)}>
             <UserPen className="mr-2 h-4 w-4" />
