@@ -74,7 +74,10 @@ export function WelcomeDialog({
 
   return (
     <Dialog onOpenChange={setIsOpen} open={isOpen}>
-      <DialogContent className="sm:max-w-xl">
+      <DialogContent
+        className="sm:max-w-xl"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <DialogHeader>
           <DialogTitle>Getting started</DialogTitle>
         </DialogHeader>
