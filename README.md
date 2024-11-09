@@ -45,7 +45,7 @@ I first looked at toolkits like ProseMirror and Lexical which have markdown supp
 
 Before digging in, I would still recommend using something like ProseMirror (same author as CodeMirror) for most WYSIWYG editors, including Markdown within web applications. The following drawbacks are only for applications which are loading and saving back Markdown files, or where you may have engineers who find WYSIWYG editors can sometimes get in the way.
 
-### The state - Markdown vs AST
+### The state - Plain text vs AST
 
 The first drawback is related to how toolkits like ProseMirror use an Abstract Syntax Tree (AST) for their state. While building an AST from a file, information can be lost. For example, there are several ways to represent lists in Markdown (`*` , `-`, `+`) and in most toolkits this kind of information is usually dropped. When saving the file, converting from an AST, all lists use the a single syntax. It would be unexpected to load a markdown file, make no changes, and have the saved file be reformatted because of the AST conversion. It possible to extend the AST to support this, but it adds significant complexity.
 
