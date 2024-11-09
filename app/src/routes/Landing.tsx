@@ -42,7 +42,7 @@ const Landing = () => {
                 keys never touch any server.{' '}
                 <a
                   className="text-blue-500 hover:underline"
-                  href="https://github.com/aaron7/collabify"
+                  href="https://github.com/aaron7/collabify#security"
                 >
                   Learn more.
                 </a>
