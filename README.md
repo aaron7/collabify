@@ -47,7 +47,7 @@ Before digging in, I would still recommend using something like ProseMirror (sam
 
 ### The state - Markdown vs AST
 
-The first drawback is that toolkits like ProseMirror use an Abstract Syntax Tree (AST) for their state. Loading Markdown from a file requires building the AST, but information can then be lost. For example, there are several ways to represent lists in Markdown (`*` , `-`, `+`) and in most toolkits this kind of information is usually dropped. When saving the file, converting from an AST, all lists use the a single syntax. It would be unexpected to load a markdown file, make no changes, and have the saved file be reformatted because of the AST conversion. It possible to extend the AST to support this, but it adds significant complexity.
+The first drawback is related to how toolkits like ProseMirror use an Abstract Syntax Tree (AST) for their state. While building an AST from a file, information can be lost. For example, there are several ways to represent lists in Markdown (`*` , `-`, `+`) and in most toolkits this kind of information is usually dropped. When saving the file, converting from an AST, all lists use the a single syntax. It would be unexpected to load a markdown file, make no changes, and have the saved file be reformatted because of the AST conversion. It possible to extend the AST to support this, but it adds significant complexity.
 
 Keeping a text markdown state simplifies the problem. The markdown is only modified by a user's action, with any visual helpers or live preview infered from the text state.
 
