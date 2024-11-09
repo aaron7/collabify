@@ -28,7 +28,6 @@ Collabify let's you host one-off collaborative sessions for your markdown :rocke
 
 <!-- TOC end -->
 
-
 ## Motivation
 
 Sometimes my colleagues and I wish we could collaboratively edit Markdown just like a Google Doc. Unfortunately, in some situations, tools which support components like code blocks (e.g. Notion) are not available to use. And tools like Google Docs or Microsoft Word are not the best for certain types of meetings or documentation. We often resorted to starting a VSCode live share session, which is only great for engineers and is quite heavy-weight for editing a document.
