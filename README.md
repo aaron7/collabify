@@ -2,19 +2,17 @@
 
 Collabify let's you host one-off collaborative sessions for your markdown :rocket:
 
+<p align="center">
+  <img width="838" src="https://github.com/user-attachments/assets/4f5b0cfb-afe2-4fee-8212-710eb9bf2efb" />
+</p>
+
 - **Launch from web:** https://collabify.it/new
 
-- **Launch from CLI:**
+- **Launch from [CLI](https://github.com/aaron7/collabify-cli)** which automatically syncs back when the session ends:
   ```sh
   brew install aaron7/collabify
   collabify ./my-notes.md
   ```
-  which syncs back automatically when the session ends. See [aaron7/collabify-cli](https://github.com/aaron7/collabify-cli).
-
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/20eaa8c5-3941-417b-b07c-795459dd5295" />
-</p>
-
 
 ## Motivation
 
@@ -69,7 +67,7 @@ Through using Collabify in some meetings, good ideas to work on next include:
 
 ## Security
 
-Disclaimer: I'm an individual product engineer with professional experience, however I'm not an expert in security. No web application is perfectly secure. I've aimed to follow best practices and have designed the app to have zero trust in any server it communicates with.
+**Disclaimer:** I'm an individual product engineer with professional experience, however I'm not an expert in security. No web application is perfectly secure. I've aimed to follow best practices and have designed the app to have zero trust in any server it communicates with.
 
 ### Trust of the build hosted at https://collabify.it
 
@@ -91,7 +89,7 @@ A simple signalling server is used to connect peers at `signaling.collabify.it`,
 
 A STUN and TURN server is used for difficult NAT traversal situations. I host a server at `turn.collabify.it`, with a fallback using TLS on port 443 to get through most corporate setups. The WebRTC payloads are encrypted using a key derived from the shared secret. If a TURN server is used, it terminates the TLS connection but cannot decrypt the WebRTC payloads.
 
-Note: I've rate limited the TURN server bandwidth per connection so it's only useful for text collaboration (and not video :sweat_smile:). Collabify doesn't use accounts, so it's not possible to fully restrict usage of the TURN server. In the future I would like to setup CloudFlare's TURN service with short-term credentials, or at least setup short-term credentials for `turn.collabify.it`. This doesn't have any security implications for users of Collabify, but if you are a developer, please don't use this TURN server for your own application. Thank you :smile:
+**Note:** I've rate limited the TURN server bandwidth per connection so it's only useful for text collaboration (and not video :sweat_smile:). Collabify doesn't use accounts, so it's not possible to fully restrict usage of the TURN server. In the future I would like to setup CloudFlare's TURN service with short-term credentials, or at least setup short-term credentials for `turn.collabify.it`. This doesn't have any security implications for users of Collabify, but if you are a developer, please don't use this TURN server for your own application. Thank you :smile:
 
 ### IndexedDB
 
