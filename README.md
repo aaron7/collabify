@@ -9,8 +9,11 @@ Collabify let's you host one-off collaborative sessions for your markdown :rocke
 - **Launch from web:** https://collabify.it/new
 
 - **Launch from [CLI](https://github.com/aaron7/collabify-cli)** which automatically syncs back when the session ends:
+
   ```sh
-  brew install aaron7/collabify
+  brew tap aaron7/collabify
+  brew install aaron7/collabify/cli
+
   collabify ./my-notes.md
   ```
 
