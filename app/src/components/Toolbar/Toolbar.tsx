@@ -51,7 +51,7 @@ import type {
   SelectionState,
   SelectionStateKey,
 } from '@/extensions/selection-state';
-import { cn } from '@/lib/utils';
+import { cn } from '@/utils/cn';
 
 import LinkOrImage from './LinkOrImage';
 
