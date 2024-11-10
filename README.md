@@ -49,7 +49,7 @@ I would still recommend using something like ProseMirror for most WYSIWYG editor
 
 The first drawback is related to how toolkits like ProseMirror use an Abstract Syntax Tree (AST) for their state. When loading a Markdown file, they build an AST where information can be lost. For example, there are several ways to represent lists in Markdown (`*` , `-`, `+`) and in most toolkits this kind of information is dropped. When saving the file, converting back from an AST, all lists may then use a different syntax. It would be unexpected to load a markdown file, make no changes, and have the saved file be reformatted because of the AST conversion. It's possible to extend the AST to support this, but it adds significant complexity.
 
-Keeping a plain text state simplifies the problem. The markdown is only modified by a user's action, with any visual helpers or live preview infered from the plain text state.
+Although it has many of it's own drawbacks, keeping a plain text state simplifies this problem. The markdown is only modified by a user's action, with any visual helpers or live preview infered from the plain text state.
 
 ### Syncing with other editors or visual modes
 
