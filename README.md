@@ -43,7 +43,7 @@ I've also aimed to keep any sessions private, with end-to-end encryption and a s
 
 I first looked at toolkits like [ProseMirror](https://prosemirror.net/) and [Lexical](https://lexical.dev/) which have markdown support, including frameworks like TipTap and Milkdown which are built on top of ProseMirror. ProseMirror and Lexical are excellent, but I released they had some drawbacks for an editor which opens and saves back markdown files. Not surprisingly, Obsidian also builds on top of CodeMirror.
 
-I would still recommend using something like ProseMirror (same author as CodeMirror) for most WYSIWYG editors, including Markdown. The following drawbacks are only for applications which are loading and saving back Markdown files, where you may have engineers who find WYSIWYG editors can sometimes get in the way, or where you need to sync in real time with another editor that only has a text state.
+I would still recommend using something like ProseMirror for most WYSIWYG editors, including Markdown. The following drawbacks are only for applications which are loading and saving back Markdown files, where you may have engineers who find WYSIWYG editors can sometimes get in the way, or where you need to sync in real time with another editor that only has a text state.
 
 ### The state - Plain text vs AST
 
