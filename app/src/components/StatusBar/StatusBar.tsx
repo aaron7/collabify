@@ -40,7 +40,7 @@ const StatusBar = ({
     <div className="background-prim flex justify-between p-1">
       <div className="ml-2 flex items-center">
         <Link to={routes.landing.path}>
-          <h2 className="text-primary text-lg font-semibold">
+          <h2 className="text-primary font-poppins text-lg font-bold">
             <span>Collabify</span>
             <span className="text-xs opacity-50">.it</span>
           </h2>

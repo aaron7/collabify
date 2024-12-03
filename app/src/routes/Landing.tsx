@@ -18,14 +18,15 @@ const Landing = () => {
       <div className="flex min-h-screen justify-center">
         <div className="flex flex-col items-center justify-center space-y-16 px-6 py-32 sm:py-16 lg:px-0">
           <div className="flex flex-col items-center">
-            <h1 className="text-primary text-6xl font-bold sm:text-8xl">
+            <h1 className="text-primary font-poppins text-6xl font-bold sm:text-8xl">
               <span>Collabify</span>
               <span className="text-3xl opacity-50">.it</span>
             </h1>
           </div>
 
           <p className="text-center text-lg font-light sm:text-xl">
-            One-off collaboration sessions for your Markdown
+            One-off collaboration sessions for your{' '}
+            <span className="font-mono">__Markdown__</span>
           </p>
 
           <div className="relative w-full">
@@ -36,7 +37,7 @@ const Landing = () => {
 
           <div className="grid max-w-3xl grid-cols-1 gap-8 sm:grid-cols-2">
             <div className="space-y-2">
-              <h3 className="text-2xl">Private</h3>
+              <h3 className="text-2xl">👀 Private</h3>
               <p className="font-light">
                 End-to-end encrypted with zero analytics and no accounts. Your
                 keys never touch any server.{' '}
@@ -49,21 +50,21 @@ const Landing = () => {
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl">Friendly</h3>
+              <h3 className="text-2xl">🤗 Friendly</h3>
               <p className="font-light">
                 Live preview designed with both engineers and non-engineers in
                 mind. Inspired by Obsidian.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl">Sync back</h3>
+              <h3 className="text-2xl">✨ Sync back locally</h3>
               <p className="font-light">
                 Launch from your favourite Markdown editor or shell, and sync
                 back when you’re done.
               </p>
             </div>
             <div className="space-y-2">
-              <h3 className="text-2xl">Free</h3>
+              <h3 className="text-2xl">🎁 Free</h3>
               <p className="font-light">
                 Free &{' '}
                 <a
@@ -97,7 +98,7 @@ const Landing = () => {
             </div>
 
             <div className="flex flex-col items-center space-y-2">
-              <span className="text-2xl">Web</span>
+              <span className="text-2xl">Web browser</span>
               <span className="flex h-full items-center justify-center text-xl">
                 <Link to={routes.new.path}>
                   <span className="flex items-center gap-x-1 font-mono text-blue-500 hover:underline">
@@ -109,7 +110,7 @@ const Landing = () => {
             </div>
 
             <div className="flex flex-col items-center space-y-2">
-              <span className="text-2xl">CLI</span>
+              <span className="text-2xl">Command line</span>
               <div className="bg-muted flex flex-col rounded-xl px-4 py-2 font-mono">
                 <span className="text-l opacity-70">
                   brew tap aaron7/collabify

@@ -10,7 +10,7 @@
     --card-foreground: 240 10% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 240 10% 3.9%;
-    --primary: 222 29% 47%;
+    --primary: 222 20% 39%;
     --primary-foreground: 0 0% 98%;
     --secondary: 222 29% 63%;
     --secondary-foreground: 240 5.9% 10%;
@@ -29,13 +29,13 @@
   }
 
   .dark {
-    --background: 212 29% 10%;
+    --background: 212 23% 16%;
     --foreground: 212 5% 90%;
     --card: 212 29% 10%;
     --card-foreground: 212 5% 90%;
     --popover: 212 29% 5%;
     --popover-foreground: 212 5% 90%;
-    --primary: 207 100% 76%;
+    --primary: 205 96% 91%;
     --primary-foreground: 0 0% 0%;
     --secondary: 95 38% 62%;
     --secondary-foreground: 0 0% 100%;
@@ -64,4 +64,18 @@
       'rlig' 1,
       'calt' 1;
   }
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/Poppins-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/poppins/Poppins-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
 }

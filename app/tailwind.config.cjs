@@ -87,6 +87,9 @@ module.exports = {
           foreground: 'hsl(var(--success-foreground))',
         },
       },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
       keyframes: {
         'accordion-down': {
           from: { height: '0' },
