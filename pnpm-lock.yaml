@@ -130,7 +130,7 @@ importers:
         version: 3.10.0(react-hook-form@7.54.2(react@18.3.1))
       '@icons-pack/react-simple-icons':
         specifier: ^11.0.0
-        version: 11.0.0(react@18.3.1)
+        version: 11.0.1(react@18.3.1)
       '@joplin/turndown':
         specifier: ^4.0.74
         version: 4.0.78
@@ -916,8 +916,8 @@ packages:
       '@vue/compiler-sfc':
         optional: true
 
-  '@icons-pack/react-simple-icons@11.0.0':
-    resolution: {integrity: sha512-o8ho4F8UiN7ie1X4gWUNJMgQw7lzPncfcXs6PHF02hDmwV71OngqI4eWEY+ibTNKaS5xdGyBXho9Zvx4JeyriA==}
+  '@icons-pack/react-simple-icons@11.0.1':
+    resolution: {integrity: sha512-K+PsqUAIuWHztSIlUc55CjTXpjSGkrM6Dl0YMKseJCLgbGZKnabaJZ5j8wtSizNaKRjadoQQ5fhjh1OSepdMeg==}
     peerDependencies:
       react: ^16.13 || ^17 || ^18 || ^19
 
@@ -5061,7 +5061,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@icons-pack/react-simple-icons@11.0.0(react@18.3.1)':
+  '@icons-pack/react-simple-icons@11.0.1(react@18.3.1)':
     dependencies:
       react: 18.3.1
 
