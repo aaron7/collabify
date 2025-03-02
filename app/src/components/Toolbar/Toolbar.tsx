@@ -128,7 +128,7 @@ export function Toolbar({ editorRefs, selectionState }: ToolbarProps) {
 
   return (
     <div className="relative flex sm:justify-center">
-      <div className="bg-background no-scrollbar z-20 mx-auto flex h-10 overflow-y-hidden overflow-x-scroll rounded-b-lg border-x border-b sm:absolute sm:mx-0 sm:overflow-hidden">
+      <div className="bg-background no-scrollbar z-20 mx-auto flex h-10 overflow-x-scroll overflow-y-hidden rounded-b-lg border-x border-b sm:absolute sm:mx-0 sm:overflow-hidden">
         <DropdownMenu>
           <DropdownMenuTrigger
             asChild={true}
