@@ -12,7 +12,7 @@ const Landing = () => {
 
   return (
     <div>
-      <div className="absolute right-1 top-1">
+      <div className="absolute top-1 right-1">
         <ThemeButton />
       </div>
       <div className="flex min-h-screen justify-center">
