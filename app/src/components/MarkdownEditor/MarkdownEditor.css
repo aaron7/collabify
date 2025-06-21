@@ -1,3 +1,5 @@
+@reference "../../App.css";
+
 .cm-editor {
   @apply flex-grow border-none outline-none;
 }

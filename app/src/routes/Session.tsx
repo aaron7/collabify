@@ -139,8 +139,8 @@ const Session = () => {
         <Toolbar editorRefs={editorRefs} selectionState={selectionState} />
       )}
 
-      <div className="flex flex-grow flex-col overflow-y-auto">
-        <div className="mx-auto flex w-full max-w-3xl flex-grow flex-col px-2">
+      <div className="flex grow flex-col overflow-y-auto">
+        <div className="mx-auto flex w-full max-w-3xl grow flex-col px-2">
           <MarkdownEditor
             autoFocus={autoFocus}
             initialSelection={initialSelection}

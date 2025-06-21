@@ -122,7 +122,7 @@ export function WelcomeDialog({
             onSubmit={form.handleSubmit(handleSubmit)}
           >
             <div className="flex flex-col items-center justify-center">
-              <div className="grid grid-cols-[auto,1fr] items-center gap-4">
+              <div className="grid grid-cols-[auto_1fr] items-center gap-4">
                 <FormField
                   control={form.control}
                   name="name"
@@ -171,7 +171,7 @@ export function WelcomeDialog({
                       onCheckedChange={field.onChange}
                     />
                     <FormLabel
-                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                      className="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                       htmlFor="doNotShowWelcomeDialog"
                     >
                       Don’t show this again
