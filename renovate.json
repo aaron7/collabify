@@ -5,16 +5,16 @@
     {
       "groupName": "all pre-1.0.0 non-major dependencies",
       "groupSlug": "all-pre-1-0-0-minor-patch",
-      "matchPackagePatterns": ["*"],
       "matchCurrentVersion": "/^0/",
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": ["*"]
     },
     {
       "groupName": "all non-major dependencies",
       "groupSlug": "all-minor-patch",
-      "matchPackagePatterns": ["*"],
       "matchCurrentVersion": "!/^0/",
-      "matchUpdateTypes": ["minor", "patch"]
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchPackageNames": ["*"]
     }
   ]
 }
