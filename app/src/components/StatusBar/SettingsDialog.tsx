@@ -68,7 +68,7 @@ export default function SettingsDialog({
             onSubmit={form.handleSubmit(handleSubmit)}
           >
             <div className="flex flex-col items-center justify-center">
-              <div className="grid grid-cols-[auto,1fr] items-center gap-4">
+              <div className="grid grid-cols-[auto_1fr] items-center gap-4">
                 <FormField
                   control={form.control}
                   name="name"

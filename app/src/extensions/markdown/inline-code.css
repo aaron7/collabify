@@ -1,3 +1,5 @@
+@reference "../../App.css";
+
 .md-inline-code {
   @apply bg-muted/50 px-0.5 font-mono text-sm;
 }
