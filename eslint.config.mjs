@@ -173,9 +173,9 @@ export default [
       },
 
       'import/resolver': {
-        alias: {
-          extensions: ['.js', '.jsx', '.ts', '.tsx'],
-          map: [['@', './app/src']],
+        typescript: {
+          alwaysTryTypes: true,
+          project: ['./tsconfig.json'],
         },
       },
 
